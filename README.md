@@ -9,6 +9,7 @@
   - [Dél-Kelet és Dél-Nyugat](#dél-kelet-és-dél-nyugat)
   - [Télen elfogyasztjuk-e a megtermelt energiát](#télen-elfogyasztjuk-e-a-megtermelt-energiát)
   - [Havi energia egyenleg](#havi-energia-egyenleg)
+  - [A szaldó problémája](#a-szaldó-problémája)
   - [Záró sorok](#záró-sorok)
 
 # Napelem otthon: az első hónap eredménye
@@ -29,7 +30,7 @@ A program, amivel kielemzem az adatokat Linux alatt fut, bash-t és python panda
 
 ![Első havi termelés](doksiképek/HaviTermelés.png)
 
-Amint látható, a novemberi termelés nem sikerült túl rózsásan, 164&nbsp;kWh körül alakult, ami elsőre igencsak kevésnek tűnik. Ebből nem fogjuk felfűteni a lakást, de szerencsére nem is akarjuk.
+A novemberi termelés nem sikerült túl rózsásan, 164&nbsp;kWh körül alakult, ami elsőre igencsak kevésnek tűnik. Ebből nem fogjuk felfűteni a lakást, de szerencsére nem is akarjuk.
 
 Amikor sütött a nap, akkor termeltünk is rendesen, de az elmúlt hónapban nem sokszor láttunk ilyet. A monokristályos napelemek problémája, hogy a szórt fényt alacsony hatékonyság mellett hasznosítják. Volt nap, amikor 13.9&nbsp;kWh-t termeltünk, máskor pedig csak 0.7&nbsp;kWh-t sikerült.
 
@@ -102,13 +103,23 @@ Az akkumulátoros rendszerek megkövetelése érthető, bár a megtérülés ebb
 
 Ugyanakkor egy államilag jóváhagyott beruházás esetén a visszamenőleges módosítás megtérülési idő előtt mindenképpen aláássa a jogállamba vetett bizalmat.
 
-A szaldó elszámolás bevezetése hiba volt, mert a napelem telepítőket déli csúcstermelésre ösztönözte. Egyenletes termeléshez Kelet-Nyugat rendszer szükséges, polikristályos napelemmel, kicsit túlméretezve, hibrid inverterrel és akkumulátorral. Hiába változtatna a kormány utólag a villamosáram átvételi díján, senki sem fogja újraépíteni a meglévő rendszerét. Ezzel a megoldással kizárólag soha meg nem térülővé lehet tenni a jelenlegi meglévő beruházásokat.
-
 ## Havi energia egyenleg
 
 Minthogy klímával fűtöttünk a novemberi hónapban, a napelem képtelen volt ezt kompenzálni, ezért a fogyasztás magasabb volt a megszokottnál. Ennek ellenére is látható, hogy a megtermelt energia 2/3-át visszatápláltuk.
 
 ![Havi energia egyenleg](doksiképek/HaviFogyasztásÉsTermelés-2022-11-14.png)
+
+## A szaldó problémája
+
+A szaldó elszámolás bevezetése hiba volt, mert a napelem telepítőket déli csúcstermelésre ösztönözte. Egyenletes termeléshez Kelet-Nyugat rendszer szükséges, polikristályos napelemmel, kicsit túlméretezve, hibrid inverterrel és akkumulátorral.
+
+Hiába változtatna a kormány utólag a villamosáram átvételi díján, senki sem fogja újraépíteni a meglévő rendszerét. Idáig mindent pont fordítva építettünk, csúcstermelésre optimalizáltunk nem egyenletes energiaszolgáltatásra.
+
+Az áramdíjakkal és a visszatáplálás esetleges tiltásával nem lehet utólag javítani a problémát, csak soha meg nem térülővé tenni a jelenlegi beruházásokat.
+
+A túltermelés ugyanakkor nem tud kárt okozni a rendszerben, mert az inverterek automatikusan leállnak, ha túl sok energia  lenne a hálózaton.
+
+Ráadásul léteznek még fokozatok a "mindenkit engedünk visszatáplálni" és "senkit sem engedünk visszatáplálni" között. Vannak külföldi szolgáltatók, melyek fixen előírják, hogy mennyit engednek visszatermelni, a többlettel a tulajdonos meg azt tesz, amit akar.
 
 ## Záró sorok
 
