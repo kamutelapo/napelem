@@ -5,7 +5,6 @@
   - [Mennyit termeltünk volna, ha a nap végig sütött volna](#mennyit-termeltünk-volna-ha-a-nap-végig-sütött-volna)
   - [A névleges teljesítmény hány százalékán mentek a panelek](#a-névleges-teljesítmény-hány-százalékán-mentek-a-panelek)
   - [Az inverter hatékonysága](#az-inverter-hatékonysága)
-  - [Az inverter munkapont-tartása](#az-inverter-munkapont-tartása)
   - [Dél-Kelet és Dél-Nyugat](#dél-kelet-és-dél-nyugat)
   - [Télen elfogyasztjuk-e a megtermelt energiát](#télen-elfogyasztjuk-e-a-megtermelt-energiát)
   - [Havi energia egyenleg](#havi-energia-egyenleg)
@@ -61,18 +60,6 @@ A hatékonyságot úgy számoljuk, hogy ismerjük az egyes láncok feszültség�
 ![Inverter hatékonyság](doksiképek/HaviInverterHatékonyság.png)
 
 Az átlag 93.5%-os hatékonyság meglehetősen alacsonynak tűnik. Jól látható, hogy amikor az inverter csúcson termel a 100%-ot is megközelítjük, felhős, borult időben rosszabbak vagyunk. Van különbség inverter és inverter között, a Solplanet ennyit tud. A keletkezett 11&nbsp;kWh veszteség havi szinten 770&nbsp;Ft-ot jelent új áron. Vannak jobb inverterek is dupla ennyi pénzért, bár a megtérülés kérdéses.
-
-## Az inverter munkapont-tartása
-
-Ismerjük a Risen 405W-os panelt, kérdés, hogy a 35V körüli munkaponti feszültséget sikerül-e tartania az inverternek. Amennyiben az inverter a munkapontnál alacsonyabb/magasabb feszültséget választ, az teljesítménycsökkenést eredményezhet.
-
-![Risen 405W](doksiképek/RisenNapelem.png)
-
-A Solplanet feszültség-görbéje:
-
-![Napelem hatékonyság](doksiképek/PillanatnyiPanelfeszültség-2022-12-12.png)
-
-Látható, hogy napfelkelte és naplemente körül kissé bizonytalankodik az inverter. A 40V-os feszültség igencsak közel került a napelem 41V-os üresjárási feszültségéhez. Ilyenkor az energia a napelem panel melegítésére megy el, nem a lakást táplálja. Amikor rendesen süt a nap, akkor természetesen megtalálja a kívánt munkapontot.
 
 ## Dél-Kelet és Dél-Nyugat
 
