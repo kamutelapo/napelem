@@ -86,9 +86,9 @@ Nemrég tiltásra került a visszatáplálás napelemes rendszerek esetén. Nyá
 
 ![Energia egyenleg](doksiképek/PillanatnyiFogyasztásÉsTermelés-2022-12-07.png)
 
-Annak ellenére, hogy jelenleg egy szobát villanyradiátorral fűtünk, jól látható, hogy a napelem a termelt energia zömét visszatáplálja. Még télen is jelentős az el nem fogyasztott energia. A 3000W termelés igencsak sok, sosem lesz ennyi elfogyasztva.
+Annak ellenére, hogy jelenleg egy szobát villanyradiátorral fűtünk, jól látható, hogy a napelem a termelt energia zömét visszatáplálja. Még télen is jelentős az el nem fogyasztott energia. A 3000W termelés igencsak sok, sosem lesz ennyi elfogyasztva. Nyáron ez az érték a 6500W-ot is megközelítheti.
 
-Az akkumulátoros rendszerek megkövetelése érthető, bár a megtérülés ebben az esetben kérdéses, a környezetvédelmi problémákról nem is beszélve. Vannak országok, ahol sosem volt megengedve a visszatáplálás, de az akkumulátoros rendszerek mégis jól működnek.
+Az akkumulátoros rendszerek megkövetelése érthető, bár a megtérülés ebben az esetben kérdéses, a környezetvédelmi problémákról nem is beszélve. Vannak országok, ahol sosem volt megengedve a visszatáplálás, az akkumulátoros rendszerek mégis jól működnek.
 
 Ugyanakkor egy államilag jóváhagyott beruházás esetén a visszamenőleges módosítás megtérülési idő előtt mindenképpen aláássa a jogállamba vetett bizalmat.
 
