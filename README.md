@@ -43,6 +43,8 @@ Feltesszük a kérdést, hogy ha a nap végig sütött volna, mit kaptunk volna.
 
 Az ábráról szépen leolvasható, hogy a decemberi nap 15&nbsp;kWh-t tudna termelni tiszta időben. Ha végig így sütött volna, akkor 450&nbsp;kWh körül alakult volna a termelés. A rossz idő a termelés majdnem 2/3-át elvitte.
 
+ 0&nbsp;kWh (végig havazás) és 450&nbsp;kWh (végig napsütés) között bármilyen értéket kaphattunk volna, időjárásfüggő.
+
 Bár a nap dőlésszöge nem ideális, a napsütéses órák száma nagyon kevés, de ez az adat nem számít rossznak.
 
 ## A névleges teljesítmény hány százalékán mentek a panelek
