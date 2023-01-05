@@ -6,7 +6,7 @@ import numpy as np
 import datetime as dt
 import os
 import matplotlib.ticker as mtick
-from matplotlib import dates as mdates
+import matplotlib.dates as mdates
 import napelem_context
 
 BASEDIR=os.path.dirname(__file__) + "/.."
@@ -22,7 +22,7 @@ maxy = ctx.roundUp(0.25, df["D-K áram"], df["D-Ny áram"])
 
 plot = df.plot(x='Time', y=['D-K áram','D-Ny áram'],
           title='Napelem panelek pillanatnyi árama  -  ' + ctx.date(), color=['orange','mediumorchid'],
-          ylim = [0, maxy])
+          ylim = [0, maxy], x_compat = True)
 plot.set_xlabel("Idő")
 plot.grid(axis='y')
 

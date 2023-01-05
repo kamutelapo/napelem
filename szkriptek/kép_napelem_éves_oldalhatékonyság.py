@@ -39,17 +39,16 @@ df["D-Ny paneltermelés"] = df["Termelés"] * (1 - df['D-K arány']) / 6
 
 df = df[["Date", "D-K paneltermelés", "D-Ny paneltermelés"]]
 
-dfavg = df.rolling(7, center=True).mean()
-dfavg["Date"] = df["Date"]
-df = dfavg.dropna().reset_index()
-
-
 df["Összeg"] = df["D-K paneltermelés"] + df["D-Ny paneltermelés"]
 df["D-K panelhatékonyság"] = 100 * df["D-K paneltermelés"] / df["Összeg"]
 df["D-Ny panelhatékonyság"] = 100 * df["D-Ny paneltermelés"] / df["Összeg"]
 
 dkmean = df["D-K panelhatékonyság"].mean()
 dnymean = df["D-Ny panelhatékonyság"].mean()
+
+dfavg = df.rolling(7, center=True).mean()
+dfavg["Date"] = df["Date"]
+df = dfavg.dropna().reset_index()
 
 dkmean = int(100 * dkmean + 0.5) / 100
 dnymean = int(100 * dnymean + 0.5) / 100

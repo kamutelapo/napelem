@@ -10,7 +10,7 @@ import napelem_context
 
 BASEDIR=os.path.dirname(__file__) + "/.."
 
-ctx = napelem_context.monthly()
+ctx = napelem_context.monthly(-1)
 df = ctx.getJoinedDataframe()
 
 dffirst = df.groupby("Nap").first()

@@ -6,7 +6,7 @@ import numpy as np
 import datetime as dt
 import os
 import matplotlib.ticker as mtick
-from matplotlib import dates as mdates
+import matplotlib.dates as mdates
 from scipy import integrate
 import napelem_context
 
@@ -27,7 +27,7 @@ dfkwh = int(simpson / 10 + 0.5) / 100
 plot = df.plot.area(x='Time', y=['AC teljesítmény'],
           label=['AC teljesítmény (' + str(dfkwh) + ' kWh)'],
           title='Napelem panelek pillanatnyi AC teljesítménye - ' + ctx.date(), color=['orange'],
-          ylim = [0, maxy], zorder = 10)
+          ylim = [0, maxy], zorder = 10, x_compat = True)
 plot.grid(axis = 'y', zorder = -1)
 plot.set_xlabel("Idő")
 

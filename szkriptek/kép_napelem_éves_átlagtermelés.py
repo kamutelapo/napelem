@@ -7,6 +7,7 @@ import datetime as dt
 import os
 import matplotlib.ticker as mtick
 from matplotlib import dates as mdates
+from matplotlib.offsetbox import AnchoredText
 from scipy import integrate
 import napelem_context
 
@@ -37,9 +38,9 @@ df['D-K arány'] = df['D-K'] / (df['D-K'] + df['D-Ny'])
 df["D-K termelés"] = df["Termelés"] * df['D-K arány']
 df["D-Ny termelés"] = df["Termelés"] * (1 - df['D-K arány'])
 
-ossz = df.sum()["Termelés"]
-dksum = int(100 * df.sum()["D-K termelés"] + 0.5) / 100
-dnysum = int(100 * df.sum()["D-Ny termelés"] + 0.5) / 100
+ossz = df["Termelés"].sum()
+dksum = int(100 * df["D-K termelés"].sum() + 0.5) / 100
+dnysum = int(100 * df["D-Ny termelés"].sum() + 0.5) / 100
 
 numdays = (df["Date"].max() - df["Date"].min()).days + 1
 avg = ossz / numdays
@@ -47,28 +48,91 @@ avg = int(avg * 100 + 0.5) / 100
 
 df = df[["Date", "D-K termelés", "D-Ny termelés"]]
 
+df['Termelés'] = df["D-K termelés"]+df["D-Ny termelés"]
+
+dminidx = df['Termelés'].idxmin()
+dmaxidx = df['Termelés'].idxmax()
+
+dmindate = df.loc[dminidx]['Date']
+dmin = df.loc[dminidx]['Termelés']
+
+dmaxdate = df.loc[dmaxidx]['Date']
+dmax = df.loc[dmaxidx]['Termelés']
+
+dfhavi = df.rolling(30, center=True).mean().dropna()
+
+hminidx = dfhavi["Termelés"].idxmin()
+hmaxidx = dfhavi["Termelés"].idxmax()
+
+hmin = dfhavi.loc[hminidx]["Termelés"]
+hmax = dfhavi.loc[hmaxidx]["Termelés"]
+
+hmindate = df.loc[hminidx]['Date']
+hminstart = hmindate + dt.timedelta(days = -15)
+hminend = hmindate + dt.timedelta(days = 14)
+hmindate = str(hminstart) + " - " + str(hminend)
+
+hmaxdate = df.loc[hmaxidx]['Date']
+hmaxstart = hmaxdate + dt.timedelta(days = -15)
+hmaxend = hmaxdate + dt.timedelta(days = 14)
+hmaxdate = str(hmaxstart) + " - " + str(hmaxend)
+
+
 dfavg = df.rolling(7, center=True).mean()
 dfavg["Date"] = df["Date"]
 
 dfavg2=df.copy()
 dfavg2["Átlag"] = df["D-K termelés"]+df["D-Ny termelés"]
+
 dfavg2 = dfavg2.rolling(30, center=True, min_periods=0).mean()
 
 dfavg["Átlag"] = dfavg2["Átlag"]
-dfavg["TeljesÁtlag"] = 0*dfavg2["Átlag"] + avg
+dfavg["TeljesÁtlag"] = avg
 
-df = dfavg.dropna()
 
+df = dfavg.dropna().copy()
+
+minavgidx = df["Termelés"].idxmin()
+maxavgidx = df["Termelés"].idxmax()
+
+minavg = df.loc[minavgidx]["Termelés"]
+maxavg = df.loc[maxavgidx]["Termelés"]
+
+minavgdate = df.loc[minavgidx]['Date']
+minavgstart = minavgdate + dt.timedelta(days = -3)
+minavgend = minavgdate + dt.timedelta(days = 3)
+minavgdate = str(minavgstart) + " - " + str(minavgend)
+
+maxavgdate = df.loc[maxavgidx]['Date']
+maxavgstart = maxavgdate + dt.timedelta(days = -3)
+maxavgend = maxavgdate + dt.timedelta(days = 3)
+maxavgdate = str(maxavgstart) + " - " + str(maxavgend)
+
+ylim = max(df["D-K termelés"]+df["D-Ny termelés"]) * 1.25
 
 plot = df.plot.area(x='Date', y=['D-Ny termelés', 'D-K termelés'], linewidth = 0,
-          label=['Dél-Nyugat termelés (6 panel, ' + str(dnysum) + ' kWh)', 'Dél-Kelet termelés (10 panel, ' + str(dksum) + ' kWh)'],
-          title='Átlagtermelés (összes: ' + str(ossz) + ' kWh, átlag: ' + str(avg) + ' kWh)  -  ' + ctx.date(), color=['mediumorchid', 'orange'])
-plot.set_xlabel("Dátum")
+          label=['Dél-Nyugat termelés (6 panel, ' + napelem_context.pretty(dnysum) + ' kWh)', 'Dél-Kelet termelés (10 panel, ' +
+                 napelem_context.pretty(dksum) + ' kWh)'],
+          title='Éves átlagtermelés (összes: ' + napelem_context.pretty(ossz) + ' kWh, éves átlag: ' + napelem_context.pretty(avg) + ' kWh)  -  ' + ctx.date(), color=['mediumorchid', 'orange'], ylim = [0, ylim])
 plot.set_ylabel("Megtermelt energia")
+plot.legend(loc='upper right')
 
 plot = df.plot(x='Date', y='Átlag', ax=plot, color='green', label='30 napos átlag')
-plot = df.plot(x='Date', y='TeljesÁtlag', ax=plot, color='magenta', label='Éves átlag (' + str(avg) + ' kWh)', linestyle='--')
+plot = df.plot(x='Date', y='TeljesÁtlag', ax=plot, color='magenta', label='Éves átlag (' + napelem_context.pretty(avg) + ' kWh)', linestyle='--')
 
+plot.set_xlabel("Dátum")
+
+at = AnchoredText("Minimum és maximum értékek:\n" +
+                  "- havi átlag minimum: " + napelem_context.pretty(hmin) + " kWh (teljes: " + napelem_context.pretty(hmin * 30) + " kWh)  [" + hmindate + "]\n" +
+                  "- havi átlag maximum: " + napelem_context.pretty(hmax) + " kWh (teljes: " + napelem_context.pretty(hmax * 30) + " kWh)  [" + hmaxdate + "]\n" +
+                  "- heti átlag minimum: " + napelem_context.pretty(minavg) + " kWh (teljes: " + napelem_context.pretty(minavg * 7) + " kWh)  [" + minavgdate + "]\n" +
+                  "- heti átlag maximum: " + napelem_context.pretty(maxavg) + " kWh (teljes: " + napelem_context.pretty(maxavg * 7) + " kWh)  [" + maxavgdate + "]\n" +
+                  "- napi minimum: " + napelem_context.pretty(dmin) + " kWh  [" + str(dmindate) + "]\n" +
+                  "- napi maximum: " + napelem_context.pretty(dmax) + " kWh  [" + str(dmaxdate) + "]",
+                  loc='upper left', prop=dict(fontfamily="sans-serif", fontsize=8.5), frameon=True)
+at.patch.set_boxstyle("round,pad=0.,rounding_size=0.2")
+at.patch.set_edgecolor("lightgrey")
+plot.add_artist(at)
 
 yticks = mtick.FormatStrFormatter('%.0f kWh')
 plot.yaxis.set_major_formatter(yticks)
