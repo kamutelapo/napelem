@@ -9,6 +9,7 @@
   - [Télen elfogyasztjuk-e a megtermelt energiát](#télen-elfogyasztjuk-e-a-megtermelt-energiát)
   - [Havi energia egyenleg](#havi-energia-egyenleg)
   - [Egy fázis esetén mennyit tápláltunk volna vissza?](#egy-fázis-esetén-mennyit-tápláltunk-volna-vissza)
+  - [Akkumulátor](#akkumulátor)
   - [A szaldó problémája](#a-szaldó-problémája)
   - [Záró sorok](#záró-sorok)
 
@@ -106,6 +107,14 @@ A nagyobb teljesítményű inverterek 3 fázissal működnek. Amennyiben két f�
 ![Havi nettó energia egyenleg](doksiképek/HaviNettóFogyasztásÉsTermelés-2022-11-14.png)
 
 A képen jól látható, hogy a napenergia valamivel több mint felét így is visszatápláljuk, ugyanakkor kimondható, hogy a 3 fázis megléte jelentősen növeli a visszatáplálás mértékét, mert a fázisok terhelése nem egyenletes.
+
+## Akkumulátor
+
+Akkumulátort teljes éves fogyasztás alapján szoktak méretezni, de felmerült a kérdés, hogy a vizsgált első hónap alapján mekkora akkumulátor kellene, ha tiltanák a visszatáplálást. Egy téli hónap adatai akkumulátor szempontból nem relevánsak, de a kíváncsiság kedvéért végigszámoltam.
+
+![Akkumulátor](doksiképek/Akkumulátor-2022-11-14.png)
+
+A kép alapján látható, hogy az energia 60%-át már egy kisebb akkumulátor is hozta volna, de minél inkább növeljük a kapacitást, annál kevesebbet adunk érdemben a rendszerhez.
 
 ## A szaldó problémája
 
