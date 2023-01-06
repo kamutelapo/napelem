@@ -8,6 +8,7 @@
   - [Dél-Kelet és Dél-Nyugat](#dél-kelet-és-dél-nyugat)
   - [Télen elfogyasztjuk-e a megtermelt energiát](#télen-elfogyasztjuk-e-a-megtermelt-energiát)
   - [Havi energia egyenleg](#havi-energia-egyenleg)
+  - [Egy fázis esetén mennyit tápláltunk volna vissza?](#egy-fázis-esetén-mennyit-tápláltunk-volna-vissza)
   - [A szaldó problémája](#a-szaldó-problémája)
   - [Záró sorok](#záró-sorok)
 
@@ -97,6 +98,14 @@ Ugyanakkor egy államilag jóváhagyott beruházás esetén a visszamenőleges m
 Minthogy klímával fűtöttünk a novemberi hónapban, a napelem képtelen volt ezt kompenzálni, ezért a fogyasztás magasabb volt a megszokottnál. Ennek ellenére is látható, hogy a megtermelt energia 2/3-át visszatápláltuk.
 
 ![Havi energia egyenleg](doksiképek/HaviFogyasztásÉsTermelés-2022-11-14.png)
+
+## Egy fázis esetén mennyit tápláltunk volna vissza?
+
+A nagyobb teljesítményű inverterek 3 fázissal működnek. Amennyiben két fázison 1000W-ot visszatáplálunk, a harmadik fázison 3000W-ot fogyasztunk, az nem valós visszatáplálás. Ha kellően sok inverter csinálja ugyanezt, akkor az áramszolgáltató felé ez fogyasztást jelentene, nem pedig visszatáplálást. Ez az érték számolható is, mert az EON ebben az esetben egyszerre mutat termelést és fogyasztást.
+
+![Havi nettó energia egyenleg](doksiképek/HaviNettóFogyasztásÉsTermelés-2022-11-14.png)
+
+A képen jól látható, hogy a napenergia valamivel több mint felét így is visszatápláljuk, ugyanakkor kimondható, hogy a 3 fázis megléte jelentősen növeli a visszatáplálás mértékét, mert a fázisok terhelése nem egyenletes.
 
 ## A szaldó problémája
 
