@@ -33,8 +33,8 @@ df["DC termelés"] = df['DC vég'] - df['DC kezdet']
 df["AC termelés"] = df['AC vég'] - df['AC kezdet']
 df["Inverter hatékonyság"] = 100 * df["AC termelés"] / df["DC termelés"]
 
-osszdc = df.sum()["DC termelés"]
-osszac = df.sum()["AC termelés"]
+osszdc = df["DC termelés"].sum()
+osszac = df["AC termelés"].sum()
 
 hatekonysag = 100 * osszac / osszdc
 hatekonysag = int(100* hatekonysag + 0.5) / 100
@@ -44,7 +44,7 @@ veszteseg = (100 - hatekonysag) * osszdc / 100000
 veszteseg = str(int(100* veszteseg + 0.5) / 100)
 
 
-maxy = ctx.roundUp(5, (df["Inverter hatékonyság"]).max()) * 1.1
+maxy = ctx.roundUp(5, df["Inverter hatékonyság"]) * 1.1
 
 plot = df.plot(x='Date', y=['Inverter hatékonyság'],
                label=['Inverter hatékonyság'],

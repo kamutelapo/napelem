@@ -6,7 +6,7 @@ import numpy as np
 import datetime as dt
 import os
 import matplotlib.ticker as mtick
-from matplotlib import dates as mdates
+import matplotlib.dates as mdates
 import napelem_context
 
 BASEDIR=os.path.dirname(__file__) + "/.."
@@ -21,7 +21,7 @@ maxy = ctx.roundUp(10, df["D-K panelfeszültség"], df["D-Ny panelfeszültség"]
 
 plot = df.plot(x='Time', y=['D-K panelfeszültség','D-Ny panelfeszültség'],
           title='Napelem panelek pillanatnyi feszültsége  -  ' + ctx.date(), color=['orange','mediumorchid'],
-          ylim = [0, maxy])
+          ylim = [0, maxy], x_compat = True)
 plot.grid(axis='y')
 plot.set_xlabel("Idő")
 

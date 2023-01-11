@@ -21,7 +21,7 @@ kezdet = np.datetime64(tegnap.replace(day=1))
 honap_napok = pd.to_datetime(tegnap).days_in_month
 
 df = pd.read_csv(BASEDIR +"/adatok/eon.csv", parse_dates=['Idő'])
-
+dfteljes = df.copy()
 
 df = df[df['Idő'] >= kezdet]
 df = df[df['Idő'] < np.datetime64('today')]
@@ -61,3 +61,26 @@ plot.grid(axis='y', zorder=-1)
 
 fig = plot.get_figure()
 fig.savefig(BASEDIR + "/képek/eon/VárhatóÁr.png", bbox_inches = "tight")
+
+df = dfteljes
+df = df[df['Idő'] >= '2022-10-19']
+
+days = (df['Idő'].max() - df['Idő'].min()).days
+cheap = days * 7
+kwh = (df['Fogyasztás'] - df['Termelés']).sum()
+
+cheap_part = kwh
+expensive_part = 0
+
+if cheap_part > cheap:
+    expensive_part = kwh - cheap
+    cheap_part = cheap
+
+ar = 36 * cheap_part + 70.1 * expensive_part
+altalany = int(ar / days * 30 + 0.5)
+
+ar = int(ar + 0.5)
+
+print ("\nÉves számla:", ar, "Ft, általány:", altalany, "Ft")
+
+

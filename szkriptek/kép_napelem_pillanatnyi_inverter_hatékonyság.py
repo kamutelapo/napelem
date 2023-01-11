@@ -19,6 +19,7 @@ df["Panel teljesítmény"] = df["Vpv1"] * df["Ipv1"] + df["Vpv2"] * df["Ipv2"]
 df["AC teljesítmény"] = df["Pac"]
 
 df["Inverter hatékonyság"] = 100 * df["AC teljesítmény"] / df["Panel teljesítmény"]
+df["Inverter hatékonyság"].replace([np.inf, -np.inf], np.nan, inplace=True)
 
 maxy = ctx.roundUp(10, df["Inverter hatékonyság"])
 
@@ -32,7 +33,7 @@ dh = int( 10000 *simpson_ac / simpson_pv ) / 100
 plot = df.plot(x='Time', y=['Inverter hatékonyság'],
           label=['Inverter hatékonyság (' + str(dh) + '%)'],
           title='Inverter pillanatnyi hatékonysága  -  ' + ctx.date(), color=['mediumorchid'],
-          ylim = [0, maxy])
+          ylim = [0, maxy], x_compat = True)
 plot.grid(axis='y')
 plot.set_xlabel("Idő")
 

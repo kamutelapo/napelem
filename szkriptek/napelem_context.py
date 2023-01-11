@@ -13,14 +13,14 @@ def daily():
     ctx.daily()
     return ctx
     
-def monthly():
+def monthly(defaultDateOffsetInDays = 0):
     ctx = NapelemContext()
-    ctx.monthly()
+    ctx.monthly(defaultDateOffsetInDays)
     return ctx
 
-def yearly():
+def yearly(defaultDateOffsetInDays = 0):
     ctx = NapelemContext()
-    ctx.yearly()
+    ctx.yearly(defaultDateOffsetInDays)
     return ctx
 
 def pretty(num):
@@ -43,7 +43,7 @@ class NapelemContext:
         self.df = self.filter(self.df, 'Time')
         self.datetext = str(self.mindate.date())
 
-    def monthly(self):
+    def monthly(self, defaultDateOffsetInDays):
         if len(os.sys.argv) == 2:
             argdate = os.sys.argv[1]
             self.mindate = pd.to_datetime(argdate)
@@ -57,13 +57,14 @@ class NapelemContext:
               self.filesuffix = "-" + self.mindate.strftime('%Y-%m-%d')
               self.datetext = "[" + str(self.mindate.date()) + " - " + str(showdate.date()) + "]"
         else:
-            self.maxdate = pd.to_datetime(dt.date.today() + dateutil.relativedelta.relativedelta(days=1))
+            currentDate = pd.to_datetime(dt.date.today() + dateutil.relativedelta.relativedelta(days=defaultDateOffsetInDays))
+            self.maxdate = currentDate + dateutil.relativedelta.relativedelta(days=1)
             self.mindate = pd.to_datetime(self.maxdate - dateutil.relativedelta.relativedelta(months=1))
             self.filesuffix = ""
-            self.datetext = "[" + str(self.mindate.date()) + " - " + str(dt.date.today()) + "]"
+            self.datetext = "[" + str(self.mindate.date()) + " - " + str(currentDate.date()) + "]"
         self.df = self.filter(self.df, 'Time')
 
-    def yearly(self):
+    def yearly(self, defaultDateOffsetInDays):
         if len(os.sys.argv) == 2:
             argdate = os.sys.argv[1]
             self.mindate = pd.to_datetime(argdate)
@@ -71,10 +72,11 @@ class NapelemContext:
             self.filesuffix = "-" + self.mindate.strftime('%Y')
             self.datetext = self.mindate.strftime('%Y')
         else:
-            self.maxdate = pd.to_datetime(dt.date.today() + dateutil.relativedelta.relativedelta(days=1))
+            currentDate = pd.to_datetime(dt.date.today() + dateutil.relativedelta.relativedelta(days=defaultDateOffsetInDays))
+            self.maxdate = currentDate + dateutil.relativedelta.relativedelta(days=1)
             self.mindate = pd.to_datetime(self.maxdate - dateutil.relativedelta.relativedelta(years=1))
             self.filesuffix = ""
-            self.datetext = "[" + str(self.mindate.date()) + " - " + str(dt.date.today()) + "]"
+            self.datetext = "[" + str(self.mindate.date()) + " - " + str(currentDate.date()) + "]"
         self.df = self.filter(self.df, 'Time')
 
     def filter(self, dfin, field):
