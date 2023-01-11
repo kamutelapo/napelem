@@ -60,6 +60,8 @@ df["Összes napelem fogyasztás"] = df["Napelem fogyasztás"].cumsum()
 
 df["Nettó termelés"] = (df["Termelés"] - df["Fogyasztás"]).clip(lower = 0)
 df["Nettó fogyasztás"] = df["Fogyasztás"] - df["Termelés"] + df["Nettó termelés"]
+df["Nettó termelés"] = (df["Termelés"] - df["Fogyasztás"]).clip(lower = 0)
+df["Nettó fogyasztás"] = df["Fogyasztás"] - df["Termelés"] + df["Nettó termelés"]
 df["Nettó napelem fogyasztás"] = (df["Napelem termelés"] - df["Nettó termelés"]).clip(lower = 0)
 
 df["Összes nettó fogyasztás"] = df["Nettó fogyasztás"].cumsum()

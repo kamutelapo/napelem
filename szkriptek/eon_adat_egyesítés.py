@@ -19,7 +19,7 @@ ma = np.datetime64('today')
 
 teljes = None
 
-while( honap_start < dt.date.today() ):
+while( honap_start.date() < dt.date.today() ):
   honap_veg = honap_start + pd.DateOffset(months=1)
   
   fajlnev = honap_start.strftime('%Y-%m.csv')
