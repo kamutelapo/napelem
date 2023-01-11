@@ -106,7 +106,7 @@ A nagyobb teljesítményű inverterek 3 fázissal működnek. Amennyiben két f�
 
 ![Havi nettó energia egyenleg](doksiképek/HaviNettóFogyasztásÉsTermelés-2022-11-14.png)
 
-A képen jól látható, hogy a napenergia valamivel több mint felét így is visszatápláljuk, ugyanakkor kimondható, hogy a 3 fázis megléte jelentősen növeli a visszatáplálás mértékét, mert a fázisok terhelése nem egyenletes.
+A képen jól látható, hogy a napenergia kicsivel kevesebb, mint a felét így is visszatápláljuk, ugyanakkor kimondható, hogy a 3 fázis megléte jelentősen növeli a visszatáplálás mértékét, mert a fázisok terhelése nem egyenletes.
 
 ## Akkumulátor
 

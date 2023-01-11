@@ -14,11 +14,11 @@ ctx = napelem_context.monthly(-1)
 df = ctx.getJoinedDataframe()
 
 dffirst = df.groupby("Nap").first()
-dffirst = dffirst[['Összes nettó fogyasztás', 'Összes nettó termelés', 'Összes napelem fogyasztás']].reset_index() \
-    .rename(columns = {'Összes nettó fogyasztás': 'Összes fogyasztás kezdet', 'Összes nettó termelés': 'Összes termelés kezdet', 'Összes napelem fogyasztás': 'Összes napelem fogyasztás kezdet'})
+dffirst = dffirst[['Összes nettó fogyasztás', 'Összes nettó termelés', 'Összes nettó napelem fogyasztás']].reset_index() \
+    .rename(columns = {'Összes nettó fogyasztás': 'Összes fogyasztás kezdet', 'Összes nettó termelés': 'Összes termelés kezdet', 'Összes nettó napelem fogyasztás': 'Összes napelem fogyasztás kezdet'})
 dflast = df.groupby("Nap").last()
-dflast = dflast[['Összes nettó fogyasztás', 'Összes nettó termelés', 'Összes napelem fogyasztás']].reset_index() \
-    .rename(columns = {'Összes nettó fogyasztás': 'Összes fogyasztás vég', 'Összes nettó termelés': 'Összes termelés vég', 'Összes napelem fogyasztás': 'Összes napelem fogyasztás vég'})
+dflast = dflast[['Összes nettó fogyasztás', 'Összes nettó termelés', 'Összes nettó napelem fogyasztás']].reset_index() \
+    .rename(columns = {'Összes nettó fogyasztás': 'Összes fogyasztás vég', 'Összes nettó termelés': 'Összes termelés vég', 'Összes nettó napelem fogyasztás': 'Összes napelem fogyasztás vég'})
 
 df = pd.merge(dffirst, dflast, left_on = 'Nap', right_on = 'Nap')
 
