@@ -46,4 +46,13 @@ export class AppComponent implements OnInit {
     this.hasSideNav = window.innerWidth >= 768;
     this.viewBoxCalculatorService.enableSideBar(this.hasSideNav);
   }
+
+  enableSideNav() {
+    this.viewBoxCalculatorService.enableSideBar(this.hasSideNav);
+    this.hasSideNav = true;
+  }
+
+  restoreSideNav() {
+    this.onResize();
+  }
 }

@@ -1,12 +1,12 @@
 <div class="container">
   <div *ngIf="hasSideNav" class="sidenav">
     <p class="title">Napelem</p>
-    <a class="menuitem" routerLink="/yearly-avg" routerLinkActive="active-link">
+    <a class="menuitem" routerLink="/yearly-avg" routerLinkActive="active-link" (click)="restoreSideNav()">
       <span>Éves átlagtermelés</span>
     </a>
   </div>
   <div class="mainview" (window:resize)="onResize()">
-    <div class="header">{{pageTitle}}</div>
+    <div class="header">{{pageTitle}}<button class="menu-button" *ngIf="!hasSideNav" (click)="enableSideNav()">&#9776;</button></div>
     <div class="content">
       <router-outlet (activate)='onActivate($event)'></router-outlet>
     </div>

@@ -81,7 +81,7 @@ export class YearlyAvgDiagramComponent implements OnInit {
   }
 
   getToolTipText(tooltipItem: Tooltip): string {
-    let result: string = '';
+    let result = '';
     if (tooltipItem.series !== undefined) {
       result += tooltipItem.series;
     } else {
