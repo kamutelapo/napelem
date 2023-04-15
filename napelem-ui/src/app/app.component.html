@@ -1,11 +1,14 @@
-<div class="sidenav">
-  <p class="title">Napelem</p>
-  <a class="menuitem" routerLink="/diagrams" routerLinkActive="active-link">
-    <span>Éves átlagtermelés</span>
-  </a>
+<div class="container">
+  <div class="sidenav">
+    <p class="title">Napelem</p>
+    <a class="menuitem" routerLink="/yearly-avg" routerLinkActive="active-link">
+      <span>Éves átlagtermelés</span>
+    </a>
+  </div>
+  <div class="mainview">
+    <div class="header">Hi</div>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>
-
-<div class="main">
-  <router-outlet></router-outlet>
-</div>
-

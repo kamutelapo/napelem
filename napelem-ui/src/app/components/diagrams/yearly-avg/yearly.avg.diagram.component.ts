@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Color, LegendPosition, ScaleType } from '@swimlane/ngx-charts';
 import { SolarDataService } from '../../../services/solar.data.service';
+import { hierarchy } from 'd3-hierarchy';
 
 export interface Tooltip {
   color: string;
@@ -33,6 +34,8 @@ export class YearlyAvgDiagramComponent implements OnInit {
   xAxisLabel = 'Nap';
   yAxisLabel = 'Átlagtermelés';
   timeline = true;
+
+  view: [number, number] = [400, 250];
 
   colorScheme: Color = {
     name: 'myScheme',
@@ -111,12 +114,28 @@ export class YearlyAvgDiagramComponent implements OnInit {
   }
 
   onResize() {
-    const ratio = window.innerWidth / window.innerHeight
-    console.log(ratio)
+    const HEADER_SIZE = 80;
+    const SIDENAV_SIZE = 210;
+    const ratio = window.innerWidth / window.innerHeight;
+
+    let deltaY = 0;
+
     if (ratio <= 1.66) {
       this.legendPosition = LegendPosition.Below;
+      deltaY = 50;
     } else {
       this.legendPosition = LegendPosition.Right;
     }
+    let width = window.innerWidth - SIDENAV_SIZE;
+    if (width < 100) {
+      width = 100;
+    }
+    let height = window.innerHeight - HEADER_SIZE - deltaY;
+    if (height < 100) {
+      height = 100;
+    }
+
+    this.view[0] = width;
+    this.view[1] = height;
   }
 }

@@ -20,7 +20,7 @@ export class AppComponent {
       "months": ["január", "február", "március", "április", "május", "június", "július", "augusztus", "szeptember", "október", "november", "december"],
       "shortMonths": ["jan.", "feb.", "márc.", "ápr.", "máj.", "jún.", "júl.", "aug.", "szept.", "okt.", "nov.", "dec."]
     }
-    
+
     timeFormatDefaultLocale(localeDef);
   }
 }

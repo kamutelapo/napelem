@@ -1,6 +1,6 @@
-<app-header><h1 class="centered">Éves átlagtermelés</h1></app-header>
-<app-body>
+<div class="chart-yearly-avg">
   <ngx-charts-area-chart-stacked (window:resize)="onResize()"
+    [view]="view"
     [animations]="animations"
     [scheme]="colorScheme"
     [legend]="legend"
@@ -36,4 +36,4 @@
     </ng-template>
 
   </ngx-charts-area-chart-stacked>
-</app-body>
+</div>
