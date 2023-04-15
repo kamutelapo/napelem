@@ -1,6 +1,12 @@
 <div class="container">
   <div *ngIf="hasSideNav" class="sidenav">
-    <p class="title">Napelem</p>
+    <table>
+      <tr>
+        <td><p class="title">Napelem</p></td>
+        <td *ngIf="isMobile()" style="width: 100%;"></td>
+        <td *ngIf="isMobile()"><button class="close-button" (click)="disableSideNav()">&#10006;</button></td>
+      </tr>
+    </table>
     <a class="menuitem" routerLink="/yearly-avg" routerLinkActive="active-link" (click)="restoreSideNav()">
       <span>Éves átlagtermelés</span>
     </a>

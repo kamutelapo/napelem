@@ -14,8 +14,12 @@ export class ViewBoxCalculatorService {
 
     private viewBox: [number, number] = [400, 250];
 
+    private mobile = false;
+
     public calculatViewBox(): void {
         const ratio = window.innerWidth / window.innerHeight;
+
+        this.mobile = window.innerWidth < 768;
     
         let deltaY = 0;
     
@@ -50,5 +54,9 @@ export class ViewBoxCalculatorService {
 
     public enableSideBar(en: boolean): void {
         this.hasSideBar = en;
+    }
+
+    public isMobile(): boolean {
+      return this.mobile;
     }
 }

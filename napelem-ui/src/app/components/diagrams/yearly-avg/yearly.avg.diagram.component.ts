@@ -124,7 +124,7 @@ export class YearlyAvgDiagramComponent implements OnInit {
     } else {
       this.legendPosition = LegendPosition.Below;
     }
-
+    this.showYAxisLabel = ! this.viewBoxCalculatorService.isMobile();
 
     this.view = this.viewBoxCalculatorService.getViewBox();
   }

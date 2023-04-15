@@ -80,10 +80,21 @@
   background-repeat:no-repeat;
   border: none;
   cursor:pointer;
-  overflow: hidden;        
+  overflow: hidden;
   font-size: 25px;
   color: #444;
   position: absolute;
   right: 10px;
   top: 0px;
+}
+
+.close-button {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  font-size: 25px;
+  color: #ccc;
+  margin-right: 5px;
 }

@@ -48,11 +48,20 @@ export class AppComponent implements OnInit {
   }
 
   enableSideNav() {
-    this.viewBoxCalculatorService.enableSideBar(this.hasSideNav);
+    this.viewBoxCalculatorService.enableSideBar(true);
     this.hasSideNav = true;
+  }
+
+  disableSideNav() {
+    this.viewBoxCalculatorService.enableSideBar(false);
+    this.hasSideNav = false;
   }
 
   restoreSideNav() {
     this.onResize();
+  }
+
+  isMobile() {
+    return window.innerWidth < 768;
   }
 }
