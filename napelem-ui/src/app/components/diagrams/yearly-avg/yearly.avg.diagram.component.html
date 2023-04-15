@@ -1,9 +1,10 @@
 <app-header><h1 class="centered">Éves átlagtermelés</h1></app-header>
 <app-body>
-  <ngx-charts-area-chart-stacked
+  <ngx-charts-area-chart-stacked (window:resize)="onResize()"
     [animations]="animations"
     [scheme]="colorScheme"
     [legend]="legend"
+    [legendPosition]="legendPosition"
     [showXAxisLabel]="showXAxisLabel"
     [showYAxisLabel]="showYAxisLabel"
     [xAxis]="xAxis"

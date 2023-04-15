@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { Component, OnInit } from '@angular/core';
+import { Color, LegendPosition, ScaleType } from '@swimlane/ngx-charts';
 import { SolarDataService } from '../../../services/solar.data.service';
 
 export interface Tooltip {
@@ -18,11 +18,12 @@ export interface Tooltip {
   templateUrl: './yearly.avg.diagram.component.html',
   styleUrls: ['./yearly.avg.diagram.component.css']
 })
-export class YearlyAvgDiagramComponent {
+export class YearlyAvgDiagramComponent implements OnInit {
   multi: any;
 
   // options
-  legend= true;
+  legend = true;
+  legendPosition = LegendPosition.Right;
   showLabels = true;
   animations = false;
   xAxis = true;
@@ -103,5 +104,19 @@ export class YearlyAvgDiagramComponent {
       result += ')';
     }
     return result;
+  }
+
+  ngOnInit(): void {
+    this.onResize()
+  }
+
+  onResize() {
+    const ratio = window.innerWidth / window.innerHeight
+    console.log(ratio)
+    if (ratio <= 1.66) {
+      this.legendPosition = LegendPosition.Below;
+    } else {
+      this.legendPosition = LegendPosition.Right;
+    }
   }
 }
