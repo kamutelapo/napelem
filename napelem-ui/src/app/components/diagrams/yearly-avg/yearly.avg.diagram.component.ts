@@ -42,7 +42,7 @@ export class YearlyAvgDiagramComponent implements OnInit {
     name: 'myScheme',
     selectable: true,
     group: ScaleType.Ordinal,
-    domain: ['mediumorchid', 'orange'],
+    domain: ['orange', 'mediumorchid'],
   };
 
 

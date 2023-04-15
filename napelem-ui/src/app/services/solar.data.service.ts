@@ -39,11 +39,11 @@ export class SolarDataService {
         );
 
         output.push( {
-            "name": "D-K termelés",
+            "name": "Dél-Kelet",
             "series": dkt,
         });
         output.push( {
-            "name": "D-Ny termelés",
+            "name": "Dél-Nyugat",
             "series": dnyt,
         });
 
