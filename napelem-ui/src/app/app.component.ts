@@ -9,6 +9,8 @@ import { timeFormatDefaultLocale, TimeLocaleDefinition } from 'd3-time-format';
 export class AppComponent {
   title = 'napelem-ui';
 
+  pageTitle = '';
+
   constructor() {
     const localeDef: TimeLocaleDefinition = {
       "dateTime": "%Y. %B %-e., %A %X",
@@ -22,5 +24,9 @@ export class AppComponent {
     }
 
     timeFormatDefaultLocale(localeDef);
+  }
+
+  onActivate(event:any) {
+    this.pageTitle = event.title;
   }
 }

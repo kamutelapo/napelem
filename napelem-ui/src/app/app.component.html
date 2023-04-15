@@ -6,9 +6,9 @@
     </a>
   </div>
   <div class="mainview">
-    <div class="header">Hi</div>
+    <div class="header">{{pageTitle}}</div>
     <div class="content">
-      <router-outlet></router-outlet>
+      <router-outlet (activate)='onActivate($event)'></router-outlet>
     </div>
   </div>
 </div>

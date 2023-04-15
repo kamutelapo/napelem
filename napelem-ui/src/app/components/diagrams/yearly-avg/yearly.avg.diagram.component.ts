@@ -21,6 +21,7 @@ export interface Tooltip {
 })
 export class YearlyAvgDiagramComponent implements OnInit {
   multi: any;
+  title = "Éves átlagtermelés";
 
   // options
   legend = true;
