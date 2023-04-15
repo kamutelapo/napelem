@@ -1,17 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { timeFormatDefaultLocale, TimeLocaleDefinition } from 'd3-time-format';
+import { ViewBoxCalculatorService } from './services/viewbox.calculator.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'napelem-ui';
 
   pageTitle = '';
 
-  constructor() {
+  hasSideNav = true;
+
+  constructor(private viewBoxCalculatorService: ViewBoxCalculatorService) {
     const localeDef: TimeLocaleDefinition = {
       "dateTime": "%Y. %B %-e., %A %X",
       "date": "%Y. %m. %d.",
@@ -24,9 +27,23 @@ export class AppComponent {
     }
 
     timeFormatDefaultLocale(localeDef);
+    viewBoxCalculatorService.enableSideBar(true);
   }
 
   onActivate(event:any) {
     this.pageTitle = event.title;
+  }
+
+  getSideNavClass() {
+    return this.hasSideNav ? "sidenav" : "sidenav-hide";
+  }
+
+  ngOnInit(): void {
+    this.onResize();
+  }
+
+  onResize() {
+    this.hasSideNav = window.innerWidth >= 768;
+    this.viewBoxCalculatorService.enableSideBar(this.hasSideNav);
   }
 }

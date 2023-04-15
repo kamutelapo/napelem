@@ -1,11 +1,11 @@
 <div class="container">
-  <div class="sidenav">
+  <div *ngIf="hasSideNav" class="sidenav">
     <p class="title">Napelem</p>
     <a class="menuitem" routerLink="/yearly-avg" routerLinkActive="active-link">
       <span>Éves átlagtermelés</span>
     </a>
   </div>
-  <div class="mainview">
+  <div class="mainview" (window:resize)="onResize()">
     <div class="header">{{pageTitle}}</div>
     <div class="content">
       <router-outlet (activate)='onActivate($event)'></router-outlet>
