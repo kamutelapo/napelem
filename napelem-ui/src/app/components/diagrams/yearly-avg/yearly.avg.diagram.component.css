@@ -1,0 +1,9 @@
+#stackedchart .ngx-charts .refline-label {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+#stackedchart .ngx-charts .refline-path {
+  stroke-width: 1.5;
+  stroke: magenta;
+}

@@ -1,5 +1,5 @@
 <div class="chart-yearly-avg">
-  <ngx-charts-area-chart-stacked (window:resize)="onResize()"
+  <app-charts-area-chart-stacked id="stackedchart" (window:resize)="onResize()"
     [view]="view"
     [animations]="animations"
     [scheme]="colorScheme"
@@ -15,6 +15,9 @@
     [results]="multi"
     [yAxisTickFormatting]="valueFormat"
     [legendTitle]="'Oldalak'"
+    [referenceLines]="referenceLines"
+    [showRefLines]="showRefLines"
+    [showRefLabels]="showRefLabels"
     (select)="onSelect($event)">
 
     <ng-template #tooltipTemplate let-model="model">
@@ -36,5 +39,5 @@
       </xhtml:div>
     </ng-template>
 
-  </ngx-charts-area-chart-stacked>
+  </app-charts-area-chart-stacked>
 </div>

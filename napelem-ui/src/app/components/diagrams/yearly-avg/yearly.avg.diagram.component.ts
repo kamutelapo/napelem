@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Color, LegendPosition, ScaleType } from '@swimlane/ngx-charts';
 import { SolarDataService } from '../../../services/solar.data.service';
 import { ViewBoxCalculatorService } from '../../../services/viewbox.calculator.service';
@@ -17,7 +17,8 @@ export interface Tooltip {
 @Component({
   selector: 'app-yearly-avg-diagram',
   templateUrl: './yearly.avg.diagram.component.html',
-  styleUrls: ['./yearly.avg.diagram.component.css']
+  styleUrls: ['./yearly.avg.diagram.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class YearlyAvgDiagramComponent implements OnInit {
   multi: any;
@@ -35,6 +36,9 @@ export class YearlyAvgDiagramComponent implements OnInit {
   xAxisLabel = 'Nap';
   yAxisLabel = 'Átlagtermelés';
   timeline = true;
+  showRefLines = true;
+  showRefLabels = true;
+  referenceLines: any;
 
   view: [number, number];
 
@@ -49,6 +53,10 @@ export class YearlyAvgDiagramComponent implements OnInit {
   constructor(private solarDataService: SolarDataService,
     private viewBoxCalculatorService: ViewBoxCalculatorService ) {
     this.multi = solarDataService.getYearlyAverageProductionSeries();
+    this.referenceLines = [
+      { value: solarDataService.getAverageConsumption(), name: 'Átlag (' + solarDataService.getAverageConsumption() + '  kWh)' }
+    ];
+  
     this.view = viewBoxCalculatorService.getViewBox();
   }
 
