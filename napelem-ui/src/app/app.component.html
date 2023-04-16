@@ -7,9 +7,22 @@
         <td *ngIf="isMobile()"><button class="close-button" (click)="disableSideNav()">&#10006;</button></td>
       </tr>
     </table>
-    <a class="menuitem" routerLink="/weekly-avg" routerLinkActive="active-link" (click)="restoreSideNav()">
-      <span>Heti átlagtermelés</span>
-    </a>
+    <table>
+      <tr>
+        <td>
+          <a class="menuitem" routerLink="/weekly-avg" routerLinkActive="active-link" (click)="restoreSideNav()">
+            <span>Heti átlagtermelés</span>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a class="menuitem" routerLink="/msmdata" routerLinkActive="active-link" (click)="restoreSideNav()">
+            <span>Mérési adatok</span>
+          </a>
+        </td>
+      </tr>
+    </table>
   </div>
   <div class="mainview" (window:resize)="onResize()">
     <div class="header">{{pageTitle}}<button class="menu-button" *ngIf="!hasSideNav" (click)="enableSideNav()">&#9776;</button></div>

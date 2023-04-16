@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { WeeklyAvgDiagramComponent } from './components/diagrams/weekly-avg/weekly.avg.diagram.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CustomAreaChartStackedComponent } from './components/custom-charts/custom-stacked-area/custom.stacked.area.chart.component'
+import { CustomAreaChartStackedComponent } from './components/custom-charts/custom-stacked-area/custom.stacked.area.chart.component';
+import { MeasurementDataComponent } from './components/diagrams/msmdata/measurement-data/measurement.data.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WeeklyAvgDiagramComponent,
     CustomAreaChartStackedComponent,
+    MeasurementDataComponent,
   ],
   imports: [
     NgxChartsModule,

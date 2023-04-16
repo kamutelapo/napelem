@@ -63,11 +63,11 @@
 }
 
 .menuitem {
-  text-align: center;
+  text-align: left;
 
   margin-bottom: 0.5em;
 
-  margin-left: auto;
+  margin-left: 2em;
   margin-right: auto;
 }
 
