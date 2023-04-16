@@ -15,14 +15,14 @@ export interface Tooltip {
 }
 
 @Component({
-  selector: 'app-yearly-avg-diagram',
-  templateUrl: './yearly.avg.diagram.component.html',
-  styleUrls: ['./yearly.avg.diagram.component.css'],
+  selector: 'app-weekly-avg-diagram',
+  templateUrl: './weekly.avg.diagram.component.html',
+  styleUrls: ['./weekly.avg.diagram.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class YearlyAvgDiagramComponent implements OnInit {
+export class WeeklyAvgDiagramComponent implements OnInit {
   multi: any;
-  title = "Éves átlagtermelés";
+  title = "Heti átlagtermelés";
 
   // options
   legend = true;
@@ -52,9 +52,9 @@ export class YearlyAvgDiagramComponent implements OnInit {
 
   constructor(private solarDataService: SolarDataService,
     private viewBoxCalculatorService: ViewBoxCalculatorService ) {
-    this.multi = solarDataService.getYearlyAverageProductionSeries();
+    this.multi = solarDataService.getWeeklyAverageProductionSeries();
     this.referenceLines = [
-      { value: solarDataService.getAverageConsumption(), name: 'Átlag (' + solarDataService.getAverageConsumption() + '  kWh)' }
+      { value: solarDataService.getAverageConsumption(), name: 'Átlag ' + solarDataService.getAverageConsumption() + '  kWh' }
     ];
   
     this.view = viewBoxCalculatorService.getViewBox();

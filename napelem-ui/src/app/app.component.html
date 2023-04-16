@@ -7,8 +7,8 @@
         <td *ngIf="isMobile()"><button class="close-button" (click)="disableSideNav()">&#10006;</button></td>
       </tr>
     </table>
-    <a class="menuitem" routerLink="/yearly-avg" routerLinkActive="active-link" (click)="restoreSideNav()">
-      <span>Éves átlagtermelés</span>
+    <a class="menuitem" routerLink="/weekly-avg" routerLinkActive="active-link" (click)="restoreSideNav()">
+      <span>Heti átlagtermelés</span>
     </a>
   </div>
   <div class="mainview" (window:resize)="onResize()">
