@@ -1,62 +1,66 @@
 <table>
     <tr>
-        <th class="column1 no-border"></th>
+        <th class="column1">Adat</th>
         <th class="column2">Érték</th>
         <th class="column3">Időpont</th>
     </tr>
     <tr>
         <td>Összes megtermelt energia</td>
-        <td>??.?? kWh</td>
-        <td>????-??-?? - ????-??-??</td>
+        <td>{{nc(solarDataService.getProducedEnergy())}}&nbsp;kWh</td>
+        <td>{{getInterval()}}</td>
     </tr>
     <tr>
         <td>Összes elfogyasztott energia</td>
-        <td>?</td>
-        <td>?</td>
+        <td>{{nc(solarDataService.getConsumedEnergy())}}&nbsp;kWh</td>
+        <td>{{getInterval()}}</td>
     </tr>
     <tr>
         <td>Átlagos napi termelés</td>
-        <td>?</td>
-        <td>?</td>
+        <td>{{nc(solarDataService.getAverageProduction())}}&nbsp;kWh</td>
+        <td>{{getInterval()}}</td>
     </tr>
     <tr>
         <td>Átlagos napi fogyasztás</td>
-        <td>?</td>
-        <td>?</td>
+        <td>{{nc(solarDataService.getAverageConsumption())}}&nbsp;kWh</td>
+        <td>{{getInterval()}}</td>
     </tr>
     <tr>
-        <td>Legerősebb hónap</td>
-        <td>?</td>
-        <td>?</td>
+        <td>Legerősebb hónap átlaga</td>
+        <td>{{nc(solarDataService.getStrongestMonth())}}&nbsp;kWh</td>
+        <td>{{nonBreakingDate(solarDataService.getStrongestMonthStart()) + " - " +
+            nonBreakingDate(solarDataService.getStrongestMonthEnd())}}</td>
     </tr>
     <tr>
-        <td>Leggyengébb hónap</td>
-        <td>?</td>
-        <td>?</td>
+        <td>Leggyengébb hónap átlaga</td>
+        <td>{{nc(solarDataService.getWeakestMonth())}}&nbsp;kWh</td>
+        <td>{{nonBreakingDate(solarDataService.getWeakestMonthStart()) + " - " +
+            nonBreakingDate(solarDataService.getWeakestMonthEnd())}}</td>
     </tr>
     <tr>
-        <td>Legerősebb hét</td>
-        <td>?</td>
-        <td>?</td>
+        <td>Legerősebb hét átlaga</td>
+        <td>{{nc(solarDataService.getStrongestWeek())}}&nbsp;kWh</td>
+        <td>{{nonBreakingDate(solarDataService.getStrongestWeekStart()) + " - " +
+            nonBreakingDate(solarDataService.getStrongestWeekEnd())}}</td>
     </tr>
     <tr>
-        <td>Leggyengébb hét</td>
-        <td>?</td>
-        <td>?</td>
+        <td>Leggyengébb hét átlaga</td>
+        <td>{{nc(solarDataService.getWeakestWeek())}}&nbsp;kWh</td>
+        <td>{{nonBreakingDate(solarDataService.getWeakestWeekStart()) + " - " +
+            nonBreakingDate(solarDataService.getWeakestWeekEnd())}}</td>
     </tr>
     <tr>
         <td>Legerősebb nap</td>
-        <td>?</td>
-        <td>?</td>
+        <td>{{nc(solarDataService.getStrongestDay())}}&nbsp;kWh</td>
+        <td>{{nonBreakingDate(solarDataService.getStrongestDayDate())}}</td>
     </tr>
     <tr>
         <td>Leggyengébb nap</td>
-        <td>?</td>
-        <td>?</td>
+        <td>{{nc(solarDataService.getWeakestDay())}}&nbsp;kWh</td>
+        <td>{{nonBreakingDate(solarDataService.getWeakestDayDate())}}</td>
     </tr>
     <tr>
         <td>Legmagasabb teljesítmény</td>
-        <td>?</td>
-        <td>?</td>
+        <td>{{nc(solarDataService.getMaxPower())}}W</td>
+        <td>{{nonBreakingDate(solarDataService.getMaxPowerDate())}}</td>
     </tr>
 </table>

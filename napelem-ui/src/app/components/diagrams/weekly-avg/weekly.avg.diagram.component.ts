@@ -34,7 +34,7 @@ export class WeeklyAvgDiagramComponent implements OnInit {
   showYAxisLabel = true;
   showXAxisLabel = false;
   xAxisLabel = 'Nap';
-  yAxisLabel = 'Átlagtermelés';
+  yAxisLabel = 'Heti átlagtermelés';
   timeline = true;
   showRefLines = true;
   showRefLabels = true;
@@ -54,9 +54,9 @@ export class WeeklyAvgDiagramComponent implements OnInit {
     private viewBoxCalculatorService: ViewBoxCalculatorService ) {
     this.multi = solarDataService.getWeeklyAverageProductionSeries();
     this.referenceLines = [
-      { value: solarDataService.getAverageConsumption(), name: 'Átlag ' + solarDataService.getAverageConsumption() + '  kWh' }
+      { value: solarDataService.getAverageProduction(), name: 'Átlag ' + solarDataService.getAverageProduction().toLocaleString("hu-HU") + '  kWh' }
     ];
-  
+
     this.view = viewBoxCalculatorService.getViewBox();
   }
 

@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import { WEEKLY_AVG_DATA, AVG } from './solardata';
+import {
+    WEEKLY_AVG_DATA, AVG, START_DATE, END_DATE, PRODUCED_ENERGY, AVG_CONSUMPTION, CONSUMPTION,
+    MAX_POWER, MAX_POWER_DATE, STRONGEST_DAY, STRONGEST_DAY_DATE, WEAKEST_DAY, WEAKEST_DAY_DATE,
+    STRONGEST_WEEK, STRONGEST_WEEK_START, STRONGEST_WEEK_END,
+    WEAKEST_WEEK, WEAKEST_WEEK_START, WEAKEST_WEEK_END,
+    STRONGEST_MONTH, STRONGEST_MONTH_START, STRONGEST_MONTH_END,
+    WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END
+} from './solardata';
 
 @Injectable({
     providedIn: 'root'
@@ -38,11 +45,11 @@ export class SolarDataService {
             }
         );
 
-        output.push( {
+        output.push({
             "name": "Dél-Kelet",
             "series": dkt,
         });
-        output.push( {
+        output.push({
             "name": "Dél-Nyugat",
             "series": dnyt,
         });
@@ -50,11 +57,103 @@ export class SolarDataService {
         return output;
     }
 
-    getAverageConsumption() : number {
+    getAverageProduction(): number {
         return AVG;
+    }
+
+    getAverageConsumption(): number {
+        return AVG_CONSUMPTION;
+    }
+
+    getProducedEnergy(): number {
+        return PRODUCED_ENERGY;
+    }
+
+    getConsumedEnergy(): number {
+        return CONSUMPTION;
     }
 
     getWeeklyAverageProductionSeries() {
         return this.weeklyAvgProductionSeries;
+    }
+
+    getStartDate(): string {
+        return START_DATE;
+    }
+
+    getEndDate(): string {
+        return END_DATE;
+    }
+
+    getMaxPower(): number {
+        return MAX_POWER;
+    }
+
+    getMaxPowerDate(): string {
+        return MAX_POWER_DATE;
+    }
+
+    getStrongestDay(): number {
+        return STRONGEST_DAY;
+    }
+
+    getStrongestDayDate(): string {
+        return STRONGEST_DAY_DATE;
+    }
+
+    getWeakestDay(): number {
+        return WEAKEST_DAY;
+    }
+
+    getWeakestDayDate(): string {
+        return WEAKEST_DAY_DATE;
+    }
+
+    getStrongestWeek(): number {
+        return STRONGEST_WEEK;
+    }
+
+    getStrongestWeekStart(): string {
+        return STRONGEST_WEEK_START;
+    }
+
+    getStrongestWeekEnd(): string {
+        return STRONGEST_WEEK_END;
+    }
+
+    getWeakestWeek(): number {
+        return WEAKEST_WEEK;
+    }
+
+    getWeakestWeekStart(): string {
+        return WEAKEST_WEEK_START;
+    }
+
+    getWeakestWeekEnd(): string {
+        return WEAKEST_WEEK_END;
+    }
+
+    getStrongestMonth(): number {
+        return STRONGEST_MONTH;
+    }
+
+    getStrongestMonthStart(): string {
+        return STRONGEST_MONTH_START;
+    }
+
+    getStrongestMonthEnd(): string {
+        return STRONGEST_MONTH_END;
+    }
+
+    getWeakestMonth(): number {
+        return WEAKEST_MONTH;
+    }
+
+    getWeakestMonthStart(): string {
+        return WEAKEST_MONTH_START;
+    }
+
+    getWeakestMonthEnd(): string {
+        return WEAKEST_MONTH_END;
     }
 }
