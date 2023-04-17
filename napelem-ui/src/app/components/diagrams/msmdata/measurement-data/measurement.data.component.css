@@ -1,6 +1,6 @@
 .container {
 	overflow: auto;
-	height: calc(100vh - 45px);
+	height: 80vh;
 }
 
 table {
