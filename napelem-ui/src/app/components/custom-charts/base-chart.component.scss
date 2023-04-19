@@ -94,18 +94,18 @@
   }
 
   .refline-path {
-    stroke: #a8b2c7;
-    stroke-width: 1;
+    stroke: magenta;
+    stroke-width: 1.5;
     stroke-dasharray: 5;
     stroke-dashoffset: 5;
   }
 
   .refline-label {
-    font-size: 9px;
+    font-size: 14px;
   }
 
   .reference-area {
-    fill-opacity: 0.05;
+    fill-opacity: 0.00;
     fill: #000;
   }
 

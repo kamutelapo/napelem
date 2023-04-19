@@ -5,7 +5,7 @@ import {
     STRONGEST_WEEK, STRONGEST_WEEK_START, STRONGEST_WEEK_END,
     WEAKEST_WEEK, WEAKEST_WEEK_START, WEAKEST_WEEK_END,
     STRONGEST_MONTH, STRONGEST_MONTH_START, STRONGEST_MONTH_END,
-    WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END
+    WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END, WEEKLY_SALDO_AVG, WEEKLY_SALDO_DATA
 } from './solardata';
 
 @Injectable({
@@ -14,8 +14,11 @@ import {
 export class SolarDataService {
     private weeklyAvgProductionSeries: any;
 
+    private weeklySaldoSeries: any;
+
     constructor() {
         this.weeklyAvgProductionSeries = this.computeWeeklyAvgProductionData()
+        this.weeklySaldoSeries = this.computeWeeklySaldoData()
     }
 
     private computeWeeklyAvgProductionData() {
@@ -56,6 +59,35 @@ export class SolarDataService {
 
         return output;
     }
+
+
+    private computeWeeklySaldoData() {
+
+        const sld: any[] = []
+        const sldoutput: any[] = []
+
+        WEEKLY_SALDO_DATA.forEach(
+            (line) => {
+                const date = new Date(line["Dátum"])
+                const saldo = line["Szaldó"]
+
+                sld.push(
+                    {
+                        "name": date,
+                        "value": saldo,
+                    }
+                )
+            }
+        );
+
+        sldoutput.push({
+            "name": "Szaldó",
+            "series": sld,
+        });
+
+        return sldoutput;
+    }
+
 
     getAverageProduction(): number {
         return AVG;
@@ -155,5 +187,13 @@ export class SolarDataService {
 
     getWeakestMonthEnd(): string {
         return WEAKEST_MONTH_END;
+    }
+
+    getWeeklySaldoSeries() {
+        return this.weeklySaldoSeries;
+    }
+
+    getWeeklySaldoAvg(): number {
+        return WEEKLY_SALDO_AVG;
     }
 }

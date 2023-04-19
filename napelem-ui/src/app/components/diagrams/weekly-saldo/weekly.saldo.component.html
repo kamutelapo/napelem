@@ -1,23 +1,23 @@
 <div>
-  <app-charts-area-chart-stacked id="stackedchart" (window:resize)="onResize()"
+  <app-charts-line-chart id="saldochart" (window:resize)="onResize()"
     [view]="view"
     [animations]="animations"
     [scheme]="colorScheme"
+    [results]="multi"
+    [xAxis]="xAxis"
+    [yAxis]="yAxis"
     [legend]="legend"
     [legendPosition]="legendPosition"
     [showXAxisLabel]="showXAxisLabel"
     [showYAxisLabel]="showYAxisLabel"
-    [xAxis]="xAxis"
-    [yAxis]="yAxis"
     [xAxisLabel]="xAxisLabel"
     [yAxisLabel]="yAxisLabel"
     [timeline]="timeline"
-    [results]="multi"
-    [yAxisTickFormatting]="valueFormat"
-    [legendTitle]="'Oldalak'"
+    [legendTitle]="'Görbe'"
     [referenceLines]="referenceLines"
     [showRefLines]="showRefLines"
-    [showRefLabels]="showRefLabels">
+    [showRefLabels]="showRefLabels"
+    [yAxisTickFormatting]="valueFormat">
 
     <ng-template #tooltipTemplate let-model="model">
       <span class="tooltip-label">{{ model.series }} &bull; {{ getLocaleDate(model.name) }} </span>
@@ -26,17 +26,13 @@
 
     <ng-template #seriesTooltipTemplate let-model="model">
       <xhtml:div class="area-tooltip-container">
-        {{ getToolTipDate(model) }}
         <xhtml:div *ngFor="let tooltipItem of model" class="tooltip-item">
           <xhtml:span class="tooltip-item-color" [style.background-color]="tooltipItem.color"></xhtml:span>
           {{ getToolTipText(tooltipItem) }}
         </xhtml:div>
-        <xhtml:div class="tooltip-item">
-          <xhtml:span class="tooltip-item-color" [style.background-color]="'red'"></xhtml:span>
-          {{ getToolTipSum(model) }}
-        </xhtml:div>
       </xhtml:div>
     </ng-template>
 
-  </app-charts-area-chart-stacked>
+  </app-charts-line-chart>
+
 </div>

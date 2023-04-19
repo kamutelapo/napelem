@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { YearlyAvgDiagramComponent } from './yearly.avg.diagram.component';
+import { WeeklyAvgDiagramComponent } from './weekly.avg.diagram.component';
 
-describe('YearlyAvgDiagramComponent', () => {
-  let component: YearlyAvgDiagramComponent;
-  let fixture: ComponentFixture<YearlyAvgDiagramComponent>;
+describe('WeeklyAvgDiagramComponent', () => {
+  let component: WeeklyAvgDiagramComponent;
+  let fixture: ComponentFixture<WeeklyAvgDiagramComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ YearlyAvgDiagramComponent ]
+      declarations: [ WeeklyAvgDiagramComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(YearlyAvgDiagramComponent);
+    fixture = TestBed.createComponent(WeeklyAvgDiagramComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

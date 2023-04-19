@@ -9,3 +9,8 @@ body {
     overflow: hidden;
     margin: 0%;
 }
+
+.ngx-charts-outer {
+    -webkit-animation:chartFadeIn linear 0 !important;
+    animation:chartFadeIn linear 0 !important;
+}
