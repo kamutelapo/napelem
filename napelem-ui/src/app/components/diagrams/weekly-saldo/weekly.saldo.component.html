@@ -26,6 +26,7 @@
 
     <ng-template #seriesTooltipTemplate let-model="model">
       <xhtml:div class="area-tooltip-container">
+        {{ getToolTipDate(model) }}
         <xhtml:div *ngFor="let tooltipItem of model" class="tooltip-item">
           <xhtml:span class="tooltip-item-color" [style.background-color]="tooltipItem.color"></xhtml:span>
           {{ getToolTipText(tooltipItem) }}

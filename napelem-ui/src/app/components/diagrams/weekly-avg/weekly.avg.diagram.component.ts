@@ -37,14 +37,6 @@ export class WeeklyAvgDiagramComponent extends CommonChartBaseComponent {
     return value + " kWh"
   }
 
-  getToolTipDate(model: Tooltip[]): string {
-    if(model.length > 0) {
-      const dt = model[0].name
-      return dt.toLocaleDateString()
-    }
-    return ""
-  }
-
   getToolTipSum(model: Tooltip[]): string {
     let sum = 0
     model.forEach( (item) => {

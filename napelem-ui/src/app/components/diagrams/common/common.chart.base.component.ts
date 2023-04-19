@@ -63,6 +63,14 @@ export class CommonChartBaseComponent implements OnInit {
         return value.toLocaleDateString()
     }
 
+    getToolTipDate(model: Tooltip[]): string {
+      if(model.length > 0) {
+        const dt = model[0].name
+        return dt.toLocaleDateString()
+      }
+      return ""
+    }
+
     getToolTipText(tooltipItem: Tooltip): string {
         let result = '';
         if (tooltipItem.series !== undefined) {
