@@ -64,6 +64,7 @@ export class SolarDataService {
     private computeWeeklySaldoData() {
 
         const sld: any[] = []
+        const sldavg: any[] = []
         const sldoutput: any[] = []
 
         WEEKLY_SALDO_DATA.forEach(
@@ -77,12 +78,24 @@ export class SolarDataService {
                         "value": saldo,
                     }
                 )
+
+                sldavg.push(
+                    {
+                        "name": date,
+                        "value": WEEKLY_SALDO_AVG,
+                    }
+                )
             }
         );
 
         sldoutput.push({
             "name": "Szaldó",
             "series": sld,
+        });
+
+        sldoutput.push({
+            "name": "Átlag",
+            "series": sldavg,
         });
 
         return sldoutput;

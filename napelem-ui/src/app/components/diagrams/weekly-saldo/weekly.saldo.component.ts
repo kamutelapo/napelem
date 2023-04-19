@@ -19,7 +19,7 @@ export class WeeklySaldoComponent extends CommonChartBaseComponent {
     name: 'saldoScheme',
     selectable: true,
     group: ScaleType.Ordinal,
-    domain: ['#0000FF']
+    domain: ['#0000FF', '#008000']
   };
 
   valueFormat(value: any) {
