@@ -17,7 +17,8 @@
     [legendTitle]="'Oldalak'"
     [referenceLines]="referenceLines"
     [showRefLines]="showRefLines"
-    [showRefLabels]="showRefLabels">
+    [showRefLabels]="showRefLabels"
+    >
 
     <ng-template #tooltipTemplate let-model="model">
       <span class="tooltip-label">{{ model.series }} &bull; {{ getLocaleDate(model.name) }} </span>

@@ -23,6 +23,7 @@
   .bar,
   .arc {
     cursor: pointer;
+    opacity: 0.8;
   }
 
   .bar,
@@ -31,7 +32,7 @@
   .card {
     &.active,
     &:hover {
-      opacity: 0.8;
+      opacity: 0.7;
       transition: opacity 100ms ease-in-out;
     }
 

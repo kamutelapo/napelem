@@ -1,5 +1,5 @@
 <div>
-  <app-charts-bar-chart  (window:resize)="onResize()"
+  <app-charts-bar-chart id="dailyprod"  (window:resize)="onResize()"
     [view]="view"
     [scheme]="colorScheme"
     [results]="multi"
@@ -16,6 +16,9 @@
     [barPadding]="2"
     [yAxisTickFormatting]="valueFormat"
     [timeline]="true"
+    [referenceLines]="referenceLines"
+    [showRefLines]="showRefLines"
+    [showRefLabels]="showRefLabels"
     >
     <ng-template #tooltipTemplate let-model="model">
       {{ model.series }}

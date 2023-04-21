@@ -33,7 +33,7 @@ export class CommonChartBaseComponent implements OnInit {
     showYAxisLabel = true;
     timeline = true;
     showRefLines = true;
-    showRefLabels = true;
+    showRefLabels = false;
     referenceLines: any;
 
     view: [number, number];

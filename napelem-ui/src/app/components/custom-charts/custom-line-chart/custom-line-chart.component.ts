@@ -210,9 +210,9 @@ export class CustomLineChartComponent extends BaseChartComponent {
   @Input() yAxisTicks: any[];
   @Input() roundDomains: boolean = false;
   @Input() tooltipDisabled: boolean = false;
-  @Input() showRefLines: boolean = false;
   @Input() referenceLines: any;
-  @Input() showRefLabels: boolean = true;
+  @Input() showRefLines: boolean = false;
+  @Input() showRefLabels: boolean = false;
   @Input() xScaleMin: number;
   @Input() xScaleMax: number;
   @Input() yScaleMin: number;

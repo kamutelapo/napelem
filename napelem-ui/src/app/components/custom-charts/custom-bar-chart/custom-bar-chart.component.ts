@@ -66,6 +66,9 @@ import { AreaChartSeries } from '../models/chart-data.model';
           [maxTickLength]="maxYAxisTickLength"
           [tickFormatting]="yAxisTickFormatting"
           [ticks]="yAxisTicks"
+          [referenceLines]="referenceLines"
+          [showRefLines]="showRefLines"
+          [showRefLabels]="showRefLabels"
           (dimensionsChanged)="updateYAxisWidth($event)"
         ></svg:g>
         <svg:g
@@ -162,6 +165,9 @@ export class CustomBarChartComponent extends BaseChartComponent {
   @Input() noBarWhenZero: boolean = true;
   @Input() curve: any = curveLinear;
   @Input() timeline: boolean;
+  @Input() referenceLines: any;
+  @Input() showRefLines: boolean = false;
+  @Input() showRefLabels: boolean = false;
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() deactivate: EventEmitter<any> = new EventEmitter();
