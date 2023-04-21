@@ -5,7 +5,8 @@ import {
     STRONGEST_WEEK, STRONGEST_WEEK_START, STRONGEST_WEEK_END,
     WEAKEST_WEEK, WEAKEST_WEEK_START, WEAKEST_WEEK_END,
     STRONGEST_MONTH, STRONGEST_MONTH_START, STRONGEST_MONTH_END,
-    WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END, WEEKLY_SALDO_AVG, WEEKLY_SALDO_DATA, DAILY_DATA
+    WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END, WEEKLY_SALDO_AVG, WEEKLY_SALDO_DATA, YEARLY_SALDO,
+    DAILY_DATA
 } from './solardata';
 
 @Injectable({
@@ -16,11 +17,14 @@ export class SolarDataService {
 
     private weeklySaldoSeries: any;
 
+    private yearlySaldoSeries: any;
+
     private dailyProductionSeries: any;
 
     constructor() {
         this.weeklyAvgProductionSeries = this.computeWeeklyAvgProductionData()
         this.weeklySaldoSeries = this.computeWeeklySaldoData()
+        this.yearlySaldoSeries = this.computeYearlySaldoData()
         this.dailyProductionSeries = this.computeDailyProductionData()
     }
 
@@ -99,6 +103,34 @@ export class SolarDataService {
         sldoutput.push({
             "name": "Átlag",
             "series": sldavg,
+        });
+
+        return sldoutput;
+    }
+
+
+    private computeYearlySaldoData() {
+
+        const sld: any[] = []
+        const sldoutput: any[] = []
+
+        YEARLY_SALDO.forEach(
+            (line) => {
+                const date = new Date(line["Dátum"])
+                const saldo = line["Szaldó"]
+
+                sld.push(
+                    {
+                        "name": date,
+                        "value": saldo,
+                    }
+                )
+            }
+        );
+
+        sldoutput.push({
+            "name": "Szaldó",
+            "series": sld,
         });
 
         return sldoutput;
@@ -250,6 +282,10 @@ export class SolarDataService {
 
     getWeeklySaldoAvg(): number {
         return WEEKLY_SALDO_AVG;
+    }
+
+    getYearlySaldoSeries() {
+        return this.yearlySaldoSeries;
     }
 
     getDailyProductionSeries() {

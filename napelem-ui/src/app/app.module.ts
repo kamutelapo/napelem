@@ -14,6 +14,7 @@ import { CustomBarChartComponent } from './components/custom-charts/custom-bar-c
 import { MeasurementDataComponent } from './components/diagrams/msmdata/measurement-data/measurement.data.component';
 import { WeeklySaldoComponent } from './components/diagrams/weekly-saldo/weekly.saldo.component';
 import { DailyProductionComponent } from './components/diagrams/daily-prod/daily.production.component';
+import { YearlySaldoComponent } from './components/diagrams/yearly-saldo/yearly.saldo.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { DailyProductionComponent } from './components/diagrams/daily-prod/daily
     MeasurementDataComponent,
     WeeklySaldoComponent,
     DailyProductionComponent,
+    YearlySaldoComponent,
   ],
   imports: [
     NgxChartsModule,

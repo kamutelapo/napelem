@@ -1,0 +1,39 @@
+<div>
+    <app-charts-line-chart (window:resize)="onResize()"
+      [view]="view"
+      [animations]="animations"
+      [scheme]="colorScheme"
+      [results]="multi"
+      [xAxis]="xAxis"
+      [yAxis]="yAxis"
+      [legend]="legend"
+      [legendPosition]="legendPosition"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [timeline]="timeline"
+      [legendTitle]="'Görbe'"
+      [referenceLines]="referenceLines"
+      [showRefLines]="showRefLines"
+      [showRefLabels]="showRefLabels"
+      [yAxisTickFormatting]="valueFormat">
+  
+      <ng-template #tooltipTemplate let-model="model">
+        <span class="tooltip-label">{{ model.series }} &bull; {{ getLocaleDate(model.name) }} </span>
+        <span class="tooltip-val">{{ model.value.toLocaleString("hu-HU") }} kWh</span>
+      </ng-template>
+  
+      <ng-template #seriesTooltipTemplate let-model="model">
+        <xhtml:div class="area-tooltip-container">
+          {{ getToolTipDate(model) }}
+          <xhtml:div *ngFor="let tooltipItem of model" class="tooltip-item">
+            <xhtml:span class="tooltip-item-color" [style.background-color]="tooltipItem.color"></xhtml:span>
+            {{ getToolTipText(tooltipItem) }}
+          </xhtml:div>
+        </xhtml:div>
+      </ng-template>
+  
+    </app-charts-line-chart>
+  
+  </div>
