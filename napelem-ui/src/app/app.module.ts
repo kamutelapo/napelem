@@ -10,8 +10,10 @@ import { CustomAreaChartStackedComponent } from './components/custom-charts/cust
 import { CustomLineChartComponent } from './components/custom-charts/custom-line-chart/custom-line-chart.component';
 import { CustomLineSeriesComponent } from './components/custom-charts/custom-line-chart/custom-line-series.component';
 import { CustomLineComponent } from './components/custom-charts/custom-line-chart/custom-line.component';
+import { CustomBarChartComponent } from './components/custom-charts/custom-bar-chart/custom-bar-chart.component';
 import { MeasurementDataComponent } from './components/diagrams/msmdata/measurement-data/measurement.data.component';
 import { WeeklySaldoComponent } from './components/diagrams/weekly-saldo/weekly.saldo.component';
+import { DailyProductionComponent } from './components/diagrams/daily-prod/daily.production.component';
 
 @NgModule({
   declarations: [
@@ -21,8 +23,10 @@ import { WeeklySaldoComponent } from './components/diagrams/weekly-saldo/weekly.
     CustomLineChartComponent,
     CustomLineSeriesComponent,
     CustomLineComponent,
+    CustomBarChartComponent,
     MeasurementDataComponent,
     WeeklySaldoComponent,
+    DailyProductionComponent,
   ],
   imports: [
     NgxChartsModule,

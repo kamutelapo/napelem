@@ -5,7 +5,7 @@ import {
     STRONGEST_WEEK, STRONGEST_WEEK_START, STRONGEST_WEEK_END,
     WEAKEST_WEEK, WEAKEST_WEEK_START, WEAKEST_WEEK_END,
     STRONGEST_MONTH, STRONGEST_MONTH_START, STRONGEST_MONTH_END,
-    WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END, WEEKLY_SALDO_AVG, WEEKLY_SALDO_DATA
+    WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END, WEEKLY_SALDO_AVG, WEEKLY_SALDO_DATA, DAILY_DATA
 } from './solardata';
 
 @Injectable({
@@ -16,9 +16,12 @@ export class SolarDataService {
 
     private weeklySaldoSeries: any;
 
+    private dailyProductionSeries: any;
+
     constructor() {
         this.weeklyAvgProductionSeries = this.computeWeeklyAvgProductionData()
         this.weeklySaldoSeries = this.computeWeeklySaldoData()
+        this.dailyProductionSeries = this.computeDailyProductionData()
     }
 
     private computeWeeklyAvgProductionData() {
@@ -101,6 +104,45 @@ export class SolarDataService {
         return sldoutput;
     }
 
+
+    private computeDailyProductionData() {
+        const output: any[] = []
+
+        DAILY_DATA.forEach(
+            (line) => {
+                const date = line["Dátum"]
+                const dkd = line["D-K termelés"]
+                const dnyd = line["D-Ny termelés"]
+                const ossz = Math.floor(100 * (dkd + dnyd)) / 100
+
+                output.push({
+                    "name": date,
+                    "series": [
+                        {
+                            "name": "Dél-Kelet",
+                            "value": dkd,
+                            "extra": {
+                                "Dél-Kelet": dkd,
+                                "Dél-Nyugat": dnyd,
+                                "Összes": ossz
+                            }
+                        },
+                        {
+                            "name": "Dél-Nyugat",
+                            "value": dnyd,
+                            "extra": {
+                                "Dél-Kelet": dkd,
+                                "Dél-Nyugat": dnyd,
+                                "Összes": ossz
+                            }
+                        }
+                    ]
+                });
+            }
+        );
+
+        return output;
+    }
 
     getAverageProduction(): number {
         return AVG;
@@ -208,5 +250,9 @@ export class SolarDataService {
 
     getWeeklySaldoAvg(): number {
         return WEEKLY_SALDO_AVG;
+    }
+
+    getDailyProductionSeries() {
+        return this.dailyProductionSeries;
     }
 }

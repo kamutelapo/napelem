@@ -1,0 +1,36 @@
+<div>
+  <app-charts-bar-chart  (window:resize)="onResize()"
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="multi"
+    [animations]="animations"
+    [gradient]="gradient"
+    [xAxis]="xAxis"
+    [yAxis]="yAxis"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [showGridLines]="showGridLines"
+    [noBarWhenZero]="noBarWhenZero"
+    [barPadding]="2"
+    [yAxisTickFormatting]="valueFormat"
+    [timeline]="true"
+    >
+    <ng-template #tooltipTemplate let-model="model">
+      {{ model.series }}
+      <xhtml:div class="tooltip-item">
+        <xhtml:span class="tooltip-item-color" [style.background-color]="'orange'"></xhtml:span>
+        Dél-Kelet: {{ model.extra["Dél-Kelet"].toLocaleString('hu-HU') }} kWh
+      </xhtml:div>
+      <xhtml:div class="tooltip-item">
+        <xhtml:span class="tooltip-item-color" [style.background-color]="'mediumorchid'"></xhtml:span>
+        Dél-Nyugat: {{ model.extra["Dél-Nyugat"].toLocaleString('hu-HU') }} kWh
+      </xhtml:div>
+      <xhtml:div class="tooltip-item">
+        <xhtml:span class="tooltip-item-color" [style.background-color]="'red'"></xhtml:span>
+        Összes: {{ model.extra["Összes"].toLocaleString('hu-HU') }} kWh
+      </xhtml:div>
+    </ng-template>
+  </app-charts-bar-chart>
+</div>
