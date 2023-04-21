@@ -606,7 +606,10 @@ export class CustomBarChartComponent extends BaseChartComponent {
   updateDomain(domain): void {
     this.timelineFilterFrom = domain[0]
     this.timelineFilterTo = domain[1]
-    setTimeout(() => this.update());
+    this.groupDomain = this.getGroupDomain();
+    this.innerDomain = this.getInnerDomain();
+
+    this.xScale = this.getXScale();
   }
 
   getTimelineSeries(series: any): AreaChartSeries {
