@@ -35,7 +35,8 @@ export class AppComponent implements OnInit {
   }
 
   getSideNavClass() {
-    return this.hasSideNav ? "sidenav" : "sidenav-hide";
+    let isMobile = window.innerWidth < 768;
+    return isMobile ? "sidenav-mobile" : "sidenav";
   }
 
   ngOnInit(): void {

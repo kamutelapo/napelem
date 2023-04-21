@@ -1,5 +1,5 @@
 <div class="container">
-  <div *ngIf="hasSideNav" class="sidenav">
+  <div *ngIf="hasSideNav" [ngClass]="getSideNavClass()">
     <table>
       <tr>
         <td><p class="title">Napelem</p></td>

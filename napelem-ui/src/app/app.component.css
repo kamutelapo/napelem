@@ -47,6 +47,20 @@
   flex-shrink: 0;
 }
 
+
+.sidenav-mobile {
+  width: 200px;
+  height: 100vh;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 0.5em;
+  flex-shrink: 0;
+}
+
 .sidenav a {
   text-decoration: none;
   font-size: 16px;
