@@ -16,6 +16,7 @@ import { WeeklySaldoComponent } from './components/diagrams/weekly-saldo/weekly.
 import { DailyProductionComponent } from './components/diagrams/daily-prod/daily.production.component';
 import { YearlySaldoComponent } from './components/diagrams/yearly-saldo/yearly.saldo.component';
 import { MonthlyProductionComponent } from './components/diagrams/monthly-prod/monthly.production.component';
+import { UsageComponent } from './components/diagrams/usage/usage.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MonthlyProductionComponent } from './components/diagrams/monthly-prod/m
     DailyProductionComponent,
     YearlySaldoComponent,
     MonthlyProductionComponent,
+    UsageComponent,
   ],
   imports: [
     NgxChartsModule,

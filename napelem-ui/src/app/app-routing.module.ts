@@ -6,6 +6,7 @@ import { YearlySaldoComponent } from './components/diagrams/yearly-saldo/yearly.
 import { MeasurementDataComponent } from './components/diagrams/msmdata/measurement-data/measurement.data.component'
 import { DailyProductionComponent } from './components/diagrams/daily-prod/daily.production.component';
 import { MonthlyProductionComponent } from './components/diagrams/monthly-prod/monthly.production.component';
+import { UsageComponent } from './components/diagrams/usage/usage.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'monthly-prod',
     component: MonthlyProductionComponent
+  },
+  {
+    path: 'usage',
+    component: UsageComponent
   },
   {
     path: 'msmdata',

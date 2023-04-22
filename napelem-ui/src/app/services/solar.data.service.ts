@@ -6,7 +6,7 @@ import {
     WEAKEST_WEEK, WEAKEST_WEEK_START, WEAKEST_WEEK_END,
     STRONGEST_MONTH, STRONGEST_MONTH_START, STRONGEST_MONTH_END,
     WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END, WEEKLY_SALDO_AVG, WEEKLY_SALDO_DATA, YEARLY_SALDO,
-    DAILY_DATA, MONTHLY_DATA
+    DAILY_DATA, MONTHLY_DATA, PRODUCTION_CONSUMPTION_DATA
 } from './solardata';
 
 @Injectable({
@@ -25,6 +25,8 @@ export class SolarDataService {
 
     private monthlyShortProduction: any;
 
+    private usageSeries: any;
+
     constructor() {
         this.weeklyAvgProductionSeries = this.computeWeeklyAvgProductionData()
         this.weeklySaldoSeries = this.computeWeeklySaldoData()
@@ -32,6 +34,7 @@ export class SolarDataService {
         this.dailyProductionSeries = this.computeDailyProductionData()
         this.monthlyProduction = this.computeMonthlyProductionData();
         this.monthlyShortProduction = this.computeMonthlyShortProductionData();
+        this.usageSeries = this.computeUsageData();
     }
 
     private computeWeeklyAvgProductionData() {
@@ -226,6 +229,57 @@ export class SolarDataService {
         return output;
     }
 
+    private computeUsageData() {
+        const output: any[] = []
+
+        const dft: any[] = []
+        const dnft: any[] = []
+        const dvt: any[] = []
+
+        PRODUCTION_CONSUMPTION_DATA.forEach(
+            (line) => {
+                const date = new Date(line["Dátum"])
+                const dfd = line["Fogyasztás"]
+                const dnfd = line["Napelem fogyasztás"]
+                const dvd = line["Visszatáplált"]
+
+                dft.push(
+                    {
+                        "name": date,
+                        "value": -dfd,
+                    }
+                )
+                dnft.push(
+                    {
+                        "name": date,
+                        "value": dnfd,
+                    }
+                )
+                dvt.push(
+                    {
+                        "name": date,
+                        "value": dvd,
+                    }
+                )
+            }
+        );
+
+        output.push({
+            "name": "Fogyasztás",
+            "series": dft,
+        });
+        output.push({
+            "name": "Napelem fogyasztás",
+            "series": dnft,
+        });
+        output.push({
+            "name": "Visszatáplált",
+            "series": dvt,
+        });
+
+        return output;
+    }
+
     getAverageProduction(): number {
         return AVG;
     }
@@ -348,5 +402,9 @@ export class SolarDataService {
 
     getMonthlyShortProduction() {
         return this.monthlyShortProduction;
+    }
+
+    getUsageSeries() {
+        return this.usageSeries;
     }
 }

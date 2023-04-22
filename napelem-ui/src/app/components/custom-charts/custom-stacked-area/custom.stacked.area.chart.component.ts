@@ -234,9 +234,11 @@ export class CustomAreaChartStackedComponent extends BaseChartComponent {
   timelinePadding: number = 10;
 
   seriesType = SeriesType;
+  seriesNegative: boolean[] = [];
 
   update(): void {
     super.update();
+    this.analyzeSeries();
 
     this.dims = calculateViewDimensions({
       width: this.width,
@@ -270,8 +272,13 @@ export class CustomAreaChartStackedComponent extends BaseChartComponent {
 
     for (let i = 0; i < this.xSet.length; i++) {
       const val = this.xSet[i];
-      let d0 = 0;
+      let d0: number[] = [0, 0];
+      let idx = 0;
+
       for (const group of this.results) {
+        const isNeg = this.seriesNegative[idx++];
+        const dndx = isNeg ? 1 : 0;
+
         let d = group.series.find(item => {
           let a = item.name;
           let b = val;
@@ -283,15 +290,15 @@ export class CustomAreaChartStackedComponent extends BaseChartComponent {
         });
 
         if (d) {
-          d.d0 = d0;
-          d.d1 = d0 + d.value;
-          d0 += d.value;
+          d.d0 = d0[dndx];
+          d.d1 = d0[dndx] + d.value;
+          d0[dndx] += d.value;
         } else {
           d = {
             name: val,
             value: 0,
             d0,
-            d1: d0
+            d1: d0[dndx]
           };
           group.series.push(d);
         }
@@ -307,6 +314,28 @@ export class CustomAreaChartStackedComponent extends BaseChartComponent {
 
     this.clipPathId = 'clip' + id().toString();
     this.clipPath = `url(#${this.clipPathId})`;
+  }
+
+  analyzeSeries(): void {
+    let sn: boolean[] = [];
+
+    for (const rslt of this.results) {
+      let isNeg:Boolean = undefined;
+      let isPos:Boolean = undefined;
+      for (const dt of rslt.series) {
+        if (dt.value < 0) {
+          isNeg = true;
+        }
+        if (dt.value > 0) {
+          isPos = true;
+        }
+      }
+      if (isPos & isNeg) {
+        throw new Error("Negative and positive values are mixed!")
+      }
+      sn.push(isNeg || false);
+    }
+    this.seriesNegative = sn;
   }
 
   updateTimeline(): void {
@@ -363,8 +392,12 @@ export class CustomAreaChartStackedComponent extends BaseChartComponent {
 
     for (let i = 0; i < this.xSet.length; i++) {
       const val = this.xSet[i];
-      let sum = 0;
+      let sum = [0, 0];
+      let idx = 0;
       for (const group of this.results) {
+        const isNeg = this.seriesNegative[idx++];
+        const dndx = isNeg ? 1 : 0;
+
         const d = group.series.find(item => {
           let a = item.name;
           let b = val;
@@ -376,11 +409,12 @@ export class CustomAreaChartStackedComponent extends BaseChartComponent {
         });
 
         if (d) {
-          sum += d.value;
+          sum[dndx] += d.value;
         }
       }
 
-      domain.push(sum);
+      domain.push(sum[0]);
+      domain.push(sum[1]);
     }
 
     const min = this.yScaleMin ? this.yScaleMin : Math.min(0, ...domain);

@@ -26,6 +26,7 @@ df['Dátum'] = df['Time'].dt.date
 mintime = df['Time'].min()
 
 dfj = dfj[dfj["Idő"] >= mintime]
+dfeon = dfj.copy()
 
 firstdfj = dfj.iloc[0]
 lastdfj = dfj.iloc[-1]
@@ -172,6 +173,15 @@ sumt = dfsp['Termelés'].sum()
 
 dfsp['Arány'] = 100 * dfsp['Termelés'] / sumt
 
+dfeon = dfeon[['Idő', 'Nap', 'Nettó fogyasztás', 'Nettó napelem fogyasztás', 'Nettó termelés']]
+
+dfeon = dfeon.groupby("Nap").sum()
+dfeon = dfeon.reset_index().rename(columns = {'Nettó fogyasztás': 'Fogyasztás', 
+                                              'Nettó napelem fogyasztás': 'Napelem fogyasztás',
+                                              'Nettó termelés' : 'Visszatáplált',
+                                              'Nap': 'Dátum'}, inplace = False)
+dfeon["Dátum"] = dfeon["Dátum"].astype(str)
+
 
 output = "export const WEEKLY_AVG_DATA = " + df.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 output += "export const AVG = " + str(int(float(avg) * 100 + 0.5) / 100) + ";\n\n"
@@ -231,6 +241,8 @@ output += "export const DAILY_DATA = " + dfdl.to_json(orient='records', force_as
 output += "export const YEARLY_SALDO = " + dfjy.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 output += "export const MONTHLY_DATA = " + dfsp.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
+
+output += "export const PRODUCTION_CONSUMPTION_DATA = " + dfeon.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 #print (output)
 
