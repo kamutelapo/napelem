@@ -6,3 +6,11 @@
     white-space: normal;
     display: inline;
 }
+
+#monthlyprod .chart-legend .legend-label-color {
+    margin-right: 2px;
+}
+
+#monthlyprod .chart-legend .legend-label {
+    margin: 8px 5px 8px 5px;
+}
