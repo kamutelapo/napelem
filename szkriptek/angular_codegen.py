@@ -11,6 +11,7 @@ from matplotlib.offsetbox import AnchoredText
 from scipy import integrate
 import napelem_context
 import matplotlib as mpl
+import dateutil.relativedelta
 
 mpl.rcParams["legend.framealpha"] = 1
 
@@ -62,6 +63,8 @@ df['D-Ny'] = df['D-Ny vég'] - df['D-Ny kezdet']
 df['D-K arány'] = df['D-K'] / (df['D-K'] + df['D-Ny'])
 df["D-K termelés"] = df["Termelés"] * df['D-K arány']
 df["D-Ny termelés"] = df["Termelés"] * (1 - df['D-K arány'])
+
+dfsp = df[['Dátum', 'Termelés']].copy()
 
 dfdl = df[["Dátum", "D-K termelés", "D-Ny termelés"]].copy()
 dfdl["Dátum"] = dfdl["Dátum"].astype(str)
@@ -139,6 +142,32 @@ dfjc = dfjc[['Nap', 'Szaldó']].dropna()
 dfjc["Dátum"] = dfjc["Nap"].astype(str)
 del dfjc['Nap']
 
+dfjy = dfj.groupby('Nap', as_index=False).mean()
+dfjy['Szaldó'] = dfjy['Napi termelés'] - dfjy['Napi fogyasztás']
+
+dfjy = dfjy[['Nap', 'Szaldó']]
+dfjy = dfjy.set_index('Nap').cumsum().reset_index()
+dtmin = dfjy['Nap'].min()
+dfjy["Dátum"] = dfjy["Nap"].astype(str)
+del dfjy['Nap']
+
+dtmin = (str((dtmin - dateutil.relativedelta.relativedelta(days=1)).date()))
+
+new_row = pd.DataFrame({'Szaldó':0, 'Dátum':dtmin}, index =[0])
+dfjy = pd.concat([new_row, dfjy]).reset_index(drop = True)
+
+monthname = ['Január','Február','Március','Április','Május','Június',
+             'Július','Augusztus','Szeptember','Október','November','December']
+
+dfsp['HónapIndex'] = dfsp.apply(lambda row: row['Dátum'].month, axis=1)
+dfsp = dfsp.groupby('HónapIndex', as_index=False).sum()
+dfsp['Hónap'] = dfsp.apply(lambda row: monthname[int(row['HónapIndex'])-1], axis=1)
+dfsp = dfsp.set_index('HónapIndex')
+
+sumt = dfsp['Termelés'].sum()
+
+dfsp['Arány'] = 100 * dfsp['Termelés'] / sumt
+
 
 output = "export const WEEKLY_AVG_DATA = " + df.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 output += "export const AVG = " + str(int(float(avg) * 100 + 0.5) / 100) + ";\n\n"
@@ -194,6 +223,10 @@ output += "export const WEEKLY_SALDO_DATA = " + dfjc.to_json(orient='records', f
 output += "export const WEEKLY_SALDO_AVG = " + str(int(float(saldo_avg) * 100 + 0.5) / 100) + ";\n\n"
 
 output += "export const DAILY_DATA = " + dfdl.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
+
+output += "export const YEARLY_SALDO = " + dfjy.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
+
+output += "export const MONTHLY_DATA = " + dfsp.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 #print (output)
 

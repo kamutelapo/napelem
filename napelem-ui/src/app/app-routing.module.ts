@@ -5,6 +5,7 @@ import { WeeklySaldoComponent } from './components/diagrams/weekly-saldo/weekly.
 import { YearlySaldoComponent } from './components/diagrams/yearly-saldo/yearly.saldo.component';
 import { MeasurementDataComponent } from './components/diagrams/msmdata/measurement-data/measurement.data.component'
 import { DailyProductionComponent } from './components/diagrams/daily-prod/daily.production.component';
+import { MonthlyProductionComponent } from './components/diagrams/monthly-prod/monthly.production.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'daily-prod',
     component: DailyProductionComponent
+  },
+  {
+    path: 'monthly-prod',
+    component: MonthlyProductionComponent
   },
   {
     path: 'msmdata',

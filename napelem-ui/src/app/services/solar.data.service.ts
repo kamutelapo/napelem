@@ -6,7 +6,7 @@ import {
     WEAKEST_WEEK, WEAKEST_WEEK_START, WEAKEST_WEEK_END,
     STRONGEST_MONTH, STRONGEST_MONTH_START, STRONGEST_MONTH_END,
     WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END, WEEKLY_SALDO_AVG, WEEKLY_SALDO_DATA, YEARLY_SALDO,
-    DAILY_DATA
+    DAILY_DATA, MONTHLY_DATA
 } from './solardata';
 
 @Injectable({
@@ -21,11 +21,14 @@ export class SolarDataService {
 
     private dailyProductionSeries: any;
 
+    private monthlyProduction: any;
+
     constructor() {
         this.weeklyAvgProductionSeries = this.computeWeeklyAvgProductionData()
         this.weeklySaldoSeries = this.computeWeeklySaldoData()
         this.yearlySaldoSeries = this.computeYearlySaldoData()
         this.dailyProductionSeries = this.computeDailyProductionData()
+        this.monthlyProduction = this.computeMonthlyProductionData();
     }
 
     private computeWeeklyAvgProductionData() {
@@ -176,6 +179,28 @@ export class SolarDataService {
         return output;
     }
 
+    private computeMonthlyProductionData() {
+        const output: any[] = []
+
+        MONTHLY_DATA.forEach(
+            (line) => {
+                const month = line["Hónap"]
+                const prod = line["Termelés"]
+                const ratio = line["Arány"]
+
+                output.push({
+                    "name": month,
+                    "value": prod,
+                    "extra": {
+                        "Arány": ratio,
+                    }
+                });
+            }
+        );
+
+        return output;
+    }
+
     getAverageProduction(): number {
         return AVG;
     }
@@ -290,5 +315,9 @@ export class SolarDataService {
 
     getDailyProductionSeries() {
         return this.dailyProductionSeries;
+    }
+
+    getMonthlyProduction() {
+        return this.monthlyProduction;
     }
 }

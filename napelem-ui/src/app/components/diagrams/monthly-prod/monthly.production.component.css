@@ -1,0 +1,8 @@
+#monthlyprod .chart-legend .legend-labels {
+    white-space: normal;
+}
+  
+#monthlyprod .legend-label-text {
+    white-space: normal;
+    display: inline;
+}
