@@ -3,6 +3,7 @@ import { CommonChartBaseComponent } from '../common/common.chart.base.component'
 import { SolarDataService } from '../../../services/solar.data.service';
 import { ViewBoxCalculatorService } from '../../../services/viewbox.calculator.service';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { LegendPosition } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-monthly-production',
@@ -17,13 +18,11 @@ export class MonthlyProductionComponent extends CommonChartBaseComponent {
   isDoughnut = false;
   gradient = false;
 
-
-  constructor(private solarDataService: SolarDataService, viewBoxCalculatorService: ViewBoxCalculatorService ) {
+  constructor(private solarDataService: SolarDataService, viewBoxCalculatorService: ViewBoxCalculatorService) {
     super(viewBoxCalculatorService);
 
     this.single = solarDataService.getMonthlyProduction();
   }
-
 
   colorScheme: Color = {
     name: 'monthlyProdColor',
@@ -39,4 +38,50 @@ export class MonthlyProductionComponent extends CommonChartBaseComponent {
       'rgb(148,149,151)'
     ],
   };
+
+  labelFormatting(label: string): string {
+    switch (label) {
+      case 'Jan':
+        return 'Január'
+      case 'Feb':
+        return 'Február'
+      case 'Márc':
+        return 'Március'
+      case 'Ápr':
+        return 'Április'
+      case 'Máj':
+        return 'Május'
+      case 'Jún':
+        return 'Június'
+      case 'Júl':
+        return 'Július'
+      case 'Aug':
+        return 'Augusztus'
+      case 'Szept':
+        return 'Szeptember'
+      case 'Okt':
+        return 'Október'
+      case 'Nov':
+        return 'November'
+      case 'Dec':
+        return 'December'
+      default:
+        return label;
+    }
+  }
+
+  override onResize() {
+    super.onResize();
+
+    if (this.legendPosition === LegendPosition.Below ) {
+      this.single = this.solarDataService.getMonthlyShortProduction();
+    } else {
+      this.single = this.solarDataService.getMonthlyProduction();
+
+    }
+  }
+
+  getToolTipMonth(model: any): string {
+    return this.labelFormatting(model.label);
+  }
 }

@@ -159,9 +159,13 @@ dfjy = pd.concat([new_row, dfjy]).reset_index(drop = True)
 monthname = ['Január','Február','Március','Április','Május','Június',
              'Július','Augusztus','Szeptember','Október','November','December']
 
+monthshortname = ['Jan','Feb','Márc','Ápr','Máj','Jún',
+                 'Júl','Aug','Szept','Okt','Nov','Dec']
+
 dfsp['HónapIndex'] = dfsp.apply(lambda row: row['Dátum'].month, axis=1)
 dfsp = dfsp.groupby('HónapIndex', as_index=False).sum()
 dfsp['Hónap'] = dfsp.apply(lambda row: monthname[int(row['HónapIndex'])-1], axis=1)
+dfsp['HónapRövid'] = dfsp.apply(lambda row: monthshortname[int(row['HónapIndex'])-1], axis=1)
 dfsp = dfsp.set_index('HónapIndex')
 
 sumt = dfsp['Termelés'].sum()
