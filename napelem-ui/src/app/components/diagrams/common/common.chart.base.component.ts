@@ -38,12 +38,16 @@ export class CommonChartBaseComponent implements OnInit {
 
     view: [number, number];
 
-    constructor(private viewBoxCalculatorService: ViewBoxCalculatorService) {
+    constructor(protected viewBoxCalculatorService: ViewBoxCalculatorService) {
         this.view = viewBoxCalculatorService.getViewBox();
     }
 
     ngOnInit(): void {
         this.onResize()
+    }
+
+    getViewBox(): [number, number] {
+      return this.viewBoxCalculatorService.getViewBox();
     }
 
     onResize() {
@@ -56,7 +60,7 @@ export class CommonChartBaseComponent implements OnInit {
         }
         this.showYAxisLabel = !this.viewBoxCalculatorService.isMobile();
 
-        this.view = this.viewBoxCalculatorService.getViewBox();
+        this.view = this.getViewBox();
     }
 
     getLocaleDate(value: Date): string {

@@ -1,0 +1,60 @@
+.usage-details {
+    position: fixed;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.usage-details-desktop {
+    width: calc(70vw - 200px);
+    height:58vh;
+    top: 50%;
+    left: 50%;
+    margin-top: -29vh;
+    margin-left: calc(-35vw + 200px);
+}
+
+.usage-details-mobile {
+    width: 62vw;
+    height: 58vh;
+    top: 50%;
+    left: 50%;
+    margin-top: -29vh;
+    margin-left: -31vw;
+}
+
+
+.details-header {
+    height: 20px;
+    color: white;
+    background-color: black;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#usagedetails .chart-legend .legend-labels {
+    white-space: normal;
+}
+  
+#usagedetails .legend-label-text {
+    white-space: normal;
+    display: inline;
+}
+
+#usagedetails .chart-legend .legend-label-color {
+    margin-right: 2px;
+}
+
+#usagedetails .chart-legend .legend-label {
+    margin: 8px 5px 8px 5px;
+}
+
+#usagedetails .chart-legend .legend-labels {
+    text-align: center;
+    background: transparent;
+}
+
+#usagedetails .chart-legend .legend-title {
+    text-align: center;
+}
+

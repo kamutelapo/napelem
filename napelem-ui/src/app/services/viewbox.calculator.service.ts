@@ -14,13 +14,9 @@ export class ViewBoxCalculatorService {
 
     private viewBox: [number, number] = [400, 250];
 
-    private mobile = false;
-
     public calculatViewBox(): void {
         const ratio = window.innerWidth / window.innerHeight;
 
-        this.mobile = window.innerWidth < 768;
-    
         let deltaY = 0;
     
         if (ratio <= 1.66) {
@@ -57,6 +53,6 @@ export class ViewBoxCalculatorService {
     }
 
     public isMobile(): boolean {
-      return this.mobile;
+      return window.innerWidth < 768;
     }
 }

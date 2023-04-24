@@ -91,17 +91,18 @@
   background: #222;
 }
 
-.menu-button {
-  background-color: Transparent;
-  background-repeat:no-repeat;
-  border: none;
-  cursor:pointer;
-  overflow: hidden;
-  font-size: 25px;
-  color: #444;
-  position: absolute;
-  right: 10px;
-  top: 0px;
+.dropdown {
+  display: inline-block;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #222;
+  background-color: #d0ffff;
+  width: 1.8em;
+}
+
+.table-button {
+  width: 35px;
 }
 
 .close-button {

@@ -14,6 +14,10 @@ export class AppComponent implements OnInit {
 
   hasSideNav = true;
 
+  detailsEnabled = false;
+
+  details: string | undefined = undefined;
+
   constructor(private viewBoxCalculatorService: ViewBoxCalculatorService) {
     const localeDef: TimeLocaleDefinition = {
       "dateTime": "%Y. %B %-e., %A %X",
@@ -32,10 +36,12 @@ export class AppComponent implements OnInit {
 
   onActivate(event:any) {
     this.pageTitle = event.title;
+    this.details = event.details;
+    this.detailsEnabled = false;
   }
 
   getSideNavClass() {
-    let isMobile = window.innerWidth < 768;
+    let isMobile = this.viewBoxCalculatorService.isMobile();
     return isMobile ? "sidenav-mobile" : "sidenav";
   }
 
@@ -44,7 +50,7 @@ export class AppComponent implements OnInit {
   }
 
   onResize() {
-    this.hasSideNav = window.innerWidth >= 768;
+    this.hasSideNav = !this.viewBoxCalculatorService.isMobile();
     this.viewBoxCalculatorService.enableSideBar(this.hasSideNav);
   }
 
@@ -63,6 +69,10 @@ export class AppComponent implements OnInit {
   }
 
   isMobile() {
-    return window.innerWidth < 768;
+    return this.viewBoxCalculatorService.isMobile();
+  }
+
+  triggerDetails() {
+    this.detailsEnabled = !this.detailsEnabled;
   }
 }

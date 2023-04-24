@@ -27,6 +27,12 @@ export class SolarDataService {
 
     private usageSeries: any;
 
+    private totalBackfeed: number | undefined;
+
+    private totalConsumptionFromPV: number | undefined;
+
+    private totalConsumptionFromProvider: number | undefined;
+
     constructor() {
         this.weeklyAvgProductionSeries = this.computeWeeklyAvgProductionData()
         this.weeklySaldoSeries = this.computeWeeklySaldoData()
@@ -236,12 +242,20 @@ export class SolarDataService {
         const dnft: any[] = []
         const dvt: any[] = []
 
+        let tbf = 0;
+        let tcpv = 0;
+        let tcpro = 0;
+
         PRODUCTION_CONSUMPTION_DATA.forEach(
             (line) => {
                 const date = new Date(line["Dátum"])
                 const dfd = line["Fogyasztás"]
                 const dnfd = line["Napelem fogyasztás"]
                 const dvd = line["Visszatáplált"]
+
+                tcpro += dfd;
+                tcpv += dnfd;
+                tbf += dvd;
 
                 dft.push(
                     {
@@ -276,6 +290,10 @@ export class SolarDataService {
             "name": "Visszatáplált",
             "series": dvt,
         });
+
+        this.totalBackfeed = tbf;
+        this.totalConsumptionFromPV = tcpv;
+        this.totalConsumptionFromProvider = tcpro;
 
         return output;
     }
@@ -406,5 +424,22 @@ export class SolarDataService {
 
     getUsageSeries() {
         return this.usageSeries;
+    }
+
+    getUsageDetails() {
+        return [
+          {
+             "name": "Fogyasztás",
+             "value": this.totalConsumptionFromProvider,
+          },
+          {
+            "name": "Napelemből",
+            "value": this.totalConsumptionFromPV,
+          },
+          {
+            "name": "Visszatáplált",
+            "value": this.totalBackfeed,
+          },
+        ]
     }
 }

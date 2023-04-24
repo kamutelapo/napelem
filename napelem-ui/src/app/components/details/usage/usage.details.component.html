@@ -1,0 +1,27 @@
+<div class="usage-details" [ngClass]="getUsageDetailsClass()">
+    <div class="details-header">Részletek</div>
+    <div>
+        <ngx-charts-pie-chart id="usagedetails" (window:resize)="onResize()"
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="single"
+          [gradient]="gradient"
+          [legend]="legend"
+          [legendPosition]="detailsLegendPosition"
+          [legendTitle]="'Eloszlás'"
+          [labels]="showLabels"
+          [doughnut]="isDoughnut"
+          [animations]="animations"
+          [arcWidth]="0.35"
+          >
+          <ng-template #tooltipTemplate let-model="model">
+            <xhtml:div class="tooltip-label">
+              {{model.label}}
+            </xhtml:div>
+            <xhtml:div class="tooltip-val">
+              {{ model.value.toLocaleString('hu-HU') }} kWh
+            </xhtml:div>
+          </ng-template>
+        </ngx-charts-pie-chart>
+    </div>
+</div>

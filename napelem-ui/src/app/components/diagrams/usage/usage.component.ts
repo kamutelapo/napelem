@@ -11,10 +11,11 @@ import { ViewBoxCalculatorService } from '../../../services/viewbox.calculator.s
   encapsulation: ViewEncapsulation.None,
 })
 export class UsageComponent extends CommonChartBaseComponent {
-  title = "Használat";
+  title = "Energia használat";
 
   xAxisLabel = 'Nap';
   yAxisLabel = 'Fogyasztás - termelés';
+  details = 'Usage';
 
   colorScheme: Color = {
     name: 'myScheme',

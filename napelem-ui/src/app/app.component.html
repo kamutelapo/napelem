@@ -60,9 +60,18 @@
     </table>
   </div>
   <div class="mainview" (window:resize)="onResize()">
-    <div class="header">{{pageTitle}}<button class="menu-button" *ngIf="!hasSideNav" (click)="enableSideNav()">&#9776;</button></div>
+    <table class="header">
+      <tr>
+        <td>{{pageTitle}}</td>
+        <td *ngIf="details != null" class="table-button"><span class="dropdown" (click)="triggerDetails()">?</span></td>
+        <td *ngIf="!hasSideNav" class="table-button"><span class="dropdown" (click)="enableSideNav()">...</span></td>
+      </tr>
+    </table>
     <div class="content">
       <router-outlet (activate)='onActivate($event)'></router-outlet>
+    </div>
+    <div *ngIf="detailsEnabled" class="details">
+      <app-usage-details *ngIf="details === 'Usage'"></app-usage-details>
     </div>
   </div>
 </div>
