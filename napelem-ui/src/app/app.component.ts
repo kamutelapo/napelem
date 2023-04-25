@@ -75,4 +75,8 @@ export class AppComponent implements OnInit {
   triggerDetails() {
     this.detailsEnabled = !this.detailsEnabled;
   }
+
+  closeDetails() {
+    this.detailsEnabled = false;
+  }
 }

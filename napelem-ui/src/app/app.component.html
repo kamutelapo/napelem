@@ -71,7 +71,7 @@
       <router-outlet (activate)='onActivate($event)'></router-outlet>
     </div>
     <div *ngIf="detailsEnabled" class="details">
-      <app-usage-details *ngIf="details === 'Usage'"></app-usage-details>
+      <app-usage-details *ngIf="details === 'Usage'" (close)="closeDetails()"></app-usage-details>
     </div>
   </div>
 </div>

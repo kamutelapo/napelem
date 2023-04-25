@@ -24,12 +24,17 @@
 
 
 .details-header {
+    width: 100%;
     height: 20px;
     color: white;
     background-color: black;
     font-size: 14px;
     font-weight: bold;
     text-align: center;
+}
+
+.details-caption {
+    width: 100%;
 }
 
 #usagedetails .chart-legend .legend-labels {

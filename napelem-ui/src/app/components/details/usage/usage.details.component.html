@@ -1,5 +1,10 @@
 <div class="usage-details" [ngClass]="getUsageDetailsClass()">
-    <div class="details-header">Részletek</div>
+    <table class="details-header">
+      <tr>
+        <td class="details-caption">Részletek</td>
+        <td (click)="closeDetails()">&nbsp;&#10006;&nbsp;</td>
+      </tr>
+    </table>
     <div>
         <ngx-charts-pie-chart id="usagedetails" (window:resize)="onResize()"
           [view]="view"

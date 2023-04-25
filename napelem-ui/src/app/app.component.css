@@ -97,7 +97,8 @@
   border-width: 1px;
   border-style: solid;
   border-color: #222;
-  background-color: #d0ffff;
+  border-radius: 5px;
+  background-color: #F8F899;
   width: 1.8em;
 }
 

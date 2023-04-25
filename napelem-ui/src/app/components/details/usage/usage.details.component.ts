@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { ViewBoxCalculatorService } from '../../../services/viewbox.calculator.service';
 import { CommonChartBaseComponent } from '../../diagrams/common/common.chart.base.component';
 import { SolarDataService } from 'src/app/services/solar.data.service';
@@ -16,6 +16,8 @@ export class UsageDetailsComponent extends CommonChartBaseComponent {
   isDoughnut = false;
   gradient = false;
   detailsLegendPosition = LegendPosition.Below;
+
+  @Output() close: EventEmitter<any> = new EventEmitter();
 
   constructor(private solarDataService: SolarDataService, viewBoxCalculatorService: ViewBoxCalculatorService) {
     super(viewBoxCalculatorService);
@@ -47,5 +49,9 @@ export class UsageDetailsComponent extends CommonChartBaseComponent {
 
     this.showLabels = !this.viewBoxCalculatorService.isMobile();
     this.isDoughnut = !this.showLabels;
+  }
+
+  closeDetails() {
+    this.close.emit();
   }
 }
