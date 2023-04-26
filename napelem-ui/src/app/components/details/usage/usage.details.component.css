@@ -41,10 +41,14 @@
     opacity: 0;
 }
 
+.details-button {
+    cursor: pointer;
+}
+
 #usagedetails .chart-legend .legend-labels {
     white-space: normal;
 }
-  
+
 #usagedetails .legend-label-text {
     white-space: normal;
     display: inline;

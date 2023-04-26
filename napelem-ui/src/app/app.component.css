@@ -98,7 +98,8 @@
   border-style: solid;
   border-color: #222;
   border-radius: 5px;
-  background-color: #F8F899;
+  background-color: #222;
+  color: white;
   width: 1.8em;
 }
 
@@ -107,10 +108,10 @@
 }
 
 .close-button {
+  cursor: pointer;
   background-color: Transparent;
   background-repeat:no-repeat;
   border: none;
-  cursor:pointer;
   overflow: hidden;
   font-size: 25px;
   color: #ccc;
