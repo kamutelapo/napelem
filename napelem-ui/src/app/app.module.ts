@@ -18,6 +18,7 @@ import { YearlySaldoComponent } from './components/diagrams/yearly-saldo/yearly.
 import { MonthlyProductionComponent } from './components/diagrams/monthly-prod/monthly.production.component';
 import { UsageComponent } from './components/diagrams/usage/usage.component';
 import { UsageDetailsComponent } from './components/details/usage/usage.details.component';
+import { AvgWattsComponent } from './components/diagrams/avg-watts/avg.watts.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { UsageDetailsComponent } from './components/details/usage/usage.details.
     MonthlyProductionComponent,
     UsageComponent,
     UsageDetailsComponent,
+    AvgWattsComponent,
   ],
   imports: [
     NgxChartsModule,

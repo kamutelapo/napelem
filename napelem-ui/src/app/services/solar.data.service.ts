@@ -6,7 +6,7 @@ import {
     WEAKEST_WEEK, WEAKEST_WEEK_START, WEAKEST_WEEK_END,
     STRONGEST_MONTH, STRONGEST_MONTH_START, STRONGEST_MONTH_END,
     WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END, WEEKLY_SALDO_AVG, WEEKLY_SALDO_DATA, YEARLY_SALDO,
-    DAILY_DATA, MONTHLY_DATA, PRODUCTION_CONSUMPTION_DATA
+    DAILY_DATA, MONTHLY_DATA, PRODUCTION_CONSUMPTION_DATA, AVG_WATTS
 } from './solardata';
 
 @Injectable({
@@ -33,6 +33,8 @@ export class SolarDataService {
 
     private totalConsumptionFromProvider: number | undefined;
 
+    private avgWatts: any;
+
     constructor() {
         this.weeklyAvgProductionSeries = this.computeWeeklyAvgProductionData()
         this.weeklySaldoSeries = this.computeWeeklySaldoData()
@@ -41,6 +43,7 @@ export class SolarDataService {
         this.monthlyProduction = this.computeMonthlyProductionData();
         this.monthlyShortProduction = this.computeMonthlyShortProductionData();
         this.usageSeries = this.computeUsageData();
+        this.avgWatts = this.computeAvgWatts();
     }
 
     private computeWeeklyAvgProductionData() {
@@ -298,6 +301,45 @@ export class SolarDataService {
         return output;
     }
 
+    private computeAvgWatts() {
+        const output: any[] = []
+
+        const pw: any[] = []
+        const cw: any[] = []
+
+        AVG_WATTS.forEach(
+            (line) => {
+                const time = line["Óra"]
+                const pwd = line["Termelés"]
+                const cwd = line["Fogyasztás"]
+
+                pw.push(
+                    {
+                        "name": time,
+                        "value": pwd,
+                    }
+                )
+                cw.push(
+                    {
+                        "name": time,
+                        "value": cwd,
+                    }
+                )
+            }
+        );
+
+        output.push({
+            "name": "Termelés",
+            "series": pw,
+        });
+        output.push({
+            "name": "Fogyasztás",
+            "series": cw,
+        });
+
+        return output;
+    }
+
     getAverageProduction(): number {
         return AVG;
     }
@@ -441,5 +483,9 @@ export class SolarDataService {
             "value": this.totalBackfeed,
           },
         ]
+    }
+
+    getAvgWatts() {
+        return this.avgWatts;
     }
 }

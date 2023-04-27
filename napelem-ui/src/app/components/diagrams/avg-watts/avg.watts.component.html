@@ -1,0 +1,31 @@
+<ngx-charts-area-chart id="wattschart" (window:resize)="onResize()"
+  [view]="view"
+  [scheme]="colorScheme"
+  [legend]="legend"
+  [legendTitle]="'Adat'"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxis]="xAxis"
+  [yAxis]="yAxis"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  [results]="multi"
+  [animations]="animations"
+  [yAxisTickFormatting]="valueFormat">
+
+  <ng-template #tooltipTemplate let-model="model">
+    <span class="tooltip-label">{{ model.series }} &bull; {{ model.name }} </span>
+    <span class="tooltip-val">{{ model.value.toLocaleString("hu-HU") }}W</span>
+  </ng-template>
+
+  <ng-template #seriesTooltipTemplate let-model="model">
+    {{ getToolTipTime(model) }}
+    <xhtml:div class="area-tooltip-container">
+      <xhtml:div *ngFor="let tooltipItem of model" class="tooltip-item">
+        <xhtml:span class="tooltip-item-color" [style.background-color]="tooltipItem.color"></xhtml:span>
+        {{ getToolTipText(tooltipItem) }}
+      </xhtml:div>
+    </xhtml:div>
+  </ng-template>
+
+</ngx-charts-area-chart>

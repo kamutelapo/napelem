@@ -7,6 +7,7 @@ import { MeasurementDataComponent } from './components/diagrams/msmdata/measurem
 import { DailyProductionComponent } from './components/diagrams/daily-prod/daily.production.component';
 import { MonthlyProductionComponent } from './components/diagrams/monthly-prod/monthly.production.component';
 import { UsageComponent } from './components/diagrams/usage/usage.component';
+import { AvgWattsComponent } from './components/diagrams/avg-watts/avg.watts.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'usage',
     component: UsageComponent
+  },
+  {
+    path: 'avg-watts',
+    component: AvgWattsComponent
   },
   {
     path: 'msmdata',
