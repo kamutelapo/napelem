@@ -182,6 +182,16 @@ dfeon = dfeon.reset_index().rename(columns = {'Nettó fogyasztás': 'Fogyasztás
                                               'Nap': 'Dátum'}, inplace = False)
 dfeon["Dátum"] = dfeon["Dátum"].astype(str)
 
+dfje = dfj.copy()
+dfje['Fogyasztás'] = dfje['Fogyasztás'] + dfje['Napelem fogyasztás']
+
+dfje['Fogyasztás'] = dfje['Fogyasztás'] * 4000
+dfje['Termelés'] = dfje['Napelem termelés'] * 4000
+
+dfje['Óra'] = dfje['Idő'].dt.strftime("%H:%M")
+dfje = dfje[['Óra', 'Fogyasztás', 'Termelés']]
+
+dfje = dfje.groupby('Óra', as_index=False).mean()
 
 output = "export const WEEKLY_AVG_DATA = " + df.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 output += "export const AVG = " + str(int(float(avg) * 100 + 0.5) / 100) + ";\n\n"
@@ -243,6 +253,8 @@ output += "export const YEARLY_SALDO = " + dfjy.to_json(orient='records', force_
 output += "export const MONTHLY_DATA = " + dfsp.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 output += "export const PRODUCTION_CONSUMPTION_DATA = " + dfeon.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
+
+output += "export const AVG_WATTS = " + dfje.to_json(orient='records', force_ascii=False, double_precision = 0).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 #print (output)
 
