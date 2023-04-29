@@ -20,6 +20,7 @@ import { UsageComponent } from './components/diagrams/usage/usage.component';
 import { UsageDetailsComponent } from './components/details/usage/usage.details.component';
 import { AvgWattsComponent } from './components/diagrams/avg-watts/avg.watts.component';
 import { VoltagesComponent } from './components/diagrams/voltages/voltages.component';
+import { AccumulatorComponent } from './components/diagrams/accumulator/accumulator.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { VoltagesComponent } from './components/diagrams/voltages/voltages.compo
     UsageDetailsComponent,
     AvgWattsComponent,
     VoltagesComponent,
+    AccumulatorComponent,
   ],
   imports: [
     NgxChartsModule,

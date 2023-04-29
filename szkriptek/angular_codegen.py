@@ -15,6 +15,42 @@ import dateutil.relativedelta
 
 mpl.rcParams["legend.framealpha"] = 1
 
+
+class Battery:
+    def __init__(self, capacity, total):
+        self.loss = 0
+        self.save = 0
+        self.fill = 0
+        self.internal = 0
+        self.capacity = capacity
+        self.total = total
+        
+    def apply(self, prod, cons, intcons):
+        delta = prod - cons
+        self.internal += intcons
+        if delta > 0:
+            remaining = self.capacity - self.fill
+            if delta > remaining:
+                self.loss += delta - remaining
+                delta = remaining
+            self.fill += delta
+        elif delta < 0:
+            stored = self.fill + delta
+            if stored < 0:
+                stored = 0
+            self.save += self.fill - stored
+            self.fill = stored
+            
+    def to_dict(self):
+        strcap = str(self.capacity) + " kWh"
+        if self.capacity == 0:
+            strcap = "Visszwatt"
+        return {
+            'Akkumulátor': strcap,
+            'Felhasználási arány': 100 * (self.save + self.internal) / (self.total)
+        }
+
+
 BASEDIR=os.path.dirname(__file__) + "/.."
 
 ctx = napelem_context.yearly()
@@ -28,6 +64,7 @@ mintime = df['Time'].min()
 
 dfj = dfj[dfj["Idő"] >= mintime]
 dfeon = dfj.copy()
+dfakku = dfj.copy()
 
 firstdfj = dfj.iloc[0]
 lastdfj = dfj.iloc[-1]
@@ -212,6 +249,19 @@ dfvacmin = dfvac.groupby('Óra')['Min. feszültség'].agg(lambda grp: grp.nsmall
 
 dfvac = pd.merge(dfvacmax, dfvacmin, left_on = 'Óra', right_on = 'Óra')
 
+        
+batteries = []
+for i in range(0, 21):
+    batteries.append(Battery(i, total_energy))
+
+def applyBattery(prod, cons, intcons):
+    for batt in batteries:
+        batt.apply(prod, cons, intcons)
+
+dfakku.apply(lambda row: applyBattery(row['Nettó termelés'], row['Nettó fogyasztás'], row['Nettó napelem fogyasztás']), axis = 1)
+
+dfakku = pd.DataFrame.from_records([b.to_dict() for b in batteries])
+
 
 output = "export const WEEKLY_AVG_DATA = " + df.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 output += "export const AVG = " + str(int(float(avg) * 100 + 0.5) / 100) + ";\n\n"
@@ -277,6 +327,8 @@ output += "export const PRODUCTION_CONSUMPTION_DATA = " + dfeon.to_json(orient='
 output += "export const AVG_WATTS = " + dfje.to_json(orient='records', force_ascii=False, double_precision = 0).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 output += "export const MAX_VOLTAGE = " + dfvac.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
+
+output += "export const ACCUMULATOR = " + dfakku.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 #print (output)
 
