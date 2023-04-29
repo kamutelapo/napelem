@@ -1,0 +1,4 @@
+#voltagechart .ngx-charts .reference-area {
+    fill-opacity: 0.10;
+    fill: #000;
+}

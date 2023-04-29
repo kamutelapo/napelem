@@ -19,6 +19,7 @@ BASEDIR=os.path.dirname(__file__) + "/.."
 
 ctx = napelem_context.yearly()
 df = ctx.getDataframe()
+dfvac = df.copy()
 dfj = ctx.getJoinedDataframe()
 
 df['Dátum'] = df['Time'].dt.date
@@ -188,10 +189,29 @@ dfje['Fogyasztás'] = dfje['Fogyasztás'] + dfje['Napelem fogyasztás']
 dfje['Fogyasztás'] = dfje['Fogyasztás'] * 4000
 dfje['Termelés'] = dfje['Napelem termelés'] * 4000
 
-dfje['Óra'] = dfje['Idő'].dt.strftime("%H:%M")
-dfje = dfje[['Óra', 'Fogyasztás', 'Termelés']]
+dfje = dfje[['Idő', 'Fogyasztás', 'Termelés']]
+
+dfje['Óra'] = dfje['Idő'].dt.time
+del dfje['Idő']
 
 dfje = dfje.groupby('Óra', as_index=False).mean()
+
+dfvac["RTime"] = dfvac["Time"].dt.round("5min")
+dfvac['Idő'] = dfvac['RTime'].dt.time
+
+dfvac = dfvac.set_index("RTime")
+dfvac = dfvac.between_time('05:30', '19:30')
+
+dfvac["Max. feszültség"] = dfvac[['Vac1', 'Vac2', 'Vac3']].max(axis=1)
+dfvac["Min. feszültség"] = dfvac[['Vac1', 'Vac2', 'Vac3']].min(axis=1)
+dfvac["Óra"] = dfvac.apply(lambda row: row['Idő'].strftime('%H:%M'), axis=1)
+dfvac = dfvac[["Óra", "Max. feszültség", "Min. feszültség"]]
+
+dfvacmax = dfvac.groupby('Óra')['Max. feszültség'].agg(lambda grp: grp.nlargest(5).mean()).reset_index()
+dfvacmin = dfvac.groupby('Óra')['Min. feszültség'].agg(lambda grp: grp.nsmallest(5).mean()).reset_index()
+
+dfvac = pd.merge(dfvacmax, dfvacmin, left_on = 'Óra', right_on = 'Óra')
+
 
 output = "export const WEEKLY_AVG_DATA = " + df.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 output += "export const AVG = " + str(int(float(avg) * 100 + 0.5) / 100) + ";\n\n"
@@ -255,6 +275,8 @@ output += "export const MONTHLY_DATA = " + dfsp.to_json(orient='records', force_
 output += "export const PRODUCTION_CONSUMPTION_DATA = " + dfeon.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 output += "export const AVG_WATTS = " + dfje.to_json(orient='records', force_ascii=False, double_precision = 0).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
+
+output += "export const MAX_VOLTAGE = " + dfvac.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 #print (output)
 

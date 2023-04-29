@@ -6,7 +6,7 @@ import {
     WEAKEST_WEEK, WEAKEST_WEEK_START, WEAKEST_WEEK_END,
     STRONGEST_MONTH, STRONGEST_MONTH_START, STRONGEST_MONTH_END,
     WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END, WEEKLY_SALDO_AVG, WEEKLY_SALDO_DATA, YEARLY_SALDO,
-    DAILY_DATA, MONTHLY_DATA, PRODUCTION_CONSUMPTION_DATA, AVG_WATTS
+    DAILY_DATA, MONTHLY_DATA, PRODUCTION_CONSUMPTION_DATA, AVG_WATTS, MAX_VOLTAGE
 } from './solardata';
 
 @Injectable({
@@ -35,6 +35,8 @@ export class SolarDataService {
 
     private avgWatts: any;
 
+    private maxVoltages: any;
+
     constructor() {
         this.weeklyAvgProductionSeries = this.computeWeeklyAvgProductionData()
         this.weeklySaldoSeries = this.computeWeeklySaldoData()
@@ -44,6 +46,7 @@ export class SolarDataService {
         this.monthlyShortProduction = this.computeMonthlyShortProductionData();
         this.usageSeries = this.computeUsageData();
         this.avgWatts = this.computeAvgWatts();
+        this.maxVoltages = this.computeMaxVoltages();
     }
 
     private computeWeeklyAvgProductionData() {
@@ -340,6 +343,47 @@ export class SolarDataService {
         return output;
     }
 
+    private computeMaxVoltages() {
+
+        const vltmax: any[] = []
+        const vltmin: any[] = []
+        const vltoutput: any[] = []
+
+        MAX_VOLTAGE.forEach(
+            (line) => {
+                const time = line["Óra"]
+                const voltmax = line["Max. feszültség"]
+                const voltmin = line["Min. feszültség"]
+
+                vltmax.push(
+                    {
+                        "name": time,
+                        "value": voltmax,
+                    }
+                )
+
+                vltmin.push(
+                    {
+                        "name": time,
+                        "value": voltmin,
+                    }
+                )
+            }
+        );
+
+        vltoutput.push({
+            "name": "Max. feszültség",
+            "series": vltmax,
+        });
+
+        vltoutput.push({
+            "name": "Min. feszültség",
+            "series": vltmin,
+        });
+
+        return vltoutput;
+    }
+
     getAverageProduction(): number {
         return AVG;
     }
@@ -487,5 +531,9 @@ export class SolarDataService {
 
     getAvgWatts() {
         return this.avgWatts;
+    }
+
+    getMaxVoltages() {
+        return this.maxVoltages;
     }
 }

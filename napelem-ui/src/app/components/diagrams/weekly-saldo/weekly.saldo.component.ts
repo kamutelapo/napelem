@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { SolarDataService } from '../../../services/solar.data.service';
 import { ViewBoxCalculatorService } from '../../../services/viewbox.calculator.service';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
@@ -7,7 +7,8 @@ import { CommonChartBaseComponent } from '../common/common.chart.base.component'
 @Component({
   selector: 'app-weekly-saldo',
   templateUrl: './weekly.saldo.component.html',
-  styleUrls: ['./weekly.saldo.component.css']
+  styleUrls: ['./weekly.saldo.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class WeeklySaldoComponent extends CommonChartBaseComponent {
   title = "Heti szaldóátlag";

@@ -40,7 +40,6 @@ export class AvgWattsComponent extends CommonChartBaseComponent {
     return ""
   }
 
-
   override getToolTipText(tooltipItem: Tooltip): string {
     let result = '';
     if (tooltipItem.series !== undefined) {

@@ -8,6 +8,7 @@ import { DailyProductionComponent } from './components/diagrams/daily-prod/daily
 import { MonthlyProductionComponent } from './components/diagrams/monthly-prod/monthly.production.component';
 import { UsageComponent } from './components/diagrams/usage/usage.component';
 import { AvgWattsComponent } from './components/diagrams/avg-watts/avg.watts.component';
+import { VoltagesComponent } from './components/diagrams/voltages/voltages.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'avg-watts',
     component: AvgWattsComponent
+  },
+  {
+    path: 'voltages',
+    component: VoltagesComponent
   },
   {
     path: 'msmdata',

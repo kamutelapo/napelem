@@ -1,0 +1,38 @@
+<app-charts-line-chart id="voltagechart" (window:resize)="onResize()"
+  [view]="view"
+  [animations]="animations"
+  [scheme]="colorScheme"
+  [results]="multi"
+  [xAxis]="xAxis"
+  [yAxis]="yAxis"
+  [legend]="legend"
+  [legendPosition]="legendPosition"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  [timeline]="false"
+  [legendTitle]="'Feszültség'"
+  [referenceLines]="referenceLines"
+  [showRefLines]="showRefLines"
+  [showRefLabels]="showRefLabels"
+  [yAxisTickFormatting]="valueFormat"
+  [yScaleMin]="205"
+  [yScaleMax]="255">
+
+  <ng-template #tooltipTemplate let-model="model">
+    <span class="tooltip-label">{{ model.series }} &bull; {{ model.name }} </span>
+    <span class="tooltip-val">{{ model.value.toLocaleString("hu-HU") }}V</span>
+  </ng-template>
+
+  <ng-template #seriesTooltipTemplate let-model="model">
+    <xhtml:div class="area-tooltip-container">
+      {{ getToolTipTime(model) }}
+      <xhtml:div *ngFor="let tooltipItem of model" class="tooltip-item">
+        <xhtml:span class="tooltip-item-color" [style.background-color]="tooltipItem.color"></xhtml:span>
+        {{ getToolTipText(tooltipItem) }}
+      </xhtml:div>
+    </xhtml:div>
+  </ng-template>
+
+</app-charts-line-chart>
