@@ -24,4 +24,15 @@ export class MeasurementDataComponent {
   nc(inv:number): string {
     return inv.toLocaleString("hu-HU");
   }
+
+  getCO2() {
+    let unit = 'kg';
+    let co2 = Math.round(0.269 * this.solarDataService.getProducedEnergy() * 100) / 100;
+    if (co2 >= 1000) {
+      unit = 't'
+      co2 = Math.round(0.269 * this.solarDataService.getProducedEnergy() / 10) / 100;
+    }
+
+    return co2 + " " + unit;
+  }
 }

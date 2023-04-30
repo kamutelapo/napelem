@@ -330,7 +330,7 @@ output += "export const MAX_VOLTAGE = " + dfvac.to_json(orient='records', force_
 
 output += "export const ACCUMULATOR = " + dfakku.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
-#print (output)
+print (output)
 
 f = open(BASEDIR + "/napelem-ui/src/app/services/solardata.ts", "w")
 f.write(output)
