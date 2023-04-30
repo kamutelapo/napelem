@@ -33,6 +33,6 @@ export class MeasurementDataComponent {
       co2 = Math.round(0.269 * this.solarDataService.getProducedEnergy() / 10) / 100;
     }
 
-    return co2 + " " + unit;
+    return this.nc(co2) + " " + unit;
   }
 }
