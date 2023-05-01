@@ -22,12 +22,15 @@ class Battery:
         self.save = 0
         self.fill = 0
         self.internal = 0
+        self.covered = 0
+        self.uncovered = 0
         self.capacity = capacity
         self.total = total
         
     def apply(self, prod, cons, intcons):
         delta = prod - cons
         self.internal += intcons
+        self.covered += intcons
         if delta > 0:
             remaining = self.capacity - self.fill
             if delta > remaining:
@@ -38,16 +41,20 @@ class Battery:
             stored = self.fill + delta
             if stored < 0:
                 stored = 0
-            self.save += self.fill - stored
+            used = self.fill - stored
+            self.uncovered += cons-used
+            self.covered += used
+            self.save += used
             self.fill = stored
             
     def to_dict(self):
         strcap = str(self.capacity) + " kWh"
+        summ = self.covered + self.uncovered
         if self.capacity == 0:
             strcap = "Visszwatt"
         return {
             'Akkumulátor': strcap,
-            'Felhasználási arány': 100 * (self.save + self.internal) / (self.total)
+            'Felhasználási arány': 100 * (self.covered) / summ
         }
 
 
