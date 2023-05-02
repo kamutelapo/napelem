@@ -15,6 +15,7 @@ export class WeeklyAvgDiagramComponent extends CommonChartBaseComponent {
 
   xAxisLabel = 'Nap';
   yAxisLabel = 'Heti átlagtermelés';
+  details = 'MonthlyAvg';
 
   colorScheme: Color = {
     name: 'myScheme',

@@ -136,7 +136,9 @@ dfavg = df.rolling(7, center=True).mean()
 dfavg["Dátum"] = df["Dátum"]
 
 dfhavi=df.copy()
-dfhavi = dfhavi.rolling(30, center=True).mean().dropna()
+dfhavi = dfhavi.rolling(30, center=True).mean()
+dfhavi["Dátum"] = df["Dátum"].astype(str)
+dfhavi = dfhavi.dropna()
 
 hminidx = dfhavi["Termelés"].idxmin()
 hmaxidx = dfhavi["Termelés"].idxmax()
@@ -271,6 +273,7 @@ dfakku = pd.DataFrame.from_records([b.to_dict() for b in batteries])
 
 
 output = "export const WEEKLY_AVG_DATA = " + df.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
+
 output += "export const AVG = " + str(int(float(avg) * 100 + 0.5) / 100) + ";\n\n"
 
 output += "export const START_DATE = \"" + str(mindate) + "\";\n\n"
@@ -336,6 +339,8 @@ output += "export const AVG_WATTS = " + dfje.to_json(orient='records', force_asc
 output += "export const MAX_VOLTAGE = " + dfvac.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 output += "export const ACCUMULATOR = " + dfakku.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
+
+output += "export const MONTHLY_AVG_DATA = " + dfhavi[["Dátum", "D-K termelés", "D-Ny termelés"]].to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 #print (output)
 

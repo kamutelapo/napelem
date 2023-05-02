@@ -6,7 +6,7 @@ import {
     WEAKEST_WEEK, WEAKEST_WEEK_START, WEAKEST_WEEK_END,
     STRONGEST_MONTH, STRONGEST_MONTH_START, STRONGEST_MONTH_END,
     WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END, WEEKLY_SALDO_AVG, WEEKLY_SALDO_DATA, YEARLY_SALDO,
-    DAILY_DATA, MONTHLY_DATA, PRODUCTION_CONSUMPTION_DATA, AVG_WATTS, MAX_VOLTAGE, ACCUMULATOR
+    DAILY_DATA, MONTHLY_DATA, PRODUCTION_CONSUMPTION_DATA, AVG_WATTS, MAX_VOLTAGE, ACCUMULATOR, MONTHLY_AVG_DATA
 } from './solardata';
 
 @Injectable({
@@ -39,6 +39,8 @@ export class SolarDataService {
 
     private accumulator: any;
 
+    private monthlyAvgProductionSeries: any;
+
     constructor() {
         this.weeklyAvgProductionSeries = this.computeWeeklyAvgProductionData()
         this.weeklySaldoSeries = this.computeWeeklySaldoData()
@@ -50,6 +52,7 @@ export class SolarDataService {
         this.avgWatts = this.computeAvgWatts();
         this.maxVoltages = this.computeMaxVoltages();
         this.accumulator = this.computeAccumulator();
+        this.monthlyAvgProductionSeries = this.computeMonthlyAvgProductionData()
     }
 
     private computeWeeklyAvgProductionData() {
@@ -59,6 +62,46 @@ export class SolarDataService {
         const dnyt: any[] = []
 
         WEEKLY_AVG_DATA.forEach(
+            (line) => {
+                const date = new Date(line["Dátum"])
+                const dkd = line["D-K termelés"]
+                const dnyd = line["D-Ny termelés"]
+
+                dkt.push(
+                    {
+                        "name": date,
+                        "value": dkd,
+                    }
+                )
+                dnyt.push(
+                    {
+                        "name": date,
+                        "value": dnyd,
+                    }
+                )
+            }
+        );
+
+        output.push({
+            "name": "Dél-Kelet",
+            "series": dkt,
+        });
+        output.push({
+            "name": "Dél-Nyugat",
+            "series": dnyt,
+        });
+
+        return output;
+    }
+
+
+    private computeMonthlyAvgProductionData() {
+        const output: any[] = []
+
+        const dkt: any[] = []
+        const dnyt: any[] = []
+
+        MONTHLY_AVG_DATA.forEach(
             (line) => {
                 const date = new Date(line["Dátum"])
                 const dkd = line["D-K termelés"]
@@ -428,6 +471,10 @@ export class SolarDataService {
 
     getWeeklyAverageProductionSeries() {
         return this.weeklyAvgProductionSeries;
+    }
+
+    getMonthlyAverageProductionSeries() {
+        return this.monthlyAvgProductionSeries;
     }
 
     getStartDate(): string {

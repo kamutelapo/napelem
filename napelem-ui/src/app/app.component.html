@@ -93,6 +93,7 @@
     </div>
     <div *ngIf="detailsEnabled" class="details">
       <app-usage-details *ngIf="details === 'Usage'" (close)="closeDetails()"></app-usage-details>
+      <app-monthly-avg-details *ngIf="details === 'MonthlyAvg'" (close)="closeDetails()"></app-monthly-avg-details>
     </div>
   </div>
 </div>
