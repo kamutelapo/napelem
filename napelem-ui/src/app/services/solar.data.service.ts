@@ -23,6 +23,8 @@ export class SolarDataService {
 
     private monthlyProduction: any;
 
+    private monthlyProductionSeries: any;
+
     private monthlyShortProduction: any;
 
     private usageSeries: any;
@@ -47,6 +49,7 @@ export class SolarDataService {
         this.yearlySaldoSeries = this.computeYearlySaldoData()
         this.dailyProductionSeries = this.computeDailyProductionData()
         this.monthlyProduction = this.computeMonthlyProductionData();
+        this.monthlyProductionSeries = this.computeMonthlyProductionSeries();
         this.monthlyShortProduction = this.computeMonthlyShortProductionData();
         this.usageSeries = this.computeUsageData();
         this.avgWatts = this.computeAvgWatts();
@@ -259,6 +262,35 @@ export class SolarDataService {
                         "Arány": ratio,
                     }
                 });
+            }
+        );
+
+        return output;
+    }
+
+    private computeMonthlyProductionSeries() {
+        const output: any[] = []
+
+        MONTHLY_DATA.forEach(
+            (line) => {
+                const month = line["Hónap"]
+                const prod = line["Termelés"]
+                const ratio = line["Arány"]
+
+                output.push(
+                    {
+                        "name": month,
+                        "series": [
+                            {
+                                "name": "Termelés",
+                                "value": prod,
+                                "extra": {
+                                    "Arány": ratio,
+                                }
+                            }
+                        ]
+                    }
+                )
             }
         );
 
@@ -575,6 +607,10 @@ export class SolarDataService {
 
     getMonthlyProduction() {
         return this.monthlyProduction;
+    }
+
+    getMonthlyProductionSeries() {
+        return this.monthlyProductionSeries;
     }
 
     getMonthlyShortProduction() {

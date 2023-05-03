@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { timeFormatDefaultLocale, TimeLocaleDefinition } from 'd3-time-format';
 import { ViewBoxCalculatorService } from './services/viewbox.calculator.service';
 
+type CallbackFunction = (val: boolean) => void;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,6 +19,8 @@ export class AppComponent implements OnInit {
   detailsEnabled = false;
 
   details: string | undefined = undefined;
+
+  detailsClick: CallbackFunction | undefined = undefined;
 
   constructor(private viewBoxCalculatorService: ViewBoxCalculatorService) {
     const localeDef: TimeLocaleDefinition = {
@@ -34,10 +38,11 @@ export class AppComponent implements OnInit {
     viewBoxCalculatorService.enableSideBar(true);
   }
 
-  onActivate(event:any) {
+  onActivate(event: any) {
     this.pageTitle = event.title;
     this.details = event.details;
     this.detailsEnabled = false;
+    this.detailsClick = event.detailsClick;
   }
 
   getSideNavClass() {
@@ -74,9 +79,18 @@ export class AppComponent implements OnInit {
 
   triggerDetails() {
     this.detailsEnabled = !this.detailsEnabled;
+
+
+    if (this.detailsClick) {
+      this.detailsClick(this.detailsEnabled);
+    }
   }
 
   closeDetails() {
     this.detailsEnabled = false;
+
+    if (this.detailsClick) {
+      this.detailsClick(this.detailsEnabled);
+    }
   }
 }

@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="isPieChart">
   <ngx-charts-pie-chart id="monthlyprod" (window:resize)="onResize()"
     [view]="view"
     [scheme]="colorScheme"
@@ -24,4 +24,32 @@
       </xhtml:div>
     </ng-template>
   </ngx-charts-pie-chart>
+</div>
+<div *ngIf="!isPieChart">
+  <app-charts-bar-chart (window:resize)="onResize()"
+    [view]="view"
+    [scheme]="colorScheme2"
+    [results]="multi"
+    [animations]="animations"
+    [gradient]="gradient"
+    [xAxis]="xAxis"
+    [yAxis]="yAxis"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="'Hónap'"
+    [yAxisLabel]="'Termelés'"
+    [showGridLines]="true"
+    [noBarWhenZero]="false"
+    [barPadding]="2"
+    [timeline]="false"
+    [yAxisTickFormatting]="valueFormat"
+    >
+
+    <ng-template #tooltipTemplate let-model="model">
+      <span class="tooltip-label">{{ model.series }} &bull; {{ model.name }} </span>
+      <span class="tooltip-val">{{ model.value.toLocaleString("hu-HU") }} kWh</span>
+    </ng-template>
+
+  </app-charts-bar-chart>
+
 </div>

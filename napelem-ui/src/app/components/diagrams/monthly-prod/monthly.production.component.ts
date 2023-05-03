@@ -13,6 +13,15 @@ import { LegendPosition } from '@swimlane/ngx-charts';
 })
 export class MonthlyProductionComponent extends CommonChartBaseComponent {
   title = "Havi termelés";
+
+  details = 'Callback';
+
+  isPieChart = true;
+
+  detailsClick = (state: boolean): void => {
+    this.isPieChart = !this.isPieChart;
+  };
+
   single: any;
 
   isDoughnut = false;
@@ -22,6 +31,7 @@ export class MonthlyProductionComponent extends CommonChartBaseComponent {
     super(viewBoxCalculatorService);
 
     this.single = solarDataService.getMonthlyProduction();
+    this.multi = solarDataService.getMonthlyProductionSeries();
   }
 
   colorScheme: Color = {
@@ -37,6 +47,13 @@ export class MonthlyProductionComponent extends CommonChartBaseComponent {
       'rgb(123,82,49)', 'rgb(104,73,158)', 'rgb(102,45,145)',
       'rgb(148,149,151)'
     ],
+  };
+
+  colorScheme2: Color = {
+    name: 'monthlyProdColor',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['green'],
   };
 
   labelFormatting(label: string): string {
@@ -68,6 +85,10 @@ export class MonthlyProductionComponent extends CommonChartBaseComponent {
       default:
         return label;
     }
+  }
+
+  valueFormat(value: any) {
+    return value + " kWh"
   }
 
   override onResize() {
