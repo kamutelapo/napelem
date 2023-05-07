@@ -11,7 +11,7 @@
       <tr>
         <td>
           <a class="menuitem" routerLink="/weekly-avg" routerLinkActive="active-link" (click)="restoreSideNav()">
-            <span>Heti átlagtermelés</span>
+            <span>Átlagtermelés</span>
           </a>
         </td>
       </tr>
@@ -93,7 +93,6 @@
     </div>
     <div *ngIf="detailsEnabled" class="details">
       <app-usage-details *ngIf="details === 'Usage'" (close)="closeDetails()"></app-usage-details>
-      <app-monthly-avg-details *ngIf="details === 'MonthlyAvg'" (close)="closeDetails()"></app-monthly-avg-details>
     </div>
   </div>
 </div>

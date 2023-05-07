@@ -15,7 +15,14 @@ export class WeeklyAvgDiagramComponent extends CommonChartBaseComponent {
 
   xAxisLabel = 'Nap';
   yAxisLabel = 'Heti átlagtermelés';
-  details = 'MonthlyAvg';
+  details = 'Callback';
+
+  isWeekly = false;
+
+  detailsClick = (state: boolean): void => {
+    this.isWeekly = !this.isWeekly;
+    this.selectChart();
+  };
 
   colorScheme: Color = {
     name: 'myScheme',
@@ -28,10 +35,34 @@ export class WeeklyAvgDiagramComponent extends CommonChartBaseComponent {
   constructor(private solarDataService: SolarDataService, viewBoxCalculatorService: ViewBoxCalculatorService ) {
     super(viewBoxCalculatorService);
 
-    this.multi = solarDataService.getWeeklyAverageProductionSeries();
+    this.selectChart();
     this.referenceLines = [
       { value: solarDataService.getAverageProduction(), name: 'Átlag ' + solarDataService.getAverageProduction().toLocaleString("hu-HU") + ' kWh' }
     ];
+  }
+
+  selectChart(): void {
+
+    if(this.isWeekly) {
+      this.yAxisLabel = "Havi átlagtermelés";
+      this.multi = this.solarDataService.getMonthlyAverageProductionSeries();
+      this.colorScheme = {
+        name: 'myScheme',
+        selectable: true,
+        group: ScaleType.Ordinal,
+        domain: ['limegreen', 'darkgreen'],
+      };
+    } else {
+      this.yAxisLabel = "Heti átlagtermelés";
+      this.multi = this.solarDataService.getWeeklyAverageProductionSeries();
+      this.colorScheme = {
+        name: 'myScheme',
+        selectable: true,
+        group: ScaleType.Ordinal,
+        domain: ['orange', 'mediumorchid'],
+      };
+    }
+    this.title = this.yAxisLabel;
   }
 
   valueFormat(value: any) {

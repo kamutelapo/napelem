@@ -22,6 +22,8 @@ export class AppComponent implements OnInit {
 
   detailsClick: CallbackFunction | undefined = undefined;
 
+  active: any = null;
+
   constructor(private viewBoxCalculatorService: ViewBoxCalculatorService) {
     const localeDef: TimeLocaleDefinition = {
       "dateTime": "%Y. %B %-e., %A %X",
@@ -43,6 +45,7 @@ export class AppComponent implements OnInit {
     this.details = event.details;
     this.detailsEnabled = false;
     this.detailsClick = event.detailsClick;
+    this.active = event;
   }
 
   getSideNavClass() {
@@ -83,6 +86,9 @@ export class AppComponent implements OnInit {
 
     if (this.detailsClick) {
       this.detailsClick(this.detailsEnabled);
+      if(this.active) {
+        this.pageTitle = this.active.title;
+      }
     }
   }
 
@@ -91,6 +97,9 @@ export class AppComponent implements OnInit {
 
     if (this.detailsClick) {
       this.detailsClick(this.detailsEnabled);
+      if(this.active) {
+        this.pageTitle = this.active.title;
+      }
     }
   }
 }
