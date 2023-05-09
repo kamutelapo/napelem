@@ -215,7 +215,7 @@ export class SolarDataService {
                 const date = line["Dátum"]
                 const dkd = line["D-K termelés"]
                 const dnyd = line["D-Ny termelés"]
-                const ossz = Math.floor(100 * (dkd + dnyd)) / 100
+                const ossz = Math.floor(100 * (dkd + dnyd) + 0.5) / 100
 
                 output.push({
                     "name": date,
