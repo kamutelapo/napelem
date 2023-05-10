@@ -10,6 +10,7 @@ import { UsageComponent } from './components/diagrams/usage/usage.component';
 import { AvgWattsComponent } from './components/diagrams/avg-watts/avg.watts.component';
 import { VoltagesComponent } from './components/diagrams/voltages/voltages.component';
 import { AccumulatorComponent } from './components/diagrams/accumulator/accumulator.component';
+import { ProductionConsumptionComponent } from './components/diagrams/prod-cons/production.consumption.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'yearly-saldo',
     component: YearlySaldoComponent
+  },
+  {
+    path: 'prod-cons',
+    component: ProductionConsumptionComponent
   },
   {
     path: 'daily-prod',

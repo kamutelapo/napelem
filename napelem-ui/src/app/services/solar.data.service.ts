@@ -6,7 +6,8 @@ import {
     WEAKEST_WEEK, WEAKEST_WEEK_START, WEAKEST_WEEK_END,
     STRONGEST_MONTH, STRONGEST_MONTH_START, STRONGEST_MONTH_END,
     WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END, WEEKLY_SALDO_AVG, WEEKLY_SALDO_DATA, YEARLY_SALDO,
-    DAILY_DATA, MONTHLY_DATA, PRODUCTION_CONSUMPTION_DATA, AVG_WATTS, MAX_VOLTAGE, ACCUMULATOR, MONTHLY_AVG_DATA
+    DAILY_DATA, MONTHLY_DATA, PRODUCTION_CONSUMPTION_DATA, AVG_WATTS, MAX_VOLTAGE, ACCUMULATOR, MONTHLY_AVG_DATA,
+    PRODCON_AVG
 } from './solardata';
 
 @Injectable({
@@ -43,6 +44,8 @@ export class SolarDataService {
 
     private monthlyAvgProductionSeries: any;
 
+    private productionConsumptionAvg: any;
+
     constructor() {
         this.weeklyAvgProductionSeries = this.computeWeeklyAvgProductionData()
         this.weeklySaldoSeries = this.computeWeeklySaldoData()
@@ -56,6 +59,7 @@ export class SolarDataService {
         this.maxVoltages = this.computeMaxVoltages();
         this.accumulator = this.computeAccumulator();
         this.monthlyAvgProductionSeries = this.computeMonthlyAvgProductionData()
+        this.productionConsumptionAvg = this.computeProductionConsumptionAvg();
     }
 
     private computeWeeklyAvgProductionData() {
@@ -485,6 +489,46 @@ export class SolarDataService {
         return output;
     }
 
+    private computeProductionConsumptionAvg() {
+        const prod: any[] = []
+        const cons: any[] = []
+        const pcavg: any[] = []
+
+        PRODCON_AVG.forEach(
+            (line) => {
+                const date = new Date(line["Dátum"])
+                const prd = line["Termelés"]
+                const cns = line["Fogyasztás"]
+
+                prod.push(
+                    {
+                        "name": date,
+                        "value": prd,
+                    }
+                )
+
+                cons.push(
+                    {
+                        "name": date,
+                        "value": cns,
+                    }
+                )
+            }
+        );
+
+        pcavg.push({
+            "name": "Termelés",
+            "series": prod,
+        });
+
+        pcavg.push({
+            "name": "Fogyasztás",
+            "series": cons,
+        });
+
+        return pcavg;
+    }
+
     getAverageProduction(): number {
         return AVG;
     }
@@ -648,5 +692,9 @@ export class SolarDataService {
 
     getAccumulator() {
         return this.accumulator;
+    }
+
+    getProductionConsumption() {
+        return this.productionConsumptionAvg;
     }
 }

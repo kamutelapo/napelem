@@ -232,8 +232,11 @@ dfeon["Dátum"] = dfeon["Dátum"].astype(str)
 dfje = dfj.copy()
 dfje['Fogyasztás'] = dfje['Fogyasztás'] + dfje['Napelem fogyasztás']
 
+dfprodcon = dfje.copy()
+
 dfje['Fogyasztás'] = dfje['Fogyasztás'] * 4000
 dfje['Termelés'] = dfje['Napelem termelés'] * 4000
+
 
 dfje = dfje[['Idő', 'Fogyasztás', 'Termelés']]
 
@@ -270,6 +273,15 @@ def applyBattery(prod, cons, intcons):
 dfakku.apply(lambda row: applyBattery(row['Nettó termelés'], row['Nettó fogyasztás'], row['Nettó napelem fogyasztás']), axis = 1)
 
 dfakku = pd.DataFrame.from_records([b.to_dict() for b in batteries])
+
+dfprodcon = dfprodcon[['Nap', 'Fogyasztás', 'Napelem termelés']]
+dfprodcon = dfprodcon.rename(columns = {'Napelem termelés': 'Termelés'})
+
+dfprodcon = dfprodcon.groupby('Nap', as_index=False).sum()
+
+dfprodconavg = dfprodcon.rolling(7, center=True).mean()
+dfprodconavg['Dátum'] = dfprodcon['Nap'].astype(str)
+dfprodcon = dfprodconavg.dropna()
 
 
 output = "export const WEEKLY_AVG_DATA = " + df.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
@@ -341,6 +353,8 @@ output += "export const MAX_VOLTAGE = " + dfvac.to_json(orient='records', force_
 output += "export const ACCUMULATOR = " + dfakku.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 output += "export const MONTHLY_AVG_DATA = " + dfhavi[["Dátum", "D-K termelés", "D-Ny termelés"]].to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
+
+output += "export const PRODCON_AVG = " + dfprodcon.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 #print (output)
 

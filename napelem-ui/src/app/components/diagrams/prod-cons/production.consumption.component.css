@@ -1,0 +1,9 @@
+#prodconchart .ngx-charts .refline-label {
+  font-size: 10px;
+}
+  
+#prodconchart .ngx-charts .refline-path {
+  stroke-width: 0.75;
+  stroke: magenta;
+}
+  
