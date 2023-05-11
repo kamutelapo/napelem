@@ -1,5 +1,5 @@
 <div>
-    <app-charts-line-chart id="prodconchart" (window:resize)="onResize()"
+    <app-charts-line-chart id="{{getChartId()}}" (window:resize)="onResize()"
       [view]="view"
       [animations]="animations"
       [scheme]="colorScheme"

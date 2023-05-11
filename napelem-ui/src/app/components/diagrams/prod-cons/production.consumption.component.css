@@ -1,9 +1,19 @@
-#prodconchart .ngx-charts .refline-label {
-  font-size: 10px;
-}
-  
-#prodconchart .ngx-charts .refline-path {
+#prodconchart-cons .ngx-charts .refline-path {
   stroke-width: 0.75;
-  stroke: magenta;
+  stroke: #008000;
 }
   
+#prodconchart-cons .ngx-charts .reference-area {
+  fill-opacity: 0.05;
+  fill: #008000;
+}
+
+#prodconchart-prod .ngx-charts .refline-path {
+  stroke-width: 0.75;
+  stroke: #0000FF;
+}
+  
+#prodconchart-prod .ngx-charts .reference-area {
+  fill-opacity: 0.05;
+  fill: #0000FF;
+}

@@ -41,4 +41,11 @@ export class ProductionConsumptionComponent extends CommonChartBaseComponent {
       { value: solarDataService.getAverageProduction(), name: 'átlag termelés' },
     ];
   }
+
+  getChartId() {
+    if (this.solarDataService.getAverageConsumption() > this.solarDataService.getAverageProduction()) {
+      return 'prodconchart-cons'
+    }
+    return 'prodconchart-prod'
+  }
 }
