@@ -38,11 +38,13 @@ perc_term = 100 * termeles_kwh / ossz
 plot = df.plot.area(x='Nap', y=['Összes fogyasztás', 'Összes napelem fogyasztás', 'Összes termelés'], linewidth = 0,
           label=['Fogyasztás: ' + napelem_context.pretty(fogyasztas_kwh) + ' kWh, ' + napelem_context.pretty(perc_fogy) + "%", \
                  'Napelemből fogyasztás: ' + napelem_context.pretty(napelem_fogyasztas_kwh) + ' kWh, ' + napelem_context.pretty(perc_napfogy) + "%", \
-                 'Visszatáplált termelés: ' + napelem_context.pretty(termeles_kwh) + ' kWh, ' + napelem_context.pretty(perc_term) + "%"],
+                 'Visszatáplált termelés: ' + napelem_context.pretty(termeles_kwh) + ' kWh, ' + napelem_context.pretty(perc_term) + "%"], zorder=3,
           title='Havi nettó fogyasztás és termelés  -  ' + ctx.date(), color=['green', 'royalblue', 'cornflowerblue'])
 
 yticks = mtick.FormatStrFormatter('%.0f kWh')
 plot.yaxis.set_major_formatter(yticks)
+plot.xaxis.label.set_visible(False)
+plot.grid(axis='y', zorder = -1, color = 'lightgrey')
 
 fig = plot.get_figure()
 fig.set_size_inches(10, 5)

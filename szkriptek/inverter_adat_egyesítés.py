@@ -20,7 +20,7 @@ teljes = None
 
 df = None
 
-while( aktualis_nap <= dt.date.today() ):
+while( aktualis_nap.date() <= dt.date.today() ):
   
   fajlnev = aktualis_nap.strftime('%Y-%m-%d.csv')
   

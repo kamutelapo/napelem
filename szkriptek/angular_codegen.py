@@ -67,7 +67,7 @@ dfj = ctx.getJoinedDataframe()
 
 df['Dátum'] = df['Time'].dt.date
 
-mintime = df['Time'].min()
+mintime = pd.to_datetime(df['Dátum'].min())
 
 dfj = dfj[dfj["Idő"] >= mintime]
 dfeon = dfj.copy()
@@ -76,8 +76,8 @@ dfakku = dfj.copy()
 firstdfj = dfj.iloc[0]
 lastdfj = dfj.iloc[-1]
 
-consumption = lastdfj["Összes fogyasztás"] - firstdfj["Összes fogyasztás"]
-consumption += lastdfj["Összes napelem fogyasztás"] - firstdfj["Összes napelem fogyasztás"]
+consumption = lastdfj["Összes nettó fogyasztás"] - firstdfj["Összes nettó fogyasztás"]
+consumption += lastdfj["Összes nettó napelem fogyasztás"] - firstdfj["Összes nettó napelem fogyasztás"]
 
 consumption = int(consumption * 100 + 0.5) / 100
 
@@ -85,7 +85,7 @@ pacmaxidx = df['Pac'].idxmax()
 powermaxdate = df.loc[pacmaxidx]['Dátum']
 powermaxvalue = int(df.loc[pacmaxidx]['Pac'])
 
-total_energy = (df["E-Total"]).max()
+total_energy = (df["E-Total"]).max() - (df["E-Total"]).min()
 
 mindate = df['Dátum'].min()
 maxdate = df['Dátum'].max()

@@ -5,6 +5,9 @@ import os
 import pandas as pd
 import datetime as dt
 import dateutil.relativedelta
+import locale
+
+locale.setlocale(locale.LC_TIME, 'hu_HU.UTF-8')
 
 BASEDIR=os.path.dirname(__file__) + "/.."
 

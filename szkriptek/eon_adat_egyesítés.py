@@ -19,7 +19,7 @@ ma = np.datetime64('today')
 
 teljes = None
 
-while( honap_start.date() < dt.date.today() ):
+while( honap_start < dt.date.today() ):
   honap_veg = honap_start + pd.DateOffset(months=1)
   
   fajlnev = honap_start.strftime('%Y-%m.csv')
@@ -63,5 +63,11 @@ napi = (teljes[['Nap', 'Fogyasztás', 'Termelés']].groupby('Nap', as_index=Fals
 napi = napi.rename(columns = {'Fogyasztás': 'Napi fogyasztás', 'Termelés': 'Napi termelés'}, inplace = False)
 
 teljes = pd.merge(teljes, napi, left_on = 'Nap', right_on = 'Nap', how = 'left')
+
+roundit = [
+    "Fogyasztás","Termelés","Energia egyenleg","Összes fogyasztás","Összes termelés","Napi fogyasztás","Napi termelés"
+]
+for i in roundit:
+    teljes[i] = teljes[i].astype(float).round(3)
 
 teljes.to_csv(BASEDIR + "/../eon.csv", index = False)

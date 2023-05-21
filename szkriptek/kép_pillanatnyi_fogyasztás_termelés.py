@@ -36,12 +36,14 @@ df['Napelem fogyasztás'] = df['Napelem fogyasztás'] * 4000
 df['Termelés'] = df['Termelés'] * 4000
 
 
-plot = df.plot.area(x='Idő', y=['Fogyasztás', 'Napelem fogyasztás', 'Termelés'], linewidth = 0,
+plot = df.plot.area(x='Idő', y=['Fogyasztás', 'Napelem fogyasztás', 'Termelés'], linewidth = 0, zorder = 3,
           label=['Pillanatnyi fogyasztás: ' + napelem_context.pretty(fogyasztas_kwh) + ' kWh', 'Napelemből fogyasztás: ' + napelem_context.pretty(napelem_fogyasztas_kwh) + ' kWh', 'Pillanatnyi termelés: ' + napelem_context.pretty(termeles_kwh) + ' kWh'],
           title='Pillanatnyi fogyasztás és termelés  -  [' + str(mindate) + " - " + str(maxdate) + "]", color=['green', 'royalblue', 'cornflowerblue'])
 
 yticks = mtick.FormatStrFormatter('%.0fW')
 plot.yaxis.set_major_formatter(yticks)
+plot.xaxis.label.set_visible(False)
+plot.grid(axis='y', zorder = -1, color = 'lightgrey')
 
 fig = plot.get_figure()
 fig.set_size_inches(15, 5)

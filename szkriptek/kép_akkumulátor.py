@@ -77,28 +77,30 @@ ax1.set_title("Akkumulátorral hasznosított energia")
 
 ax1par = ax1.twinx()
 
-
-pa1 = df.plot.bar(ax = ax1, x = 'Akkumulátor kapacitás', y = 'Eltárolt energia', label="Akkumulátorral hasznosított energia", zorder = 10, color = 'green')
-pa2 = df.plot.bar(ax = ax1par, x = 'Akkumulátor kapacitás', y = 'Eltárolt arány', label="Akkumulátorral hasznosított energia", zorder = 10, color = 'green')
-pa2.grid(axis='y', zorder = -1)
+ax1.set_xticks(df['Akkumulátor kapacitás'].values)
+pa1 = ax1.bar(df['Akkumulátor kapacitás'], df['Eltárolt energia'], label="Akkumulátorral hasznosított energia", zorder = 10, color = 'green', align='center', width = 0.3)
+pa2 = ax1par.bar(df['Akkumulátor kapacitás'], df['Eltárolt arány'], label="Akkumulátorral hasznosított energia", zorder = 10, color = 'green', align='center', width = 0.3)
+ax1par.grid(axis='y', zorder = -1)
 
 ax1.set_ylabel("Eltárolt összes energia")
 ax1par.set_ylabel("Eltárolt energia aránya")
 
 yticks = mtick.FormatStrFormatter('%.0f kWh')
 ax1.yaxis.set_major_formatter(yticks)
-ax1.set_xticklabels(caplabels)
+ax1.set_xticklabels(caplabels, rotation = 90)
 yticks = mtick.FormatStrFormatter('%.0f%%')
 ax1par.yaxis.set_major_formatter(yticks)
 
 ax2=fig.add_subplot(spec[1], label="2")
 ax2.set_title("Mennyit többletet produkál az akkumulátor az előző mérethez képest?")
-pa2 = df.plot.bar(ax = ax2, x = 'Akkumulátor kapacitás', y = 'Eltárolt energiatöbblet', label="Többlet az előző mérethez képest", zorder = 10, color = 'orange')
+ax2.set_xticks(df['Akkumulátor kapacitás'].values)
+pa2 = ax2.bar(df['Akkumulátor kapacitás'], df['Eltárolt energiatöbblet'], label="Többlet az előző mérethez képest", zorder = 10, color = 'orange', align='center', width = 0.3)
 
 yticks = mtick.FormatStrFormatter('%.0f kWh')
 ax2.yaxis.set_major_formatter(yticks)
-ax2.set_xticklabels(caplabels)
+ax2.set_xticklabels(caplabels, rotation = 90)
 ax2.set_ylabel("Eltárolt többlet energia")
+ax2.grid(axis='y', zorder = -1)
 
 fig.suptitle('Akkumulátor számítások', fontsize=22)
 fig.savefig(BASEDIR + ctx.fileName("/képek/eon/Akkumulátor%s.png"), bbox_inches = "tight")

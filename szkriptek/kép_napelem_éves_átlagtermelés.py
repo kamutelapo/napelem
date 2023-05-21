@@ -10,6 +10,9 @@ from matplotlib import dates as mdates
 from matplotlib.offsetbox import AnchoredText
 from scipy import integrate
 import napelem_context
+import matplotlib as mpl
+
+mpl.rcParams["legend.framealpha"] = 1
 
 BASEDIR=os.path.dirname(__file__) + "/.."
 
@@ -21,6 +24,9 @@ df['Date'] = df['Time'].dt.date
 df["D-K"] = (df["Vpv1"] * df["Ipv1"]).cumsum() * 300 / 3600
 df["D-Ny"] = (df["Vpv2"] * df["Ipv2"]).cumsum()  * 300 / 3600
 
+pacmaxidx = df['Pac'].idxmax()
+powermaxdate = df.loc[pacmaxidx]['Date']
+powermaxvalue = int(df.loc[pacmaxidx]['Pac'])
 
 dffirst = df.groupby("Date").first()
 dffirst = dffirst[['E-Total', 'D-K', 'D-Ny']].reset_index() \
@@ -30,6 +36,7 @@ dflast = dflast[['E-Total', 'D-K', 'D-Ny']].reset_index() \
     .rename(columns = {'E-Total': 'Termelés vég', 'D-K': 'D-K vég', 'D-Ny': 'D-Ny vég'})
 
 df = pd.merge(dffirst, dflast, left_on = 'Date', right_on = 'Date')
+
 
 df["Termelés"] = df['Termelés vég'] - df['Termelés kezdet']
 df['D-K'] = df['D-K vég'] - df['D-K kezdet']
@@ -108,17 +115,17 @@ maxavgstart = maxavgdate + dt.timedelta(days = -3)
 maxavgend = maxavgdate + dt.timedelta(days = 3)
 maxavgdate = str(maxavgstart) + " - " + str(maxavgend)
 
-ylim = max(df["D-K termelés"]+df["D-Ny termelés"]) * 1.25
+ylim = max(df["D-K termelés"]+df["D-Ny termelés"]) * 1.3
 
 plot = df.plot.area(x='Date', y=['D-Ny termelés', 'D-K termelés'], linewidth = 0,
           label=['Dél-Nyugat termelés (6 panel, ' + napelem_context.pretty(dnysum) + ' kWh)', 'Dél-Kelet termelés (10 panel, ' +
-                 napelem_context.pretty(dksum) + ' kWh)'],
+                 napelem_context.pretty(dksum) + ' kWh)'], zorder = 10,
           title='Éves átlagtermelés (összes: ' + napelem_context.pretty(ossz) + ' kWh, éves átlag: ' + napelem_context.pretty(avg) + ' kWh)  -  ' + ctx.date(), color=['mediumorchid', 'orange'], ylim = [0, ylim])
 plot.set_ylabel("Megtermelt energia")
 plot.legend(loc='upper right')
 
-plot = df.plot(x='Date', y='Átlag', ax=plot, color='green', label='30 napos átlag')
-plot = df.plot(x='Date', y='TeljesÁtlag', ax=plot, color='magenta', label='Éves átlag (' + napelem_context.pretty(avg) + ' kWh)', linestyle='--')
+plot = df.plot(x='Date', y='Átlag', ax=plot, color='green', label='30 napos átlag', zorder = 10)
+plot = df.plot(x='Date', y='TeljesÁtlag', ax=plot, color='magenta', label='Éves átlag (' + napelem_context.pretty(avg) + ' kWh)', linestyle='--', zorder = 10)
 
 plot.set_xlabel("Dátum")
 
@@ -128,11 +135,13 @@ at = AnchoredText("Minimum és maximum értékek:\n" +
                   "- heti átlag minimum: " + napelem_context.pretty(minavg) + " kWh (teljes: " + napelem_context.pretty(minavg * 7) + " kWh)  [" + minavgdate + "]\n" +
                   "- heti átlag maximum: " + napelem_context.pretty(maxavg) + " kWh (teljes: " + napelem_context.pretty(maxavg * 7) + " kWh)  [" + maxavgdate + "]\n" +
                   "- napi minimum: " + napelem_context.pretty(dmin) + " kWh  [" + str(dmindate) + "]\n" +
-                  "- napi maximum: " + napelem_context.pretty(dmax) + " kWh  [" + str(dmaxdate) + "]",
+                  "- napi maximum: " + napelem_context.pretty(dmax) + " kWh  [" + str(dmaxdate) + "]\n" +
+                  "- maximális teljesítmény: " + napelem_context.pretty(powermaxvalue) + "W  [" + str(powermaxdate) + "]",
                   loc='upper left', prop=dict(fontfamily="sans-serif", fontsize=8.5), frameon=True)
 at.patch.set_boxstyle("round,pad=0.,rounding_size=0.2")
 at.patch.set_edgecolor("lightgrey")
 plot.add_artist(at)
+plot.grid(axis='y', zorder = -1, color = 'lightgrey')
 
 yticks = mtick.FormatStrFormatter('%.0f kWh')
 plot.yaxis.set_major_formatter(yticks)
