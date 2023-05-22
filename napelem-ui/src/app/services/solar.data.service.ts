@@ -7,7 +7,7 @@ import {
     STRONGEST_MONTH, STRONGEST_MONTH_START, STRONGEST_MONTH_END,
     WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END, WEEKLY_SALDO_AVG, WEEKLY_SALDO_DATA, YEARLY_SALDO,
     DAILY_DATA, MONTHLY_DATA, PRODUCTION_CONSUMPTION_DATA, AVG_WATTS, MAX_VOLTAGE, ACCUMULATOR, MONTHLY_AVG_DATA,
-    PRODCON_AVG
+    PRODCON_AVG, MONEY
 } from './solardata';
 
 @Injectable({
@@ -696,5 +696,9 @@ export class SolarDataService {
 
     getProductionConsumption() {
         return this.productionConsumptionAvg;
+    }
+
+    getMoney() {
+        return MONEY;
     }
 }

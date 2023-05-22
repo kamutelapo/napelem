@@ -35,4 +35,8 @@ export class MeasurementDataComponent {
 
     return this.nc(co2) + " " + unit;
   }
+
+  getMoney() {
+    return this.nc(this.solarDataService.getMoney()) + " Ft";
+  }
 }
