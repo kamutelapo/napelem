@@ -20,12 +20,12 @@
       [showRefLines]="showRefLines"
       [showRefLabels]="showRefLabels"
       >
-  
+
       <ng-template #tooltipTemplate let-model="model">
         <span class="tooltip-label">{{ model.series }} &bull; {{ getLocaleDate(model.name) }} </span>
         <span class="tooltip-val">{{ model.value.toLocaleString("hu-HU") }} W</span>
       </ng-template>
-  
+
       <ng-template #seriesTooltipTemplate let-model="model">
         <xhtml:div class="area-tooltip-container">
           {{ getToolTipDate(model) }}
@@ -35,18 +35,17 @@
           </xhtml:div>
         </xhtml:div>
       </ng-template>
-  
+
     </app-charts-area-chart-stacked>
   </div>
 
   <table [ngClass]="'momentarycontainer momentarycontainer-' + getNgClassType()">
     <tr>
-      <td class="momentarylabel" colspan="3">{{getRangeText()}}</td>
+      <td (click)="moveBack()" class="momentary-arrow" rowspan="2">&#x25C0;</td>
+      <td class="momentarylabel">{{getRangeText()}}</td>
+      <td (click)="moveForward()" class="momentary-arrow" rowspan="2">&#x25B6;</td>
     </tr>
     <tr>
-      <td (click)="moveBack()" class="momentary-arrow">&#x25C0;</td>
       <td class="slider-cell"><input class="slider" type="range" name="rangeslider" min="0" [max]="daycnt" (ngModelChange)="sliceRaw()" [(ngModel)]="rangeSelector"></td>
-      <td (click)="moveForward()" class="momentary-arrow">&#x25B6;</td>
     </tr>
   </table>
-  

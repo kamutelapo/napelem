@@ -1,16 +1,17 @@
 .momentarycontainer {
     position: fixed;
-    top: calc(100vh - 75px);
     border: 1px solid;
 }
 
 .momentarycontainer-desktop {
     left: 210px;
+    top: calc(100vh - 75px);
     width: calc(100vw - 220px);
 }
 
 .momentarycontainer-mobile {
     left: 10px;
+    top: calc(100vh - 125px);
     width: calc(100vw - 20px);
 }
 
@@ -20,7 +21,6 @@
 
 .slider-cell {
     width: 100%;
-    padding-top: 0.5em;
 }
 
 .slider {
@@ -28,11 +28,11 @@
 }
 
 .momentary-arrow {
-    padding-left: 0.8em;
-    padding-right: 0.8em;
+    padding-left: 16px;
+    padding-right: 16px;
     background-color: #80808080;
-    font-size: 1em;
+    font-size: 25px;
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */  
+    user-select: none; /* Standard syntax */
 }
