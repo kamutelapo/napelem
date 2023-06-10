@@ -1,8 +1,9 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { SolarDataService } from '../../../services/solar.data.service';
 import { CommonChartBaseComponent, Tooltip } from '../common/common.chart.base.component';
 import { ViewBoxCalculatorService } from '../../../services/viewbox.calculator.service';
+import { CustomAreaChartStackedComponent } from '../../custom-charts/custom-stacked-area/custom.stacked.area.chart.component'
 
 @Component({
   selector: 'app-momentary',
@@ -11,6 +12,10 @@ import { ViewBoxCalculatorService } from '../../../services/viewbox.calculator.s
   encapsulation: ViewEncapsulation.None,
 })
 export class MomentaryComponent extends CommonChartBaseComponent {
+
+  @ViewChild('areachart')
+  customStackArea: CustomAreaChartStackedComponent | null = null;
+
   title = "Pillanatnyi értékek";
 
   xAxisLabel = 'Idő';
@@ -82,7 +87,57 @@ export class MomentaryComponent extends CommonChartBaseComponent {
     }
   }
 
+  private readSelection() {
+    let filteredArea = undefined;
+
+    if (this.customStackArea != null && this.multi != null && this.customStackArea.filteredDomain) {
+      const fdstart = this.customStackArea.filteredDomain[0]
+      const fdstop = this.customStackArea.filteredDomain[1]
+
+      let ndx = 0;
+      filteredArea = [0, 0]
+      let hasStart = false
+      let hasStop = false
+      this.multi[0].series.forEach( (l: any) => {
+        if(! hasStart) {
+          if (l["name"] >= fdstart) {
+            hasStart = true;
+            filteredArea[0] = ndx;
+          }
+        }
+        if(! hasStop) {
+          if (l["name"] >= fdstop) {
+            hasStop = true;
+            filteredArea[1] = ndx;
+          }
+        }
+        ndx += 1
+      });
+    }
+    return filteredArea;
+  }
+
+  private applySelection(filteredArea:any) {
+    if (this.customStackArea != null) {
+      this.customStackArea.filteredDomain = null;
+
+      if (filteredArea != null) {
+        const series = this.multi[0].series;
+        if(filteredArea[0] >= series.length) {
+          filteredArea[0] = series.length - 1
+        }
+        if(filteredArea[1] >= series.length) {
+          filteredArea[1] = series.length - 1
+        }
+        const domain = [series[filteredArea[0]]["name"], series[filteredArea[1]]["name"]]
+        this.customStackArea.updateDomain(domain)
+      }
+    }
+  }
+
   sliceRaw() {
+    const selection = this.readSelection();
+
     const firstndx = this.solarDataService.getRawIndex()[this.rangeSelector];
     const lastndx = this.solarDataService.getRawIndex()[this.rangeSelector + 7] - 1;
     const output: any[] = []
@@ -95,6 +150,7 @@ export class MomentaryComponent extends CommonChartBaseComponent {
     });
 
     this.multi = output;
+    this.applySelection(selection);
   }
 
   getRangeText(): string {

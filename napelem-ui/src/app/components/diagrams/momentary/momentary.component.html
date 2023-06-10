@@ -1,6 +1,6 @@
 
 <div>
-    <app-charts-area-chart-stacked id="momentarychart" (window:resize)="onResize()"
+    <app-charts-area-chart-stacked #areachart id="momentarychart" (window:resize)="onResize()"
       [view]="view"
       [animations]="animations"
       [scheme]="colorScheme"
