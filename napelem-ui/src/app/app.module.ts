@@ -22,6 +22,8 @@ import { AvgWattsComponent } from './components/diagrams/avg-watts/avg.watts.com
 import { VoltagesComponent } from './components/diagrams/voltages/voltages.component';
 import { AccumulatorComponent } from './components/diagrams/accumulator/accumulator.component';
 import { ProductionConsumptionComponent } from './components/diagrams/prod-cons/production.consumption.component';
+import { MomentaryComponent } from './components/diagrams/momentary/momentary.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -43,12 +45,14 @@ import { ProductionConsumptionComponent } from './components/diagrams/prod-cons/
     VoltagesComponent,
     AccumulatorComponent,
     ProductionConsumptionComponent,
+    MomentaryComponent,
   ],
   imports: [
     NgxChartsModule,
     AppRoutingModule,
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

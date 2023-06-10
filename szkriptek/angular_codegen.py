@@ -58,6 +58,18 @@ class Battery:
         }
 
 
+def calcprice(avg_cons, numdays):
+    expensive_part = 0
+
+    if avg_cons > 7:
+       expensive_part = avg_cons - 7
+       avg_cons = 7
+    cheap_part = avg_cons
+
+    price = 36 * cheap_part + 70.1 * expensive_part
+    return numdays * price
+
+
 BASEDIR=os.path.dirname(__file__) + "/.."
 
 ctx = napelem_context.yearly()
@@ -72,6 +84,7 @@ mintime = pd.to_datetime(df['Dátum'].min())
 dfj = dfj[dfj["Idő"] >= mintime]
 dfeon = dfj.copy()
 dfakku = dfj.copy()
+rawdf = dfj.copy()
 
 firstdfj = dfj.iloc[0]
 lastdfj = dfj.iloc[-1]
@@ -283,6 +296,32 @@ dfprodconavg = dfprodcon.rolling(7, center=True).mean()
 dfprodconavg['Dátum'] = dfprodcon['Nap'].astype(str)
 dfprodcon = dfprodconavg.dropna()
 
+money = 0
+mdt = avg
+if mdt > avg_consumption:
+    money += 4.94 * (mdt - avg_consumption) * numdays
+    mdt = avg_consumption
+
+money_full = calcprice(mdt, numdays)
+money_pv = calcprice(avg_consumption - mdt, numdays)
+money += money_full - money_pv
+money = int(money + 0.5)
+
+rawdf = rawdf[['Idő', 'Nap', 'Nettó termelés', 'Nettó fogyasztás', 'Nettó napelem fogyasztás']]
+rawdf['Nettó termelés'] = (rawdf['Nettó termelés'] * 4000 + 0.5).astype(int)
+rawdf['Nettó fogyasztás'] = (rawdf['Nettó fogyasztás'] * 4000 + 0.5).astype(int)
+rawdf['Nettó napelem fogyasztás'] = (rawdf['Nettó napelem fogyasztás'] * 4000 + 0.5).astype(int)
+rawdf.set_index("Idő")
+
+rawgbp = rawdf.groupby('Nap').agg(pd.Series.tolist)
+rawgbp = rawgbp[['Nettó fogyasztás', 'Nettó napelem fogyasztás', 'Nettó termelés']]
+
+rawdf = rawgbp.reset_index().rename(columns = {'Nettó fogyasztás': 'Fogyasztás', 
+                                               'Nettó napelem fogyasztás': 'Napelem fogyasztás',
+                                               'Nettó termelés' : 'Visszatáplált',
+                                               'Nap': 'Dátum'}, inplace = False)
+rawdf['Dátum'] = rawdf['Dátum'].astype(str)
+
 
 output = "export const WEEKLY_AVG_DATA = " + df.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
@@ -355,6 +394,10 @@ output += "export const ACCUMULATOR = " + dfakku.to_json(orient='records', force
 output += "export const MONTHLY_AVG_DATA = " + dfhavi[["Dátum", "D-K termelés", "D-Ny termelés"]].to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 output += "export const PRODCON_AVG = " + dfprodcon.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
+
+output += "export const MONEY = " + str(money) + ";\n\n"
+
+output += "export const RAW = " + rawdf.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 #print (output)
 

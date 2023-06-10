@@ -7,7 +7,7 @@ import {
     STRONGEST_MONTH, STRONGEST_MONTH_START, STRONGEST_MONTH_END,
     WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END, WEEKLY_SALDO_AVG, WEEKLY_SALDO_DATA, YEARLY_SALDO,
     DAILY_DATA, MONTHLY_DATA, PRODUCTION_CONSUMPTION_DATA, AVG_WATTS, MAX_VOLTAGE, ACCUMULATOR, MONTHLY_AVG_DATA,
-    PRODCON_AVG, MONEY
+    PRODCON_AVG, MONEY, RAW
 } from './solardata';
 
 @Injectable({
@@ -46,6 +46,10 @@ export class SolarDataService {
 
     private productionConsumptionAvg: any;
 
+    private raw: any;
+
+    private rawIndex: any;
+
     constructor() {
         this.weeklyAvgProductionSeries = this.computeWeeklyAvgProductionData()
         this.weeklySaldoSeries = this.computeWeeklySaldoData()
@@ -60,6 +64,7 @@ export class SolarDataService {
         this.accumulator = this.computeAccumulator();
         this.monthlyAvgProductionSeries = this.computeMonthlyAvgProductionData()
         this.productionConsumptionAvg = this.computeProductionConsumptionAvg();
+        this.raw = this.computeRaw();
     }
 
     private computeWeeklyAvgProductionData() {
@@ -529,6 +534,73 @@ export class SolarDataService {
         return pcavg;
     }
 
+    private computeRaw() {
+        const output: any[] = []
+
+        const rf: any[] = []
+        const rnf: any[] = []
+        const rv: any[] = []
+
+        this.rawIndex = []
+        let rndx = 0
+
+        RAW.forEach(
+            (line) => {
+                const datedy = new Date(line["Dátum"])
+                var userTimezoneOffset = datedy.getTimezoneOffset() * 60000
+
+                let ndx = 0
+                const ndxmax = line["Fogyasztás"].length
+                this.rawIndex.push(rndx);
+                rndx += ndxmax
+                while(ndx < ndxmax) {
+                    const date = new Date(datedy.getTime() + userTimezoneOffset + ndx * (15*60*1000))
+
+                    const rawf = line["Fogyasztás"][ndx]
+                    const rawnf= line["Napelem fogyasztás"][ndx]
+                    const rawv = line["Visszatáplált"][ndx]
+
+                    ndx+=1
+
+                    rf.push(
+                        {
+                            "name": date,
+                            "value": -rawf,
+                        }
+                    )
+                    rnf.push(
+                        {
+                            "name": date,
+                            "value": rawnf,
+                        }
+                    )
+                    rv.push(
+                        {
+                            "name": date,
+                            "value": rawv,
+                        }
+                    )
+                }
+            }
+        );
+
+        output.push({
+            "name": "Fogyasztás",
+            "series": rf,
+        });
+        output.push({
+            "name": "Napelem fogyasztás",
+            "series": rnf,
+        });
+        output.push({
+            "name": "Visszatáplált",
+            "series": rv,
+        });
+
+        this.rawIndex.push(rndx);
+        return output
+    }
+
     getAverageProduction(): number {
         return AVG;
     }
@@ -700,5 +772,13 @@ export class SolarDataService {
 
     getMoney() {
         return MONEY;
+    }
+
+    getRaw() {
+        return this.raw;
+    }
+
+    getRawIndex(): number [] {
+        return this.rawIndex;
     }
 }

@@ -11,6 +11,7 @@ import { AvgWattsComponent } from './components/diagrams/avg-watts/avg.watts.com
 import { VoltagesComponent } from './components/diagrams/voltages/voltages.component';
 import { AccumulatorComponent } from './components/diagrams/accumulator/accumulator.component';
 import { ProductionConsumptionComponent } from './components/diagrams/prod-cons/production.consumption.component';
+import { MomentaryComponent } from './components/diagrams/momentary/momentary.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'monthly-prod',
     component: MonthlyProductionComponent
+  },
+  {
+    path: 'momentary',
+    component: MomentaryComponent
   },
   {
     path: 'usage',

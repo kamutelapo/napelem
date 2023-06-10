@@ -1,0 +1,52 @@
+
+<div>
+    <app-charts-area-chart-stacked id="momentarychart" (window:resize)="onResize()"
+      [view]="view"
+      [animations]="animations"
+      [scheme]="colorScheme"
+      [legend]="legend"
+      [legendPosition]="legendPosition"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxis]="xAxis"
+      [yAxis]="yAxis"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [timeline]="timeline"
+      [results]="multi"
+      [yAxisTickFormatting]="valueFormat"
+      [legendTitle]="'Adat'"
+      [referenceLines]="referenceLines"
+      [showRefLines]="showRefLines"
+      [showRefLabels]="showRefLabels"
+      >
+  
+      <ng-template #tooltipTemplate let-model="model">
+        <span class="tooltip-label">{{ model.series }} &bull; {{ getLocaleDate(model.name) }} </span>
+        <span class="tooltip-val">{{ model.value.toLocaleString("hu-HU") }} W</span>
+      </ng-template>
+  
+      <ng-template #seriesTooltipTemplate let-model="model">
+        <xhtml:div class="area-tooltip-container">
+          {{ getToolTipDate(model) }}
+          <xhtml:div *ngFor="let tooltipItem of model" class="tooltip-item">
+            <xhtml:span class="tooltip-item-color" [style.background-color]="tooltipItem.color"></xhtml:span>
+            {{ getToolTipText(tooltipItem) }}
+          </xhtml:div>
+        </xhtml:div>
+      </ng-template>
+  
+    </app-charts-area-chart-stacked>
+  </div>
+
+  <table [ngClass]="'momentarycontainer momentarycontainer-' + getNgClassType()">
+    <tr>
+      <td class="momentarylabel" colspan="3">{{getRangeText()}}</td>
+    </tr>
+    <tr>
+      <td (click)="moveBack()" class="momentary-arrow">&#x25C0;</td>
+      <td class="slider-cell"><input class="slider" type="range" name="rangeslider" min="0" [max]="daycnt" (ngModelChange)="sliceRaw()" [(ngModel)]="rangeSelector"></td>
+      <td (click)="moveForward()" class="momentary-arrow">&#x25B6;</td>
+    </tr>
+  </table>
+  
