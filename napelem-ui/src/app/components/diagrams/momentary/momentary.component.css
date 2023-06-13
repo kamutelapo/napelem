@@ -5,7 +5,7 @@
 
 .momentarycontainer-desktop {
     left: 210px;
-    top: calc(100vh - 75px);
+    top: calc(95vh - 75px);
     width: calc(100vw - 220px);
 }
 

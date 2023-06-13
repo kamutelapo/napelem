@@ -36,7 +36,8 @@ export class MomentaryComponent extends CommonChartBaseComponent {
 
   constructor(private solarDataService: SolarDataService, viewBoxCalculatorService: ViewBoxCalculatorService) {
     super(viewBoxCalculatorService);
-    this.spaceY = viewBoxCalculatorService.isMobile() ? 100 : 50;
+    this.spaceY = viewBoxCalculatorService.isWideWindow() ? 75 : 50;
+    this.ratioY = viewBoxCalculatorService.isWideWindow() ? 0.95 : 1.0;
     this.view = this.getViewBox()
 
     this.rawData = solarDataService.getRaw();

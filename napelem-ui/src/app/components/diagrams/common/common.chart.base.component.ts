@@ -38,6 +38,8 @@ export class CommonChartBaseComponent implements OnInit {
 
     spaceY = 0;
 
+    ratioY = 1.0;
+
     view: [number, number];
 
     constructor(protected viewBoxCalculatorService: ViewBoxCalculatorService) {
@@ -51,7 +53,7 @@ export class CommonChartBaseComponent implements OnInit {
     getViewBox(): [number, number] {
       const vb: [number, number] = [0, 0]
       vb[0] = this.viewBoxCalculatorService.getViewBox()[0]
-      vb[1] = this.viewBoxCalculatorService.getViewBox()[1] - this.spaceY
+      vb[1] = this.ratioY * this.viewBoxCalculatorService.getViewBox()[1] - this.spaceY
       return vb;
     }
 
