@@ -494,8 +494,12 @@ export class CustomBarChartComponent extends BaseChartComponent {
   }
 
   getXScale(): any {
-    const spacing = this.groupDomain.length / (this.dims.width / this.barPadding + 1);
-    return scaleBand().rangeRound([0, this.dims.width]).paddingInner(spacing).domain(this.groupDomain);
+    if (this.groupDomain.length > this.dims.width) {
+      return scaleBand().range([0, this.dims.width]).paddingInner(0).domain(this.groupDomain);
+    } else {
+      const spacing = this.groupDomain.length / (this.dims.width / this.barPadding + 1);
+      return scaleBand().rangeRound([0, this.dims.width]).paddingInner(spacing).domain(this.groupDomain);
+    }
   }
 
   getYScale(): any {

@@ -35,6 +35,7 @@ export class CommonChartBaseComponent implements OnInit {
     showRefLines = true;
     showRefLabels = false;
     referenceLines: any;
+    measurementUnit = " kWh";
 
     spaceY = 0;
 
@@ -86,6 +87,14 @@ export class CommonChartBaseComponent implements OnInit {
       return value.toLocaleDateString() + " " + value.toLocaleTimeString()
     }
 
+    getToolTipTime(model: Tooltip[]): string {
+      if(model.length > 0) {
+        const dt = model[0].name
+        return dt.toLocaleTimeString()
+      }
+      return ""
+    }
+
     getToolTipDateTime(model: Tooltip[]): string {
       if(model.length > 0) {
         const dt = model[0].name
@@ -103,7 +112,7 @@ export class CommonChartBaseComponent implements OnInit {
         }
         result += ': ';
         if (tooltipItem.value !== undefined) {
-          result += tooltipItem.value.toLocaleString("hu-HU") + " kWh";
+          result += tooltipItem.value.toLocaleString("hu-HU") + this.measurementUnit;
         }
         if (tooltipItem.min !== undefined || tooltipItem.max !== undefined) {
           result += ' (';
@@ -111,7 +120,7 @@ export class CommonChartBaseComponent implements OnInit {
             if (tooltipItem.max === undefined) {
               result += '≥';
             }
-            result += tooltipItem.min.toLocaleString("hu-HU") + " kWh";
+            result += tooltipItem.min.toLocaleString("hu-HU") + this.measurementUnit;
             if (tooltipItem.max !== undefined) {
               result += ' - ';
             }

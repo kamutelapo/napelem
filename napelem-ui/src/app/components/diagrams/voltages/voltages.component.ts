@@ -39,7 +39,7 @@ export class VoltagesComponent extends CommonChartBaseComponent {
   }
 
 
-  getToolTipTime(model: Tooltip[]): string {
+  override getToolTipTime(model: Tooltip[]): string {
     if(model.length > 0) {
       return model[0].name
     }

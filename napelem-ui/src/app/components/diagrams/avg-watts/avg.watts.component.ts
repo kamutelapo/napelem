@@ -33,7 +33,7 @@ export class AvgWattsComponent extends CommonChartBaseComponent {
     return value + "W"
   }
 
-  getToolTipTime(model: Tooltip[]): string {
+  override getToolTipTime(model: Tooltip[]): string {
     if(model.length > 0) {
       return model[0].name
     }
