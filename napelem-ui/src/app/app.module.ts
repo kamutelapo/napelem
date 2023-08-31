@@ -13,6 +13,7 @@ import { CustomLineComponent } from './components/custom-charts/custom-line-char
 import { CustomBarChartComponent } from './components/custom-charts/custom-bar-chart/custom-bar-chart.component';
 import { MeasurementDataComponent } from './components/diagrams/msmdata/measurement-data/measurement.data.component';
 import { WeeklySaldoComponent } from './components/diagrams/weekly-saldo/weekly.saldo.component';
+import { MonthlySaldoComponent } from './components/diagrams/monthly-saldo/monthly.saldo.component';
 import { DailyProductionComponent } from './components/diagrams/daily-prod/daily.production.component';
 import { YearlySaldoComponent } from './components/diagrams/yearly-saldo/yearly.saldo.component';
 import { MonthlyProductionComponent } from './components/diagrams/monthly-prod/monthly.production.component';
@@ -36,6 +37,7 @@ import { FormsModule } from '@angular/forms';
     CustomBarChartComponent,
     MeasurementDataComponent,
     WeeklySaldoComponent,
+    MonthlySaldoComponent,
     DailyProductionComponent,
     YearlySaldoComponent,
     MonthlyProductionComponent,

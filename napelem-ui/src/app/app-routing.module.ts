@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WeeklyAvgDiagramComponent } from './components/diagrams/weekly-avg/weekly.avg.diagram.component';
 import { WeeklySaldoComponent } from './components/diagrams/weekly-saldo/weekly.saldo.component';
+import { MonthlySaldoComponent } from './components/diagrams/monthly-saldo/monthly.saldo.component';
 import { YearlySaldoComponent } from './components/diagrams/yearly-saldo/yearly.saldo.component';
 import { MeasurementDataComponent } from './components/diagrams/msmdata/measurement-data/measurement.data.component'
 import { DailyProductionComponent } from './components/diagrams/daily-prod/daily.production.component';
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'weekly-saldo',
     component: WeeklySaldoComponent
+  },
+  {
+    path: 'monthly-saldo',
+    component: MonthlySaldoComponent
   },
   {
     path: 'yearly-saldo',

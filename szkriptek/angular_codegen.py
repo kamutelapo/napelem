@@ -193,6 +193,8 @@ dfjc = dfj.copy()
 dfjc = dfjc.groupby('Nap', as_index=False).mean()
 
 dfjc['Szaldó'] = dfjc['Napi termelés'] - dfjc['Napi fogyasztás']
+dfsaldo_monthly = dfjc.copy()
+
 
 saldo_avg = dfjc['Szaldó'].mean()
 
@@ -202,6 +204,13 @@ dfjc['Szaldó'] = dfroll['Szaldó']
 dfjc = dfjc[['Nap', 'Szaldó']].dropna()
 dfjc["Dátum"] = dfjc["Nap"].astype(str)
 del dfjc['Nap']
+
+dfsaldoroll = dfsaldo_monthly.rolling(30, center = False).mean()
+dfsaldo_monthly['Szaldó'] = dfsaldoroll['Szaldó']
+
+dfsaldo_monthly = dfsaldo_monthly[['Nap', 'Szaldó']].dropna()
+dfsaldo_monthly["Dátum"] = dfsaldo_monthly["Nap"].astype(str)
+del dfsaldo_monthly['Nap']
 
 dfjy = dfj.groupby('Nap', as_index=False).mean()
 dfjy['Szaldó'] = dfjy['Napi termelés'] - dfjy['Napi fogyasztás']
@@ -376,6 +385,8 @@ output += "export const WEAKEST_MONTH_END = \"" + str(hminend) + "\";\n\n"
 output += "export const WEEKLY_SALDO_DATA = " + dfjc.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 output += "export const WEEKLY_SALDO_AVG = " + str(int(float(saldo_avg) * 100 + 0.5) / 100) + ";\n\n"
+
+output += "export const MONTHLY_SALDO_DATA = " + dfsaldo_monthly.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 output += "export const DAILY_DATA = " + dfdl.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 

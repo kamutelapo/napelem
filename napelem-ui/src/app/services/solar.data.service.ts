@@ -5,9 +5,9 @@ import {
     STRONGEST_WEEK, STRONGEST_WEEK_START, STRONGEST_WEEK_END,
     WEAKEST_WEEK, WEAKEST_WEEK_START, WEAKEST_WEEK_END,
     STRONGEST_MONTH, STRONGEST_MONTH_START, STRONGEST_MONTH_END,
-    WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END, WEEKLY_SALDO_AVG, WEEKLY_SALDO_DATA, YEARLY_SALDO,
-    DAILY_DATA, MONTHLY_DATA, PRODUCTION_CONSUMPTION_DATA, AVG_WATTS, MAX_VOLTAGE, ACCUMULATOR, MONTHLY_AVG_DATA,
-    PRODCON_AVG, MONEY, RAW
+    WEAKEST_MONTH, WEAKEST_MONTH_START, WEAKEST_MONTH_END, WEEKLY_SALDO_AVG, WEEKLY_SALDO_DATA, MONTHLY_SALDO_DATA,
+    YEARLY_SALDO, DAILY_DATA, MONTHLY_DATA, PRODUCTION_CONSUMPTION_DATA, AVG_WATTS, MAX_VOLTAGE, ACCUMULATOR,
+    MONTHLY_AVG_DATA, PRODCON_AVG, MONEY, RAW
 } from './solardata';
 
 @Injectable({
@@ -17,6 +17,8 @@ export class SolarDataService {
     private weeklyAvgProductionSeries: any;
 
     private weeklySaldoSeries: any;
+
+    private monthlySaldoSeries: any;
 
     private yearlySaldoSeries: any;
 
@@ -53,6 +55,7 @@ export class SolarDataService {
     constructor() {
         this.weeklyAvgProductionSeries = this.computeWeeklyAvgProductionData()
         this.weeklySaldoSeries = this.computeWeeklySaldoData()
+        this.monthlySaldoSeries = this.computeMonthlySaldoData()
         this.yearlySaldoSeries = this.computeYearlySaldoData()
         this.dailyProductionSeries = this.computeDailyProductionData()
         this.monthlyProduction = this.computeMonthlyProductionData();
@@ -182,6 +185,34 @@ export class SolarDataService {
         sldoutput.push({
             "name": "Átlag",
             "series": sldavg,
+        });
+
+        return sldoutput;
+    }
+
+
+    private computeMonthlySaldoData() {
+
+        const sld: any[] = []
+        const sldoutput: any[] = []
+
+        MONTHLY_SALDO_DATA.forEach(
+            (line) => {
+                const date = new Date(line["Dátum"])
+                const saldo = line["Szaldó"]
+
+                sld.push(
+                    {
+                        "name": date,
+                        "value": saldo,
+                    }
+                )
+            }
+        );
+
+        sldoutput.push({
+            "name": "Szaldó",
+            "series": sld,
         });
 
         return sldoutput;
@@ -711,6 +742,10 @@ export class SolarDataService {
 
     getWeeklySaldoAvg(): number {
         return WEEKLY_SALDO_AVG;
+    }
+
+    getMonthlySaldoSeries() {
+        return this.monthlySaldoSeries;
     }
 
     getYearlySaldoSeries() {
