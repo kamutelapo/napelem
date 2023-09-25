@@ -203,6 +203,8 @@ export class CustomAreaChartStackedComponent extends BaseChartComponent {
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() deactivate: EventEmitter<any> = new EventEmitter();
 
+  @Output() domainChanged: EventEmitter<any> = new EventEmitter();
+
   @ContentChild('tooltipTemplate') tooltipTemplate: TemplateRef<any>;
   @ContentChild('seriesTooltipTemplate') seriesTooltipTemplate: TemplateRef<any>;
 
@@ -314,6 +316,8 @@ export class CustomAreaChartStackedComponent extends BaseChartComponent {
 
     this.clipPathId = 'clip' + id().toString();
     this.clipPath = `url(#${this.clipPathId})`;
+
+    this.domainChanged.emit(this.filteredDomain);
   }
 
   analyzeSeries(): void {
@@ -331,7 +335,13 @@ export class CustomAreaChartStackedComponent extends BaseChartComponent {
         }
       }
       if (isPos & isNeg) {
-        throw new Error("Negative and positive values are mixed!")
+        if (this.results.length < 2)
+        {
+          // if only one chart is present, it's not a problem
+          isNeg = false;
+        } else {
+          throw new Error("Negative and positive values are mixed!")
+        }
       }
       sn.push(isNeg || false);
     }
@@ -452,6 +462,7 @@ export class CustomAreaChartStackedComponent extends BaseChartComponent {
     this.filteredDomain = domain;
     this.xDomain = this.filteredDomain;
     this.xScale = this.getXScale(this.xDomain, this.dims.width);
+    this.domainChanged.emit(this.filteredDomain);
   }
 
   updateHoveredVertical(item) {
@@ -546,5 +557,24 @@ export class CustomAreaChartStackedComponent extends BaseChartComponent {
       this.deactivate.emit({ value: entry, entries: [] });
     }
     this.activeEntries = [];
+  }
+
+  hasTimelineSelection() {
+    if (this.timeline && this.filteredDomain) {
+      if (this.filteredDomain[0].getTime() > this.timelineXDomain[0].getTime()) {
+        return true;
+      }
+      if (this.filteredDomain[1].getTime() < this.timelineXDomain[1].getTime()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  setLegendTitle(title: string) {
+    if (this.legendTitle != title) {
+      this.legendTitle = title;
+      this.legendOptions = this.getLegendOptions();
+    }
   }
 }
