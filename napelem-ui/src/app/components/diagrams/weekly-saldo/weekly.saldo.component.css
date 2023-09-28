@@ -1,0 +1,3 @@
+#weeklysaldochart .chart-legend .legend-label-text {
+  width: calc(100% - 19px);
+}

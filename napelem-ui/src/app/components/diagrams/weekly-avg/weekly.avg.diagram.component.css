@@ -6,3 +6,7 @@
   stroke-width: 1.5;
   stroke: magenta;
 }
+
+#stackedchart .chart-legend .legend-label-text {
+  width: calc(100% - 19px);
+}
