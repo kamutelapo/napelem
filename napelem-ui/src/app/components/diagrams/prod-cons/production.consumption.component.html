@@ -1,5 +1,5 @@
 <div>
-    <app-charts-line-chart id="{{getChartId()}}" (window:resize)="onResize()"
+    <app-charts-line-chart #chart id="{{getChartId()}}" (window:resize)="onResize()" (domainChanged)="onDomainChanged($event)"
       [view]="view"
       [animations]="animations"
       [scheme]="colorScheme"
@@ -16,14 +16,14 @@
       [legendTitle]="'Görbe'"
       [referenceLines]="referenceLines"
       [showRefLines]="showRefLines"
-      [showRefLabels]="showRefLabels"  
+      [showRefLabels]="showRefLabels"
       [yAxisTickFormatting]="valueFormat">
-  
+
       <ng-template #tooltipTemplate let-model="model">
         <span class="tooltip-label">{{ model.series }} &bull; {{ getLocaleDate(model.name) }} </span>
         <span class="tooltip-val">{{ model.value.toLocaleString("hu-HU") }} kWh</span>
       </ng-template>
-  
+
       <ng-template #seriesTooltipTemplate let-model="model">
         <xhtml:div class="area-tooltip-container">
           {{ getToolTipDate(model) }}
@@ -39,9 +39,17 @@
             <xhtml:span class="tooltip-item-color" [style.background-color]="'#8E8'"></xhtml:span>
             Átlag fogy.: {{ avgCons.toLocaleString("hu-HU") }} kWh
           </xhtml:div>
+          <xhtml:div class="tooltip-item">
+            <xhtml:span class="tooltip-item-color" [style.background-color]="'white'"></xhtml:span>
+            Óraállás t.: {{ getToolTipMeter(model, "Export") }} kWh
+          </xhtml:div>
+          <xhtml:div class="tooltip-item">
+            <xhtml:span class="tooltip-item-color" [style.background-color]="'white'"></xhtml:span>
+            Óraállás f.: {{ getToolTipMeter(model, "Import") }} kWh
+          </xhtml:div>
         </xhtml:div>
       </ng-template>
-  
+
     </app-charts-line-chart>
-  
+
   </div>

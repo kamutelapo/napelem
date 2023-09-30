@@ -1,8 +1,9 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { SolarDataService } from '../../../services/solar.data.service';
 import { CommonChartBaseComponent, Tooltip } from '../common/common.chart.base.component';
 import { ViewBoxCalculatorService } from '../../../services/viewbox.calculator.service';
+import { CustomAreaChartStackedComponent } from '../../custom-charts/custom-stacked-area/custom.stacked.area.chart.component';
 
 @Component({
   selector: 'app-weekly-avg-diagram',
@@ -18,6 +19,8 @@ export class WeeklyAvgDiagramComponent extends CommonChartBaseComponent {
   details = 'Callback';
 
   isWeekly = false;
+
+  @ViewChild('chart') chart: CustomAreaChartStackedComponent | null = null;
 
   detailsClick = (state: boolean): void => {
     this.isWeekly = !this.isWeekly;
@@ -75,5 +78,35 @@ export class WeeklyAvgDiagramComponent extends CommonChartBaseComponent {
       sum += item.value
     });
     return "Összes termelés: " + sum.toLocaleString("hu-HU") + " kWh"
+  }
+
+  getToolTipMeter(model: Tooltip[]): string {
+    let meter = "?"
+    model.forEach( (item) => {
+      if ("extra" in item) {
+        meter = item.extra["Inverter"].toLocaleString("hu-HU")
+      }
+    });
+    return "Óraállás: " + meter + " kWh"
+  }
+
+  onDomainChanged(event: any) {
+    if (this.chart) {
+      if (event && this.chart.hasTimelineSelection()) {
+        const ndxlo = this.solarDataService.findDate(event[0] as Date, this.multi[0].series, false);
+        const ndxhi = this.solarDataService.findDate(event[1] as Date, this.multi[0].series, true);
+
+        if ((ndxlo >= 0) && (ndxhi >= 0)) {
+          const meterlo = this.multi[0].series[ndxlo].extra["Inverter"];
+          const meterhi = this.multi[0].series[ndxhi].extra["Inverter"];
+
+          const totalStr = (meterhi - meterlo).toFixed(1);
+          const label = "Ablak: " + totalStr + " kWh";
+          this.chart.setLegendTitle(label);
+          return;
+        }
+      }
+      this.chart.setLegendTitle('Oldalak');
+    }
   }
 }

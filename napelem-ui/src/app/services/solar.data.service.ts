@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-    WEEKLY_AVG_DATA, AVG, START_DATE, END_DATE, PRODUCED_ENERGY, AVG_CONSUMPTION, CONSUMPTION,
+    METERS, WEEKLY_AVG_DATA, AVG, START_DATE, END_DATE, PRODUCED_ENERGY, AVG_CONSUMPTION, CONSUMPTION,
     MAX_POWER, MAX_POWER_DATE, STRONGEST_DAY, STRONGEST_DAY_DATE, WEAKEST_DAY, WEAKEST_DAY_DATE,
     STRONGEST_WEEK, STRONGEST_WEEK_START, STRONGEST_WEEK_END,
     WEAKEST_WEEK, WEAKEST_WEEK_START, WEAKEST_WEEK_END,
@@ -14,6 +14,8 @@ import {
     providedIn: 'root'
 })
 export class SolarDataService {
+    private metersCache: any;
+
     private weeklyAvgProductionSeries: any;
 
     private weeklySaldoSeries: any;
@@ -53,6 +55,7 @@ export class SolarDataService {
     private rawIndex: any;
 
     constructor() {
+        this.metersCache = this.buildMetersCache()
         this.weeklyAvgProductionSeries = this.computeWeeklyAvgProductionData()
         this.weeklySaldoSeries = this.computeWeeklySaldoData()
         this.monthlySaldoSeries = this.computeMonthlySaldoData()
@@ -70,6 +73,25 @@ export class SolarDataService {
         this.raw = this.computeRaw();
     }
 
+    private buildMetersCache() {
+        const cache: any = {}
+        METERS.forEach(
+            (line) => {
+                const date = line["Dátum"]
+                const imprt = line["Import"]
+                const exprt = line["Export"]
+                const invrt = line["Inverter"]
+
+                cache[date] = {
+                    "Import": imprt,
+                    "Export": exprt,
+                    "Inverter": invrt,
+                }
+            }
+        )
+        return cache;
+    }
+
     private computeWeeklyAvgProductionData() {
         const output: any[] = []
 
@@ -78,16 +100,23 @@ export class SolarDataService {
 
         WEEKLY_AVG_DATA.forEach(
             (line) => {
-                const date = new Date(line["Dátum"])
+                const dtstr = line["Dátum"]
+                const date = new Date(dtstr)
                 const dkd = line["D-K termelés"]
                 const dnyd = line["D-Ny termelés"]
 
-                dkt.push(
-                    {
-                        "name": date,
-                        "value": dkd,
+                const dct: any = {
+                    "name": date,
+                    "value": dkd,
+                }
+
+                if (dtstr in this.metersCache) {
+                    dct["extra"] = {
+                        "Inverter": this.metersCache[dtstr]["Inverter"]
                     }
-                )
+                }
+
+                dkt.push(dct)
                 dnyt.push(
                     {
                         "name": date,
@@ -118,16 +147,23 @@ export class SolarDataService {
 
         MONTHLY_AVG_DATA.forEach(
             (line) => {
-                const date = new Date(line["Dátum"])
+                const dtstr = line["Dátum"]
+                const date = new Date(dtstr)
                 const dkd = line["D-K termelés"]
                 const dnyd = line["D-Ny termelés"]
 
-                dkt.push(
-                    {
-                        "name": date,
-                        "value": dkd,
+                const dct: any = {
+                    "name": date,
+                    "value": dkd,
+                }
+
+                if (dtstr in this.metersCache) {
+                    dct["extra"] = {
+                        "Inverter": this.metersCache[dtstr]["Inverter"]
                     }
-                )
+                }
+
+                dkt.push(dct)
                 dnyt.push(
                     {
                         "name": date,
@@ -532,23 +568,36 @@ export class SolarDataService {
 
         PRODCON_AVG.forEach(
             (line) => {
-                const date = new Date(line["Dátum"])
+                const dtstr = line["Dátum"]
+                const date = new Date(dtstr)
                 const prd = line["Termelés"]
                 const cns = line["Fogyasztás"]
 
-                prod.push(
-                    {
-                        "name": date,
-                        "value": prd,
-                    }
-                )
+                const mprd: any = {
+                    "name": date,
+                    "value": prd,
+                }
 
-                cons.push(
-                    {
-                        "name": date,
-                        "value": cns,
+                if (dtstr in this.metersCache) {
+                    mprd["extra"] = {
+                        "Export": this.metersCache[dtstr]["Export"]
                     }
-                )
+                }
+
+                prod.push(mprd)
+
+                const mcns: any = {
+                    "name": date,
+                    "value": cns,
+                }
+
+                if (dtstr in this.metersCache) {
+                    mcns["extra"] = {
+                        "Import": this.metersCache[dtstr]["Import"]
+                    }
+                }
+
+                cons.push(mcns)
             }
         );
 
@@ -630,6 +679,32 @@ export class SolarDataService {
 
         this.rawIndex.push(rndx);
         return output
+    }
+
+
+    public findDate(date:Date, series: any[], next = true): number {
+        if ( series.length === 0 ) {
+            return -1;
+        }
+
+        let lo = 0;
+        let hi = series.length - 1;
+
+        while ( lo < hi ) {
+            let mid = Math.floor( (lo+hi) / 2 );
+
+            if ( series[mid].name.getTime() > date.getTime() ) {
+                hi = mid;
+            } else {
+                lo = mid+1;
+            }
+        }
+
+        if (!next && (hi>0) && (series[hi].name.getTime() != date.getTime())) {
+            hi -= 1;
+        }
+
+        return hi;
     }
 
     getAverageProduction(): number {

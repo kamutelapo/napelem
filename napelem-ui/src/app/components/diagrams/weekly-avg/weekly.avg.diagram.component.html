@@ -1,5 +1,5 @@
 <div>
-  <app-charts-area-chart-stacked id="stackedchart" (window:resize)="onResize()"
+  <app-charts-area-chart-stacked #chart id="stackedchart" (window:resize)="onResize()" (domainChanged)="onDomainChanged($event)"
     [view]="view"
     [animations]="animations"
     [scheme]="colorScheme"
@@ -35,6 +35,10 @@
         <xhtml:div class="tooltip-item">
           <xhtml:span class="tooltip-item-color" [style.background-color]="'red'"></xhtml:span>
           {{ getToolTipSum(model) }}
+        </xhtml:div>
+        <xhtml:div class="tooltip-item">
+          <xhtml:span class="tooltip-item-color" [style.background-color]="'white'"></xhtml:span>
+          {{ getToolTipMeter(model) }}
         </xhtml:div>
       </xhtml:div>
     </ng-template>

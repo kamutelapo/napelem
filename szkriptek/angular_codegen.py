@@ -77,6 +77,15 @@ df = ctx.getDataframe()
 dfvac = df.copy()
 dfj = ctx.getJoinedDataframe()
 
+dfmeters = dfj[["Nap", "Összes termelés", "Összes fogyasztás", "Összes napelem termelés"]].copy().rename(
+    columns = {"Összes termelés": "Export", "Összes fogyasztás": "Import", 
+               "Összes napelem termelés": "Inverter"})
+
+dfmeters = dfmeters.groupby("Nap").last().reset_index()
+dfmeters["Dátum"] = dfmeters["Nap"].astype(str)
+del dfmeters['Nap']
+dfmeters = dfmeters[["Dátum", "Import", "Export", "Inverter"]]
+
 df['Dátum'] = df['Time'].dt.date
 
 mintime = pd.to_datetime(df['Dátum'].min())
@@ -331,8 +340,9 @@ rawdf = rawgbp.reset_index().rename(columns = {'Nettó fogyasztás': 'Fogyasztá
                                                'Nap': 'Dátum'}, inplace = False)
 rawdf['Dátum'] = rawdf['Dátum'].astype(str)
 
+output = "export const METERS = " + dfmeters.to_json(orient='records', force_ascii=False, double_precision = 3).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
-output = "export const WEEKLY_AVG_DATA = " + df.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
+output += "export const WEEKLY_AVG_DATA = " + df.to_json(orient='records', force_ascii=False, double_precision = 2).replace("},", "},\n  ").replace("}]", "}\n];\n\n")
 
 output += "export const AVG = " + str(int(float(avg) * 100 + 0.5) / 100) + ";\n\n"
 

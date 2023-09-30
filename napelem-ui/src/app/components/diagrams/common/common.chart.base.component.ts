@@ -12,6 +12,7 @@ export interface Tooltip {
     name: any;
     series: any;
     value: any;
+    extra?:any;
 }
 
 @Component({
