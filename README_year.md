@@ -85,7 +85,7 @@ TBD
 
 A 10 másodperces adatokból látszik, hogy a rendszerünk gyakran tüskékben fogyaszt, bár ez a szolgáltatónak nem okoz gondot. Miközben a mosogatógép átlag 300W termelését a napelem teljesen fedezni tudná, a visszwatt védelem levágja amikor többlet termelésünk lenne és kiszámlázza a tüskék miatti többlet fogyasztást. Ilyenkor a semmiért fizetünk, a szolgáltatónak a tüskékből nem adódik többlete. Három fázison mégdurvább a kiesés, mert amennyiben nem egyenletesen terheljük le a három fázist, a megtermelt energia zöme a kukába kerül, bár házon belül felhasználhatnánk normális számlázással.
 
-A mi lakásunk önfogyasztása egy fázison 40% lenne, három fázissal 15%, három fázisú rendszerre a szolgáltató kötelezett.
+A mi lakásunk önfogyasztása egy fázison 40% lenne, három fázissal 15%, három fázisú rendszerre pedig a szolgáltató kötelezett.
 
 ### Az ipar által javasolt 15 perces szaldó
 
@@ -93,15 +93,15 @@ Sokan felháborodtak ezen, viszont az egyetlen igazságosnak mondható elszámol
 
 ### Lehetne-e akkumulátort berakni a tüskék kiegyenlítésére?
 
-Mindig fel kell tenni a kérdést, hogy érdemes-e milliókat fizetni azért, mert a szolgáltató képtelen rendesen számlázni. Nem lehetne-e olcsóbban megoldani a mérőszoftver frissítésével?
+Mindig fel kell tenni a kérdést, hogy érdemes-e milliókat fizetni azért, mert a szolgáltató képtelen rendesen számlázni. Nem lehetne-e olcsóbban megoldani a mérőóra szoftverének frissítésével, vagy óracserével?
 
 ### Bruttó elszámolás mérőóra-állás alapján
 
-Az összes elszámolás közül a legnagyobb hülyeség X Ft-ért kiszámlázni az elfogyasztott energiát, Y Ft-ért megvenni a megtermelt energiát. Háromfázisú rendszereknél már tényleg semmi értelme nincs a 15%-os önfelhasználásnak, akár le is lehet kapcsolni az invertert, akkor nem adunk ingyen energiát az államnak.
+Az összes elszámolás közül a legnagyobb hülyeség X Ft-ért kiszámlázni az elfogyasztott energiát, Y Ft-ért megvenni a megtermelt energiát. Ilyen hülyeséget is csak politikusok tudnak kitalálni. Háromfázisú rendszereknél már tényleg semmi értelme nincs a 15%-os önfelhasználásnak, akár le is lehet kapcsolni az invertert, hogy ne adjunk ingyen energiát az államnak.
 
 A leghülyébb megoldás kiválasztásának egyetlen indoka van: a szolgáltatók buta mérőórákat telepítettek sok helyen, sokba kerülne az összes mérőóra cseréje és csak évente akarják leolvasni az adatokat. Ebbe bukott bele a havi szaldó is, nincsenek rendes mérőórák.
 
-Ebből a helyzetből adódott, hogy a szakma által ajánlott 15 perces szaldót elvetették, helyette ad-hoc ötletelésbe kezdtek és mérőóra-állás alapján számláznának, aminek tényleg semmi köze a valósághoz, pénzbehajtásról szól.
+Ebből a helyzetből adódott, hogy a szakma által ajánlott 15 perces szaldót elvetették, helyette ad-hoc ötletelésbe kezdtek és mérőóra-állás alapján számláznának, ami már tényleg csak a pénzbehajtásról szólna, semmi köze a valósághoz.
 
 ## Az éves adatok megtekintése
 
